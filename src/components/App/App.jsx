@@ -12,7 +12,7 @@ import Nav from "../../layout/Nav/Nav"; // Delete later
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import UserPage from "../UserPage/UserPage";
+import Dashboard from "../../pages/Dashboard/components/Dashboard/Dashboard";
 import LoginPage from "../../pages/Login/components/LoginPage/LoginPage";
 import RegisterPage from "../../pages/Register/components/RegisterPage/RegisterPage";
 
@@ -36,15 +36,15 @@ function App() {
 					<Redirect exact from="/" to="/login" />
 
 					{/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
+            Visiting localhost:3000/user will show the Dashboard if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
 					<ProtectedRoute
-						// logged in shows UserPage else shows LoginPage
+						// logged in shows Dashboard else shows LoginPage
 						exact
 						path="/user"
 					>
-						<UserPage />
+						<Dashboard />
 					</ProtectedRoute>
 
 					<Route exact path="/login">
