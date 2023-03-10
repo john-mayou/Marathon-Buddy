@@ -12,9 +12,9 @@ import Nav from "../../layout/Nav/Nav"; // Delete later
 
 import ProtectedRoute from "../../utils/ProtectedRoute";
 
-import Dashboard from "../../pages/Dashboard/components/Dashboard/Dashboard";
-import LoginPage from "../../pages/Login/components/LoginPage/LoginPage";
-import RegisterPage from "../../pages/Register/components/RegisterPage/RegisterPage";
+import Dashboard from "../../pages/User/Dashboard/components/Dashboard/Dashboard";
+import LoginPage from "../../pages/Login/Login/components/LoginPage/LoginPage";
+import RegisterPage from "../../pages/Login/Register/components/RegisterPage/RegisterPage";
 
 import "./App.scss";
 
