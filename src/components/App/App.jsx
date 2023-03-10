@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Nav from "../../layout/Nav/Nav"; // Delete later
 
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../../utils/ProtectedRoute";
 
 import Dashboard from "../../pages/Dashboard/components/Dashboard/Dashboard";
 import LoginPage from "../../pages/Login/components/LoginPage/LoginPage";
