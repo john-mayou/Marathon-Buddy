@@ -1,0 +1,36 @@
+html,
+body,
+#react-root {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+html {
+	/* 1rem = 10px based on browser defaults */
+	font-size: 62.5%;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+body {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 1.6rem;
+	margin: 0;
+}
+
+img {
+	display: inline-block;
+	max-width: 100%;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+	color: black;
+	text-decoration: none;
+}
