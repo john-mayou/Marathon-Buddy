@@ -14,7 +14,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import UserPage from "../UserPage/UserPage";
 import LandingPage from "../LandingPage/LandingPage";
-import LoginPage from "../LoginPage/LoginPage";
+import LoginPage from "../../pages/Login/components/LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 
 import "./App.scss";
