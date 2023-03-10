@@ -8,14 +8,13 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../Nav/Nav";
+import Nav from "../../layout/Nav/Nav"; // Delete later
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import UserPage from "../UserPage/UserPage";
-import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../../pages/Login/components/LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
+import RegisterPage from "../../pages/Register/components/RegisterPage/RegisterPage";
 
 import "./App.scss";
 
@@ -34,7 +33,7 @@ function App() {
 				<Nav />
 				<Switch>
 					{/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-					<Redirect exact from="/" to="/home" />
+					<Redirect exact from="/" to="/login" />
 
 					{/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
@@ -70,16 +69,16 @@ function App() {
 						)}
 					</Route>
 
-					<Route exact path="/home">
+					{/* <Route exact path="/home">
 						{user.id ? (
 							// If the user is already logged in,
 							// redirect them to the /user page
-							<Redirect to="/user" />
+							<Redirect to="/login" />
 						) : (
 							// Otherwise, show the Landing page
 							<LandingPage />
 						)}
-					</Route>
+					</Route> */}
 
 					{/* If none of the other routes matched, we will show a 404. */}
 					<Route>
