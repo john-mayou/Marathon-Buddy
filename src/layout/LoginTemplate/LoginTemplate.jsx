@@ -1,5 +1,5 @@
 import "./LoginTemplate.scss";
-import RunningPicture from "../../assets/images/Woman-Running-Blue.jpg";
+import RunningPicture from "../../assets/images/Woman-Running-Away.jpg";
 
 function LoginTemplate({ FormElement }) {
 	return (
@@ -9,7 +9,11 @@ function LoginTemplate({ FormElement }) {
 					<FormElement />
 				</section>
 				<section className="login-page__image-box">
-					<img src={RunningPicture} alt="" />
+					<img
+						className="login-page__hero-image"
+						src={RunningPicture}
+						alt="running photo"
+					/>
 				</section>
 			</div>
 		</>

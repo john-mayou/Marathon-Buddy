@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+
 function LoginForm() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -28,54 +31,45 @@ function LoginForm() {
 	}; // end login
 
 	return (
-		<form className="formPanel" onSubmit={login}>
-			<h2>Login</h2>
+		<form className="login-form">
+			<h2 className="login-form__header">Welcome Back</h2>
 			{errors.loginMessage && (
 				<h3 className="alert" role="alert">
 					{errors.loginMessage}
 				</h3>
 			)}
-			<div>
-				<label htmlFor="username">
-					Username:
-					<input
-						type="text"
-						name="username"
-						required
-						value={username}
-						onChange={(event) => setUsername(event.target.value)}
-					/>
-				</label>
+			<TextField
+				type="email"
+				label="Email"
+				variant="outlined"
+				value={username}
+				onChange={(event) => setUsername(event.target.value)}
+				sx={{ width: "100%" }}
+			/>
+			<TextField
+				type="password"
+				label="Password"
+				variant="outlined"
+				value={password}
+				onChange={(event) => setPassword(event.target.value)}
+				sx={{ width: "100%" }}
+			/>
+			<div className="login-form__additional-actions-box">
+				<a
+					className="login-form__sign-up-btn"
+					onClick={() => {
+						history.push("/registration");
+					}}
+				>
+					Don't have an account ? <span>Sign Up</span>
+				</a>
+				<a className="login-form__forgot-password-btn">
+					Forgot Password
+				</a>
 			</div>
-			<div>
-				<label htmlFor="password">
-					Password:
-					<input
-						type="password"
-						name="password"
-						required
-						value={password}
-						onChange={(event) => setPassword(event.target.value)}
-					/>
-				</label>
-			</div>
-			<div>
-				<input
-					className="btn"
-					type="submit"
-					name="submit"
-					value="Log In"
-				/>
-			</div>
-			<button
-				type="button"
-				className="btn btn_asLink"
-				onClick={() => {
-					history.push("/registration");
-				}}
-			>
-				Register
-			</button>
+			<Button variant="contained" sx={{ width: "100%" }} onClick={login}>
+				Sign In
+			</Button>
 		</form>
 	);
 }

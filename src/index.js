@@ -11,6 +11,9 @@ import "./assets/styles/_typography.scss";
 import "./assets/styles/_utils.scss";
 import "./assets/styles/_variables.scss";
 
+// mui
+import "@fontsource/roboto";
+
 import store from "./redux/store";
 
 import App from "./components/App/App";
