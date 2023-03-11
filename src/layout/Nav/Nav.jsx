@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 function Nav() {
 	const dispatch = useDispatch();
-	const user = useSelector((store: any) => store.user);
+	const user = useSelector((store) => store.user);
 
 	return (
 		<div className="nav">

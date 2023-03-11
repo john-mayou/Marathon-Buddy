@@ -3,7 +3,7 @@ import "./RegisterPage.scss";
 import { useHistory } from "react-router-dom";
 import RegisterForm from "../RegisterForm/RegisterForm";
 
-function RegisterPage(): JSX.Element {
+function RegisterPage() {
 	const history = useHistory();
 
 	return (
