@@ -14,9 +14,7 @@ function LoginForm() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const login = (event) => {
-		event.preventDefault();
-
+	const login = () => {
 		if (username && password) {
 			dispatch({
 				type: "LOGIN",
