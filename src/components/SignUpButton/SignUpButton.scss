@@ -1,6 +1,7 @@
 $btn-color: salmon;
 
 .sign-up-btn {
+	cursor: pointer;
 	border-radius: 4px;
 	border: 2px solid $btn-color;
 	color: $btn-color;
