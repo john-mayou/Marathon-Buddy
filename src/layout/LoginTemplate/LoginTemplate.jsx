@@ -4,13 +4,13 @@ import RunningPicture from "../../assets/images/Woman-Running-Away.jpg";
 function LoginTemplate({ FormElement }) {
 	return (
 		<>
-			<div className="login-page">
-				<section className="login-page__form-box">
+			<div className="login-layout">
+				<section className="login-layout__form-box">
 					<FormElement />
 				</section>
-				<section className="login-page__image-box">
+				<section className="login-layout__image-box">
 					<img
-						className="login-page__hero-image"
+						className="login-layout__hero-image"
 						src={RunningPicture}
 						alt="running photo"
 					/>
