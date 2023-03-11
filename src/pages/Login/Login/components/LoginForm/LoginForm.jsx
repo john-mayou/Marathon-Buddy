@@ -8,19 +8,19 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 function LoginForm() {
-	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const errors = useSelector((store) => store.errors);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const login = () => {
-		if (username && password) {
+		if (email && password) {
 			dispatch({
 				type: "LOGIN",
 				payload: {
-					username: username,
-					password: password,
+					email,
+					password,
 				},
 			});
 		} else {
@@ -40,8 +40,8 @@ function LoginForm() {
 				type="email"
 				label="Email"
 				variant="outlined"
-				value={username}
-				onChange={(event) => setUsername(event.target.value)}
+				value={email}
+				onChange={(event) => setEmail(event.target.value)}
 				sx={{ width: "100%" }}
 			/>
 			<TextField

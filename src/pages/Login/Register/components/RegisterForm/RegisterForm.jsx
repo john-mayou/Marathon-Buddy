@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 function RegisterForm() {
-	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const errors = useSelector((store) => store.errors);
 	const dispatch = useDispatch();
@@ -18,8 +18,8 @@ function RegisterForm() {
 		dispatch({
 			type: "REGISTER",
 			payload: {
-				username: username,
-				password: password,
+				email,
+				password,
 			},
 		});
 	}; // end registerUser
@@ -36,8 +36,8 @@ function RegisterForm() {
 				type="email"
 				label="Email"
 				variant="outlined"
-				value={username}
-				onChange={(event) => setUsername(event.target.value)}
+				value={email}
+				onChange={(event) => setEmail(event.target.value)}
 				sx={{ width: "100%" }}
 			/>
 			<TextField

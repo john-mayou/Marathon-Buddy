@@ -9,7 +9,7 @@ function Dashboard() {
 	const user = useSelector((store) => store.user);
 	return (
 		<div>
-			<h2>Welcome, {user.username}!</h2>
+			<h2>Welcome, {user.email}!</h2>
 			<p>Your ID is: {user.id}</p>
 			<button
 				// This button shows up in multiple locations and is styled differently
