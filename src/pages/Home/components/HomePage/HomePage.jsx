@@ -7,7 +7,6 @@ import HomeFooter from "../HomeFooter/HomeFooter";
 function HomePage() {
 	return (
 		<div>
-			<h1>HomePage</h1>
 			<HomeHero />
 			<HomeContent />
 			<HomeFooter />

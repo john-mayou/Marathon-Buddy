@@ -1,0 +1,54 @@
+.home-hero {
+	height: 700px;
+	background-image: linear-gradient(
+			to top left,
+			rgba(0, 0, 0, 0),
+			rgba(0, 0, 0, 0.33)
+		),
+		url("../../../../assets/images/Home-Hero.svg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	color: white;
+
+	display: flex;
+	align-items: center;
+
+	&__text-box {
+		margin: auto 0 auto 200px;
+		width: 350px;
+
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+
+		@media only screen and (max-width: 700px) {
+			margin: auto;
+			max-width: 350px;
+			padding: 0 10px;
+		}
+	}
+
+	&__heading-box {
+		position: relative;
+		color: #f0f0f0;
+	}
+
+	&__heading-primary {
+		font-size: 120px;
+		font-weight: 700;
+		margin: 0;
+	}
+
+	&__heading-secondary {
+		position: absolute;
+		font-size: 20px;
+		top: 6px;
+		left: 117px;
+		font-weight: 700;
+	}
+
+	&__copy-text {
+		margin-left: 5px;
+		line-height: 35px;
+	}
+}
