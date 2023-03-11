@@ -1,36 +1,32 @@
-import "./LoginForm.scss";
+import "./RegisterForm.scss";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-function LoginForm(): JSX.Element {
+function RegisterForm() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const errors: any = useSelector((store: any) => store.errors);
+	const errors = useSelector((store) => store.errors);
 	const dispatch = useDispatch();
 
-	const login = (event: any) => {
+	const registerUser = (event) => {
 		event.preventDefault();
 
-		if (username && password) {
-			dispatch({
-				type: "LOGIN",
-				payload: {
-					username: username,
-					password: password,
-				},
-			});
-		} else {
-			dispatch({ type: "LOGIN_INPUT_ERROR" });
-		}
-	}; // end login
+		dispatch({
+			type: "REGISTER",
+			payload: {
+				username: username,
+				password: password,
+			},
+		});
+	}; // end registerUser
 
 	return (
-		<form className="formPanel" onSubmit={login}>
-			<h2>Login</h2>
-			{errors.loginMessage && (
+		<form className="formPanel" onSubmit={registerUser}>
+			<h2>Register User</h2>
+			{errors.registrationMessage && (
 				<h3 className="alert" role="alert">
-					{errors.loginMessage}
+					{errors.registrationMessage}
 				</h3>
 			)}
 			<div>
@@ -39,8 +35,8 @@ function LoginForm(): JSX.Element {
 					<input
 						type="text"
 						name="username"
-						required
 						value={username}
+						required
 						onChange={(event) => setUsername(event.target.value)}
 					/>
 				</label>
@@ -51,8 +47,8 @@ function LoginForm(): JSX.Element {
 					<input
 						type="password"
 						name="password"
-						required
 						value={password}
+						required
 						onChange={(event) => setPassword(event.target.value)}
 					/>
 				</label>
@@ -62,11 +58,11 @@ function LoginForm(): JSX.Element {
 					className="btn"
 					type="submit"
 					name="submit"
-					value="Log In"
+					value="Register"
 				/>
 			</div>
 		</form>
 	);
 }
 
-export default LoginForm;
+export default RegisterForm;

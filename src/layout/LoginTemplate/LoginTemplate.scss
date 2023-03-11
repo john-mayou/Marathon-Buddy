@@ -1,0 +1,30 @@
+.login-page {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	padding: 3rem;
+
+	&__form-box {
+		border-radius: 10px 0 0 10px;
+		background-color: #f0f0f0;
+		flex: 1;
+
+		display: flex;
+		justify-content: center;
+		padding-top: 5rem;
+	}
+
+	&__image-box {
+		border-radius: 0 10px 10px 0;
+		flex: 1;
+	}
+
+	img {
+		border-radius: 0 10px 10px 0;
+		width: 50%;
+		flex: 1;
+		width: 100%;
+		object-fit: cover;
+	}
+}

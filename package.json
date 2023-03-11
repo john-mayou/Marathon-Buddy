@@ -35,13 +35,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "@tsconfig/create-react-app": "^1.0.3",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/react-router-dom": "^5.3.3",
-    "nodemon": "^2.0.4",
-    "ts-loader": "^9.4.2",
-    "typescript": "^4.9.5"
+    "nodemon": "^2.0.4"
   },
   "browserslist": [
     ">0.2%",
