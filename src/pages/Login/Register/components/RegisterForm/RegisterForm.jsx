@@ -49,6 +49,7 @@ function RegisterForm() {
 				sx={{ width: "100%" }}
 			/>
 			<Button
+				type="submit"
 				variant="contained"
 				sx={{ width: "100%" }}
 				onClick={registerUser}

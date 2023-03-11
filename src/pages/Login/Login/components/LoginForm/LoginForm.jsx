@@ -65,7 +65,12 @@ function LoginForm() {
 					Forgot Password
 				</a>
 			</div>
-			<Button variant="contained" sx={{ width: "100%" }} onClick={login}>
+			<Button
+				type="submit"
+				variant="contained"
+				sx={{ width: "100%" }}
+				onClick={login}
+			>
 				Sign In
 			</Button>
 		</form>
