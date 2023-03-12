@@ -16,6 +16,7 @@ import ProtectedRoute from "../../utils/ProtectedRoute";
 import DashboardPage from "../../pages/User/Dashboard/components/DashboardPage/DashboardPage";
 import JoinCohortPage from "../../pages/User/JoinCohort/components/JoinCohortPage/JoinCohortPage";
 import HistoryPage from "../../pages/User/History/components/HistoryPage/HistoryPage";
+import AppsPage from "../../pages/User/Apps/components/AppsPage/AppsPage";
 
 // Info Pages / Landing
 import HomePage from "../../pages/Home/components/HomePage/HomePage";
@@ -73,7 +74,7 @@ function App() {
 						exact
 						path="/connected-apps"
 					>
-						<DashboardPage />
+						<AppsPage />
 					</ProtectedRoute>
 
 					<Route exact path="/login">
