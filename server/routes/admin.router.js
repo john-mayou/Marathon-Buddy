@@ -46,4 +46,22 @@ router.post("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 		});
 });
 
+router.put("/:id", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
+	const updateCurrentCohortQuery = `
+		UPDATE "cohorts" SET "is_current" = ("id" = $1);
+	`;
+
+	pool.query(updateCurrentCohortQuery, [req.params.id])
+		.then(() => {
+			res.sendStatus(201);
+		})
+		.catch((error) => {
+			console.log(
+				`Error making query ${updateCurrentCohortQuery}`,
+				error
+			);
+			res.sendStatus(500);
+		});
+});
+
 module.exports = router;

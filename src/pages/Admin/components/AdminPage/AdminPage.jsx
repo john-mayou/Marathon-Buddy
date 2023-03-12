@@ -18,7 +18,7 @@ function AdminPage() {
 				setCohorts(response.data);
 			})
 			.catch((error) => {
-				console.log(error);
+				console.log("Error getCohorts", error);
 			});
 	};
 
@@ -36,15 +36,22 @@ function AdminPage() {
 				getCohorts();
 			})
 			.catch((error) => {
-				console.log(error);
+				console.log("Error handleAddCohort", error);
 			});
 	};
 
-	const handleSetCurrentCohort = () => {
-		axios.put;
+	const handleSetCurrentCohort = (id) => {
+		axios
+			.put(`/api/admin/${id}`)
+			.then(() => {
+				getCohorts();
+			})
+			.catch((error) => {
+				console.log("Error handleSetCurrentCohort", error);
+			});
 	};
 
-	const handleDeleteCohort = () => {};
+	const handleDeleteCohort = (id) => {};
 
 	return (
 		<>
@@ -79,20 +86,28 @@ function AdminPage() {
 								key={cohort.id}
 								style={
 									cohort.is_current
-										? { backgroundColor: "#f0f0f0" }
-										: { backgroundColor: "lightgreen" }
+										? { backgroundColor: "lightgreen" }
+										: { backgroundColor: "#f0f0f0" }
 								}
 							>
 								<td>{cohort.name}</td>
 								<td>{cohort.start_date.toString()}</td>
 								<td>{cohort.users}</td>
 								<td>
-									<button onClick={handleSetCurrentCohort}>
+									<button
+										onClick={() =>
+											handleSetCurrentCohort(cohort.id)
+										}
+									>
 										Set Current
 									</button>
 								</td>
 								<td>
-									<button onClick={handleDeleteCohort}>
+									<button
+										onClick={() =>
+											handleDeleteCohort(cohort.id)
+										}
+									>
 										Delete
 									</button>
 								</td>
