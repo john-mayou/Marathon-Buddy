@@ -8,8 +8,6 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../../layout/Nav/Nav"; // Delete later
-
 import ProtectedRoute from "../../utils/ProtectedRoute";
 
 // User Pages
@@ -39,78 +37,41 @@ function App() {
 	return (
 		<Router>
 			<div>
-				{/* <Nav /> */}
 				<Switch>
-					{/* Visiting localhost:3000 will redirect to localhost:3000/home */}
 					<Redirect exact from="/" to="/home" />
 
-					{/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the Dashboard if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-					<ProtectedRoute
-						// logged in shows Dashboard else shows LoginPage
-						exact
-						path="/dashboard"
-					>
+					<ProtectedRoute exact path="/dashboard">
 						<DashboardPage />
 					</ProtectedRoute>
-					<ProtectedRoute
-						// logged in shows Dashboard else shows LoginPage
-						exact
-						path="/join-cohort"
-					>
+
+					<ProtectedRoute exact path="/join-cohort">
 						<JoinCohortPage />
 					</ProtectedRoute>
-					<ProtectedRoute
-						// logged in shows Dashboard else shows LoginPage
-						exact
-						path="/cohort-history"
-					>
+
+					<ProtectedRoute exact path="/cohort-history">
 						<HistoryPage />
 					</ProtectedRoute>
-					<ProtectedRoute
-						// logged in shows Dashboard else shows LoginPage
-						exact
-						path="/connected-apps"
-					>
+
+					<ProtectedRoute exact path="/connected-apps">
 						<AppsPage />
 					</ProtectedRoute>
 
 					<Route exact path="/login">
-						{user.id ? (
-							// If the user is already logged in,
-							// redirect to the /user page
-							<Redirect to="/dashboard" />
-						) : (
-							// Otherwise, show the login page
-							<LoginPage />
-						)}
+						{user.id ? <Redirect to="/dashboard" /> : <LoginPage />}
 					</Route>
 
 					<Route exact path="/registration">
 						{user.id ? (
-							// If the user is already logged in,
-							// redirect them to the /user page
 							<Redirect to="/dashboard" />
 						) : (
-							// Otherwise, show the registration page
 							<RegisterPage />
 						)}
 					</Route>
 
 					<Route exact path="/home">
-						{user.id ? (
-							// If the user is already logged in,
-							// redirect them to the /user page
-							<Redirect to="/dashboard" />
-						) : (
-							// Otherwise, show the Landing page
-							<HomePage />
-						)}
+						{user.id ? <Redirect to="/dashboard" /> : <HomePage />}
 					</Route>
 
-					{/* If none of the other routes matched, we will show a 404. */}
 					<Route>
 						<h1>404</h1>
 					</Route>
