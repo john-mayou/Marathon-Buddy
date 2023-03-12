@@ -32,7 +32,19 @@ router.get("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
  * POST route template
  */
 router.post("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
-	console.log(req.body);
+	const cohortInsertionText = `
+		INSERT INTO "cohorts" ("name", "start_date")
+		VALUES ($1, $2); 
+	`;
+
+	pool.query(cohortInsertionText, [req.body.name, req.body.start_date])
+		.then(() => {
+			res.sendStatus(201);
+		})
+		.catch((error) => {
+			console.log(`Error making query ${cohortInsertionText}`, error);
+			res.sendStatus(500);
+		});
 });
 
 module.exports = router;
