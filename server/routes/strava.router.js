@@ -7,18 +7,12 @@ const axios = require("axios");
  * GET route template
  */
 router.get("/", (req, res) => {
-	// GET route code here
-	console.log("got to api/strava-auth");
-	console.log(req.query);
-	console.log(req.user);
-	console.log("scope", typeof req.query.scope);
-
+	// if proper scopes were not authorized, break and redirect back to apps page
 	if (!/read,activity:read_all/.test(req.query.scope)) {
-		console.log("scope not authenticated");
 		res.status(301).redirect("http://localhost:3000/connected-apps");
 	}
 
-	const params = {
+	const tokenExchangeParams = {
 		client_id: process.env.STRAVA_CLIENT_ID,
 		client_secret: process.env.STRAVA_CLIENT_SECRET,
 		code: req.query.code,
@@ -26,15 +20,27 @@ router.get("/", (req, res) => {
 	};
 
 	axios
-		.post("https://www.strava.com/oauth/token", {}, { params })
-		.then((response) => {
-			console.log(response.data);
+		.post(
+			"https://www.strava.com/oauth/token",
+			{},
+			{ params: tokenExchangeParams }
+		)
+		.then((tokenExchangeResponse) => {
+			const stravaTableInsersion = `
+				INSERT INTO "strava_tokens" ("user_id", "refresh_token")
+				VALUES ($1, $2);
+			`;
+
+			const stravaTableValues = [
+				req.user.id,
+				tokenExchangeResponse.data.refresh_token,
+			];
+
+			pool.query(stravaTableInsersion, stravaTableValues);
 		})
 		.catch((error) => {
-			console.log(
-				"Error with getting access token /api/strava-auth",
-				error
-			);
+			console.log("Error exchanging access token", error);
+			res.send(500).redirect("http://localhost:3000/connected-apps");
 		});
 
 	res.status(301).redirect("http://localhost:3000/connected-apps");
