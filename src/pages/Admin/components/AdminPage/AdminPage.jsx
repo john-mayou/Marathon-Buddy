@@ -40,6 +40,12 @@ function AdminPage() {
 			});
 	};
 
+	const handleSetCurrentCohort = () => {
+		axios.put;
+	};
+
+	const handleDeleteCohort = () => {};
+
 	return (
 		<>
 			<h1>AdminPage</h1>
@@ -62,15 +68,34 @@ function AdminPage() {
 						<th>Name</th>
 						<th>Start Date</th>
 						<th>Users</th>
+						<th>Set Current</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
 					{cohorts.map((cohort) => {
 						return (
-							<tr key={cohort.id}>
+							<tr
+								key={cohort.id}
+								style={
+									cohort.is_current
+										? { backgroundColor: "#f0f0f0" }
+										: { backgroundColor: "lightgreen" }
+								}
+							>
 								<td>{cohort.name}</td>
 								<td>{cohort.start_date.toString()}</td>
 								<td>{cohort.users}</td>
+								<td>
+									<button onClick={handleSetCurrentCohort}>
+										Set Current
+									</button>
+								</td>
+								<td>
+									<button onClick={handleDeleteCohort}>
+										Delete
+									</button>
+								</td>
 							</tr>
 						);
 					})}

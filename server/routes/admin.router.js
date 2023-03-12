@@ -12,10 +12,9 @@ const {
 router.get("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 	const cohortDataQuery = `
 		SELECT "cohorts".id, "cohorts".name, "cohorts".start_date, 
-		COUNT("users_cohorts".cohort_id) AS "users" FROM "cohorts"
+		COUNT("users_cohorts".cohort_id) AS "users", "cohorts".is_current FROM "cohorts"
 		LEFT JOIN "users_cohorts" ON "users_cohorts".cohort_id = "cohorts".id 
 		GROUP BY "cohorts".id ORDER BY "cohorts".start_date ASC;
-
 	`;
 
 	pool.query(cohortDataQuery)
