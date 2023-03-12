@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
 			{ params: tokenExchangeParams }
 		)
 		.then((tokenExchangeResponse) => {
-			const stravaTableInsersion = `
+			const stravaTableInsertion = `
 				INSERT INTO "strava_tokens" ("user_id", "refresh_token")
 				VALUES ($1, $2);
 			`;
@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
 				tokenExchangeResponse.data.refresh_token,
 			];
 
-			pool.query(stravaTableInsersion, stravaTableValues);
+			pool.query(stravaTableInsertion, stravaTableValues);
 		})
 		.catch((error) => {
 			console.log("Error exchanging access token", error);
