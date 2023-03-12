@@ -12,8 +12,15 @@ import Nav from "../../layout/Nav/Nav"; // Delete later
 
 import ProtectedRoute from "../../utils/ProtectedRoute";
 
+// User Pages
+import DashboardPage from "../../pages/User/Dashboard/components/DashboardPage/DashboardPage";
+import JoinCohortPage from "../../pages/User/JoinCohort/components/JoinCohortPage/JoinCohortPage";
+import HistoryPage from "../../pages/User/History/components/HistoryPage/HistoryPage";
+
+// Info Pages / Landing
 import HomePage from "../../pages/Home/components/HomePage/HomePage";
-import Dashboard from "../../pages/User/Dashboard/components/Dashboard/Dashboard";
+
+// Login Pages
 import LoginPage from "../../pages/Login/Login/components/LoginPage/LoginPage";
 import RegisterPage from "../../pages/Login/Register/components/RegisterPage/RegisterPage";
 
@@ -45,7 +52,28 @@ function App() {
 						exact
 						path="/dashboard"
 					>
-						<Dashboard />
+						<DashboardPage />
+					</ProtectedRoute>
+					<ProtectedRoute
+						// logged in shows Dashboard else shows LoginPage
+						exact
+						path="/join-cohort"
+					>
+						<JoinCohortPage />
+					</ProtectedRoute>
+					<ProtectedRoute
+						// logged in shows Dashboard else shows LoginPage
+						exact
+						path="/cohort-history"
+					>
+						<HistoryPage />
+					</ProtectedRoute>
+					<ProtectedRoute
+						// logged in shows Dashboard else shows LoginPage
+						exact
+						path="/connected-apps"
+					>
+						<DashboardPage />
 					</ProtectedRoute>
 
 					<Route exact path="/login">
