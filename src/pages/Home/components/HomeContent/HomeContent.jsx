@@ -13,6 +13,7 @@ function HomeContent() {
 				<SectionLabel
 					iconColor={"rgb(255, 91, 32)"}
 					title={"HOW IT WORKS"}
+					className="home-content__section-label"
 				/>
 				<h2 className="home-content__list-header">
 					Our approach to training
