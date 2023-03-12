@@ -51,7 +51,16 @@ function AdminPage() {
 			});
 	};
 
-	const handleDeleteCohort = (id) => {};
+	const handleDeleteCohort = (id) => {
+		axios
+			.delete(`/api/admin/${id}`)
+			.then(() => {
+				getCohorts();
+			})
+			.catch((error) => {
+				console.log("Error handleDeleteCohort", error);
+			});
+	};
 
 	return (
 		<>

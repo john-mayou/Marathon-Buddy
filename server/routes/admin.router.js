@@ -64,4 +64,22 @@ router.put("/:id", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 		});
 });
 
+router.delete("/:id", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
+	const deleteCohortQuery = `
+		DELETE FROM "cohorts" WHERE id = $1;
+	`;
+
+	pool.query(deleteCohortQuery, [req.params.id])
+		.then(() => {
+			res.sendStatus(204);
+		})
+		.catch((error) => {
+			console.log(
+				`Error making query ${updateCurrentCohortQuery}`,
+				error
+			);
+			res.sendStatus(500);
+		});
+});
+
 module.exports = router;
