@@ -16,6 +16,9 @@ import JoinCohortPage from "../../pages/User/JoinCohort/components/JoinCohortPag
 import HistoryPage from "../../pages/User/History/components/HistoryPage/HistoryPage";
 import AppsPage from "../../pages/User/Apps/components/AppsPage/AppsPage";
 
+// Admin
+import AdminPage from "../../pages/Admin/components/AdminPage/AdminPage";
+
 // Info Pages / Landing
 import HomePage from "../../pages/Home/components/HomePage/HomePage";
 
@@ -54,6 +57,10 @@ function App() {
 
 					<ProtectedRoute exact path="/connected-apps">
 						<AppsPage />
+					</ProtectedRoute>
+
+					<ProtectedRoute exact path="/admin">
+						<AdminPage />
 					</ProtectedRoute>
 
 					<Route exact path="/login">
