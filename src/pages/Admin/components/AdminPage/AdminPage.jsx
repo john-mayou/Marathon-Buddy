@@ -13,7 +13,7 @@ function AdminPage() {
 		axios
 			.get("/api/admin")
 			.then((response) => {
-				setAdminText(response.data);
+				setCohorts(response.data);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -29,7 +29,6 @@ function AdminPage() {
 						<th>Name</th>
 						<th>Start Date</th>
 						<th>Users</th>
-						<th>Completion %</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,9 +36,8 @@ function AdminPage() {
 						return (
 							<tr key={cohort.id}>
 								<td>{cohort.name}</td>
-								<td>{cohort.start_date}</td>
+								<td>{cohort.start_date.toString()}</td>
 								<td>{cohort.users}</td>
-								<td>{cohort.completion_percentage}</td>
 							</tr>
 						);
 					})}
