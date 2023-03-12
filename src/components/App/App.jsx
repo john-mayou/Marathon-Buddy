@@ -12,6 +12,7 @@ import Nav from "../../layout/Nav/Nav"; // Delete later
 
 import ProtectedRoute from "../../utils/ProtectedRoute";
 
+import HomePage from "../../pages/Home/components/HomePage/HomePage";
 import Dashboard from "../../pages/User/Dashboard/components/Dashboard/Dashboard";
 import LoginPage from "../../pages/Login/Login/components/LoginPage/LoginPage";
 import RegisterPage from "../../pages/Login/Register/components/RegisterPage/RegisterPage";
@@ -33,7 +34,7 @@ function App() {
 				{/* <Nav /> */}
 				<Switch>
 					{/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-					<Redirect exact from="/" to="/dashboard" />
+					<Redirect exact from="/" to="/home" />
 
 					{/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the Dashboard if the user is logged in.
@@ -69,16 +70,16 @@ function App() {
 						)}
 					</Route>
 
-					{/* <Route exact path="/home">
+					<Route exact path="/home">
 						{user.id ? (
 							// If the user is already logged in,
 							// redirect them to the /user page
-							<Redirect to="/login" />
+							<Redirect to="/dashboard" />
 						) : (
 							// Otherwise, show the Landing page
-							<Dashboard />
+							<HomePage />
 						)}
-					</Route> */}
+					</Route>
 
 					{/* If none of the other routes matched, we will show a 404. */}
 					<Route>
