@@ -31,8 +31,8 @@ router.get("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 /**
  * POST route template
  */
-router.post("/", (req, res) => {
-	// POST route code here
+router.post("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
+	console.log(req.body);
 });
 
 module.exports = router;
