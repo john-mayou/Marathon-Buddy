@@ -1,26 +1,17 @@
 import "./AdminPage.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function AdminPage() {
-	const [cohorts, setCohorts] = useState([]);
+	const dispatch = useDispatch();
+	const cohorts = useSelector((store) => store.adminCohorts);
 	const [newCohortName, setNewCohortName] = useState("");
 	const [newCohortDate, setNewCohortDate] = useState("");
 
 	useEffect(() => {
-		getCohorts();
+		dispatch({ type: "FETCH_COHORTS" });
 	}, []);
-
-	const getCohorts = () => {
-		axios
-			.get("/api/admin")
-			.then((response) => {
-				setCohorts(response.data);
-			})
-			.catch((error) => {
-				console.log("Error getCohorts", error);
-			});
-	};
 
 	const handleAddCohort = (e) => {
 		e.preventDefault();
