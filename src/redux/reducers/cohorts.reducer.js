@@ -1,3 +1,5 @@
+import { combineReducers } from "redux";
+
 const cohortsReducer = (state = [], action) => {
 	switch (action.type) {
 		case "SET_COHORTS":
@@ -9,6 +11,18 @@ const cohortsReducer = (state = [], action) => {
 	}
 };
 
-// user will be on the redux state at:
-// state.user
-export default cohortsReducer;
+const currentCohortReducer = (state = [], action) => {
+	switch (action.type) {
+		case "SET_CURRENT_COHORT":
+			return action.payload;
+		case "UNSET_COHORTS":
+			return [];
+		default:
+			return state;
+	}
+};
+
+export default combineReducers({
+	cohortsReducer,
+	currentCohortReducer,
+});
