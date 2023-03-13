@@ -9,7 +9,7 @@ const passport = require("./strategies/user.strategy");
 
 // Route includes
 const userRouter = require("./routes/user.router");
-const adminRouter = require("./routes/admin.router");
+const cohortRouter = require("./routes/cohort.router");
 const stravaRouter = require("./routes/strava.router");
 
 // Body parser middleware
@@ -25,7 +25,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use("/api/user", userRouter);
-app.use("/api/admin", adminRouter);
+app.use("/api/cohort", cohortRouter);
 app.use("/api/strava-auth", stravaRouter);
 
 // Serve static files
