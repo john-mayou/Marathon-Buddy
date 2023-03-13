@@ -10,7 +10,7 @@ function AdminPage() {
 	const [newCohortDate, setNewCohortDate] = useState("");
 
 	useEffect(() => {
-		dispatch({ type: "FETCH_COHORTS" });
+		dispatch({ type: "FETCH_ADMIN_COHORTS" });
 	}, []);
 
 	const handleAddCohort = (e) => {

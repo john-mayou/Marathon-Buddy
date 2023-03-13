@@ -4,14 +4,19 @@ import MultipleDatesPicker from "@ambiot/material-ui-multiple-dates-picker";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 
 function JoinCohortPage() {
+	const dispatch = useDispatch();
 	const user = useSelector((store) => store.user);
 	const [open, setOpen] = useState(false);
 	const [trainingDates, setTrainingDates] = useState([]);
 	const [trainingMiles, setTrainingMiles] = useState({});
+
+	useEffect(() => {
+		dispatch({ type: "" });
+	}, []);
 
 	console.log(trainingMiles);
 	return (
