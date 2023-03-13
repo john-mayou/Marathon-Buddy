@@ -1,12 +1,32 @@
 import { put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 
+// USER REQUESTS BELOW THIS LINE
+function* fetchCohorts() {
+	try {
+		const response = yield axios.get("/api/cohort");
+		yield put({ type: "SET_COHORTS", payload: response.data });
+	} catch (error) {
+		console.log("Error fetching cohorts", error);
+	}
+}
+
+function* fetchCurrentCohort() {
+	try {
+		const response = yield axios.get("/api/cohort/current");
+		yield put({ type: "SET_CURRENT_COHORT", payload: response.data });
+	} catch (error) {
+		console.log("Error fetching current cohort", error);
+	}
+}
+
+// ADMIN REQUESTS BELOW THIS LINE
 function* fetchAdminCohorts() {
 	try {
 		const response = yield axios.get("/api/cohort/admin");
 		yield put({ type: "SET_COHORTS", payload: response.data });
 	} catch (error) {
-		console.log("Error fetching cohorts", error);
+		console.log("Error fetching admin cohorts", error);
 	}
 }
 
@@ -38,9 +58,14 @@ function* deleteCohort(action) {
 }
 
 function* cohortSaga() {
+	// user
+	yield takeEvery("FETCH_COHORTS", fetchCohorts); // GET
+	yield takeEvery("FETCH_CURRENT_COHORT", fetchCurrentCohort); // GET
+
+	// admin
 	yield takeEvery("FETCH_ADMIN_COHORTS", fetchAdminCohorts); // GET
 	yield takeEvery("ADD_COHORT", addCohort); // POST
-	yield takeEvery("SET_CURRENT_COHORT", setCurrentCohort); // PUT
+	yield takeEvery("UPDATE_CURRENT_COHORT", setCurrentCohort); // PUT
 	yield takeEvery("DELETE_COHORT", deleteCohort); // DELETE
 }
 

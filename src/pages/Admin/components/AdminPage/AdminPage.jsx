@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function AdminPage() {
 	const dispatch = useDispatch();
-	const cohorts = useSelector((store) => store.cohorts); // redux
+	const cohorts = useSelector((store) => store.cohorts.cohortsReducer); // redux
 	const [newCohortName, setNewCohortName] = useState("");
 	const [newCohortDate, setNewCohortDate] = useState("");
 
@@ -68,7 +68,7 @@ function AdminPage() {
 									<button
 										onClick={() =>
 											dispatch({
-												type: "SET_CURRENT_COHORT",
+												type: "UPDATE_CURRENT_COHORT",
 												payload: cohort.id,
 											})
 										}

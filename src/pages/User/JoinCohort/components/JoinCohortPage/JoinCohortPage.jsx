@@ -8,22 +8,36 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
 function JoinCohortPage() {
+	// redux
 	const dispatch = useDispatch();
-	const user = useSelector((store) => store.user);
+	const user = useSelector((store) => store.user); // redux
+	const cohorts = useSelector((store) => store.cohorts.cohortsReducer); // redux
+	const currentCohort = useSelector(
+		(store) => store.cohorts.currentCohortReducer[0]
+	); // redux
+
+	// local state
 	const [open, setOpen] = useState(false);
 	const [trainingDates, setTrainingDates] = useState([]);
 	const [trainingMiles, setTrainingMiles] = useState({});
 
+	// on load
 	useEffect(() => {
-		dispatch({ type: "" });
+		dispatch({ type: "FETCH_COHORTS" });
+		dispatch({ type: "FETCH_CURRENT_COHORT" });
 	}, []);
 
+	console.log(currentCohort);
 	console.log(trainingMiles);
 	return (
 		<div className="join-cohort">
 			<Sidebar />
 			<section className="join-cohort__main-content">
 				<h1>JOIN COHORT</h1>
+				<p>
+					{currentCohort?.name} {currentCohort?.start_date}
+				</p>
+				<p>Duration: 7 days</p>
 				<Button onClick={() => setOpen(!open)}>Selected Dates</Button>
 				<MultipleDatesPicker
 					open={open}

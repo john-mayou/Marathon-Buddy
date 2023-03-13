@@ -6,9 +6,38 @@ const {
 	rejectIfNotAdmin,
 } = require("../modules/authentication-middleware");
 
-/**
- * GET route template
- */
+// USER NON PROTECTED ROUTES BELOW THIS LINE
+router.get("/", rejectUnauthenticated, (req, res) => {
+	const cohortQuery = `
+		SELECT * FROM "cohorts" ORDER BY "start_date" ASC;
+	`;
+
+	pool.query(cohortQuery)
+		.then((result) => {
+			res.send(result.rows);
+		})
+		.catch(() => {
+			console.log(`Error making query ${cohortQuery}`, error);
+			res.sendStatus(500);
+		});
+});
+
+router.get("/current", rejectUnauthenticated, (req, res) => {
+	const currentCohortQuery = `
+		SELECT * FROM "cohorts" WHERE "is_current" = true;
+	`;
+
+	pool.query(currentCohortQuery)
+		.then((result) => {
+			res.send(result.rows);
+		})
+		.catch(() => {
+			console.log(`Error making query ${cohortQuery}`, error);
+			res.sendStatus(500);
+		});
+});
+
+// ADMIN PROTECTED ROUTES BELOW THIS LINE
 router.get("/admin", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 	const cohortDataQuery = `
 		SELECT "cohorts".id, "cohorts".name, "cohorts".start_date, 
