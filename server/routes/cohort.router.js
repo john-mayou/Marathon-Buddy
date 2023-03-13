@@ -9,7 +9,7 @@ const {
 /**
  * GET route template
  */
-router.get("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
+router.get("/admin", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 	const cohortDataQuery = `
 		SELECT "cohorts".id, "cohorts".name, "cohorts".start_date, 
 		COUNT("users_cohorts".cohort_id) AS "users", "cohorts".is_current FROM "cohorts"
@@ -30,7 +30,7 @@ router.get("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 /**
  * POST route template
  */
-router.post("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
+router.post("/admin", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 	const cohortInsertionText = `
 		INSERT INTO "cohorts" ("name", "start_date")
 		VALUES ($1, $2); 
@@ -46,40 +46,50 @@ router.post("/", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 		});
 });
 
-router.put("/:id", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
-	const updateCurrentCohortQuery = `
+router.put(
+	"/admin/:id",
+	rejectUnauthenticated,
+	rejectIfNotAdmin,
+	(req, res) => {
+		const updateCurrentCohortQuery = `
 		UPDATE "cohorts" SET "is_current" = ("id" = $1);
 	`;
 
-	pool.query(updateCurrentCohortQuery, [req.params.id])
-		.then(() => {
-			res.sendStatus(201);
-		})
-		.catch((error) => {
-			console.log(
-				`Error making query ${updateCurrentCohortQuery}`,
-				error
-			);
-			res.sendStatus(500);
-		});
-});
+		pool.query(updateCurrentCohortQuery, [req.params.id])
+			.then(() => {
+				res.sendStatus(201);
+			})
+			.catch((error) => {
+				console.log(
+					`Error making query ${updateCurrentCohortQuery}`,
+					error
+				);
+				res.sendStatus(500);
+			});
+	}
+);
 
-router.delete("/:id", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
-	const deleteCohortQuery = `
+router.delete(
+	"/admin/:id",
+	rejectUnauthenticated,
+	rejectIfNotAdmin,
+	(req, res) => {
+		const deleteCohortQuery = `
 		DELETE FROM "cohorts" WHERE id = $1;
 	`;
 
-	pool.query(deleteCohortQuery, [req.params.id])
-		.then(() => {
-			res.sendStatus(204);
-		})
-		.catch((error) => {
-			console.log(
-				`Error making query ${updateCurrentCohortQuery}`,
-				error
-			);
-			res.sendStatus(500);
-		});
-});
+		pool.query(deleteCohortQuery, [req.params.id])
+			.then(() => {
+				res.sendStatus(204);
+			})
+			.catch((error) => {
+				console.log(
+					`Error making query ${updateCurrentCohortQuery}`,
+					error
+				);
+				res.sendStatus(500);
+			});
+	}
+);
 
 module.exports = router;

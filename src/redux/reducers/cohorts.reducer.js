@@ -1,4 +1,4 @@
-const adminCohortsReducer = (state = [], action) => {
+const cohortsReducer = (state = [], action) => {
 	switch (action.type) {
 		case "SET_COHORTS":
 			return action.payload;
@@ -11,4 +11,4 @@ const adminCohortsReducer = (state = [], action) => {
 
 // user will be on the redux state at:
 // state.user
-export default adminCohortsReducer;
+export default cohortsReducer;

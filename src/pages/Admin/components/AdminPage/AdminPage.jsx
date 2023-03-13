@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function AdminPage() {
 	const dispatch = useDispatch();
-	const cohorts = useSelector((store) => store.adminCohorts); // redux
+	const cohorts = useSelector((store) => store.cohorts); // redux
 	const [newCohortName, setNewCohortName] = useState("");
 	const [newCohortDate, setNewCohortDate] = useState("");
 
