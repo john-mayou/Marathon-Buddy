@@ -1,26 +1,17 @@
 import "./AdminPage.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function AdminPage() {
-	const [cohorts, setCohorts] = useState([]);
+	const dispatch = useDispatch();
+	const cohorts = useSelector((store) => store.adminCohorts); // redux
 	const [newCohortName, setNewCohortName] = useState("");
 	const [newCohortDate, setNewCohortDate] = useState("");
 
 	useEffect(() => {
-		getCohorts();
+		dispatch({ type: "FETCH_COHORTS" });
 	}, []);
-
-	const getCohorts = () => {
-		axios
-			.get("/api/admin")
-			.then((response) => {
-				setCohorts(response.data);
-			})
-			.catch((error) => {
-				console.log("Error getCohorts", error);
-			});
-	};
 
 	const handleAddCohort = (e) => {
 		e.preventDefault();
@@ -30,36 +21,7 @@ function AdminPage() {
 			start_date: newCohortDate,
 		};
 
-		axios
-			.post("/api/admin", newCohort)
-			.then(() => {
-				getCohorts();
-			})
-			.catch((error) => {
-				console.log("Error handleAddCohort", error);
-			});
-	};
-
-	const handleSetCurrentCohort = (id) => {
-		axios
-			.put(`/api/admin/${id}`)
-			.then(() => {
-				getCohorts();
-			})
-			.catch((error) => {
-				console.log("Error handleSetCurrentCohort", error);
-			});
-	};
-
-	const handleDeleteCohort = (id) => {
-		axios
-			.delete(`/api/admin/${id}`)
-			.then(() => {
-				getCohorts();
-			})
-			.catch((error) => {
-				console.log("Error handleDeleteCohort", error);
-			});
+		dispatch({ type: "ADD_COHORT", payload: newCohort });
 	};
 
 	return (
@@ -105,7 +67,10 @@ function AdminPage() {
 								<td>
 									<button
 										onClick={() =>
-											handleSetCurrentCohort(cohort.id)
+											dispatch({
+												type: "SET_CURRENT_COHORT",
+												payload: cohort.id,
+											})
 										}
 									>
 										Set Current
@@ -114,7 +79,10 @@ function AdminPage() {
 								<td>
 									<button
 										onClick={() =>
-											handleDeleteCohort(cohort.id)
+											dispatch({
+												type: "DELETE_COHORT",
+												payload: cohort.id,
+											})
 										}
 									>
 										Delete
