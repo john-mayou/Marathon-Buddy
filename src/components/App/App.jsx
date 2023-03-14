@@ -12,6 +12,7 @@ import ProtectedRoute from "../../utils/ProtectedRoute";
 
 // User Pages
 import DashboardPage from "../../pages/User/Dashboard/components/DashboardPage/DashboardPage";
+import JoinInfoPage from "../../pages/User/JoinInfo/components/JoinInfoPage/JoinInfoPage";
 import JoinCohortPage from "../../pages/User/JoinCohort/components/JoinCohortPage/JoinCohortPage";
 import HistoryPage from "../../pages/User/History/components/HistoryPage/HistoryPage";
 import AppsPage from "../../pages/User/Apps/components/AppsPage/AppsPage";
@@ -45,6 +46,10 @@ function App() {
 
 					<ProtectedRoute exact path="/dashboard">
 						<DashboardPage />
+					</ProtectedRoute>
+
+					<ProtectedRoute exact path="/join-info">
+						<JoinInfoPage />
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path="/join-cohort">
