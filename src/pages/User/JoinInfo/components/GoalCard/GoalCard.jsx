@@ -1,8 +1,14 @@
 import "./GoalCard.scss";
+import { useHistory } from "react-router-dom";
 
-function GoalCard({ image, imageText, title, description }) {
+function GoalCard({ image, imageText, title, description, durationParam }) {
+	const history = useHistory();
+
 	return (
-		<div className="goal-card">
+		<div
+			className="goal-card"
+			onClick={() => history.push(`/join-cohort/${durationParam}`)}
+		>
 			<div className="goal-card__image-container">
 				<span className="goal-card__image-text-container">
 					<span className="goal-card__image-text">{imageText}</span>
