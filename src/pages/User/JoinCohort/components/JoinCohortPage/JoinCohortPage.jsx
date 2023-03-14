@@ -6,6 +6,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 
 function JoinCohortPage() {
@@ -20,10 +21,14 @@ function JoinCohortPage() {
 	const [trainingMiles, setTrainingMiles] = useState({});
 
 	// variables
+	const { trainingDuration } = useParams(); // from url (string)
+	const dayMilliseconds = 86400000;
+	const timeToAdd =
+		Number(trainingDuration) * dayMilliseconds - dayMilliseconds; // substract 1 day to account for calendar inaccuracies
 	const availableDates = {
 		min: dayjs(currentCohort?.start_date).format("YYYY/MM/DD"),
 		max: dayjs(
-			new Date(Date.parse(currentCohort?.start_date) + 518400000)
+			new Date(Date.parse(currentCohort?.start_date) + timeToAdd)
 		).format("YYYY/MM/DD"),
 	};
 

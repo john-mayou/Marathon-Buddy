@@ -52,7 +52,7 @@ function App() {
 						<JoinInfoPage />
 					</ProtectedRoute>
 
-					<ProtectedRoute exact path="/join-cohort/:duration">
+					<ProtectedRoute exact path="/join-cohort/:trainingDuration">
 						<JoinCohortPage />
 					</ProtectedRoute>
 
