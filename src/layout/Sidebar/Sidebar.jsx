@@ -14,7 +14,7 @@ function UserTemplate({ PageContent }) {
 					<li onClick={() => history.push("/dashboard")}>
 						Dashboard
 					</li>
-					<li onClick={() => history.push("/join-cohort")}>
+					<li onClick={() => history.push("/join-info")}>
 						Join Next
 					</li>
 					<li onClick={() => history.push("/cohort-history")}>
