@@ -1,9 +1,10 @@
 import "./AppsPage.scss";
 import Sidebar from "../../../../../layout/Sidebar/Sidebar";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function AppsPage() {
+	const dispatch = useDispatch();
 	const user = useSelector((store) => store.user);
 
 	// lets user approve scope for API access
@@ -14,7 +15,15 @@ function AppsPage() {
 			<Sidebar />
 			<section className="connected-apps__main-content">
 				<h1>CONNECTED APPS</h1>
-				<a href={stravaAuthUrl}>Connect to Strava</a>
+				{user.strava_connected ? (
+					<button
+						onClick={() => dispatch({ type: "DISCONNECT_STRAVA" })}
+					>
+						Disconnect
+					</button>
+				) : (
+					<a href={stravaAuthUrl}>Connect to Strava</a>
+				)}
 				<h2>Welcome, {user.email}!</h2>
 				<p>Your ID is: {user.id}</p>
 			</section>
