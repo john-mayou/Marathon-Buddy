@@ -26,17 +26,23 @@ router.get("/", (req, res) => {
 			{ params: tokenExchangeParams }
 		)
 		.then((tokenExchangeResponse) => {
+			// STRAVA_TOKENS INSERTION
 			const stravaTableInsertion = `
 				INSERT INTO "strava_tokens" ("user_id", "refresh_token")
 				VALUES ($1, $2);
 			`;
 
-			const stravaTableValues = [
+			pool.query(stravaTableInsertion, [
 				req.user.id,
 				tokenExchangeResponse.data.refresh_token,
-			];
+			]);
 
-			pool.query(stravaTableInsertion, stravaTableValues);
+			// USERS TABLE UPDATE
+			const userStravaConnectionQuery = `
+				UPDATE "users" SET "strava_connected"=true WHERE "id"=$1;
+			`;
+
+			pool.query(userStravaConnectionQuery, [req.user.id]);
 		})
 		.catch((error) => {
 			console.log("Error exchanging access token", error);
