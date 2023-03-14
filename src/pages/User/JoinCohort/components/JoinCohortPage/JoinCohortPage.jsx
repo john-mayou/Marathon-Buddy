@@ -1,7 +1,7 @@
 import "./JoinCohortPage.scss";
 import Sidebar from "../../../../../layout/Sidebar/Sidebar";
-import MultipleDatesPicker from "@ambiot/material-ui-multiple-dates-picker";
-import Button from "@mui/material/Button";
+import DatePicker from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,20 +11,24 @@ import dayjs from "dayjs";
 function JoinCohortPage() {
 	// redux
 	const dispatch = useDispatch();
-	const user = useSelector((store) => store.user);
-	const cohorts = useSelector((store) => store.cohorts.cohortsReducer);
 	const currentCohort = useSelector(
 		(store) => store.cohorts.currentCohortReducer[0]
 	);
 
 	// local state
-	const [open, setOpen] = useState(false);
-	const [trainingDates, setTrainingDates] = useState([]);
+	const [trainingDates, setTrainingDates] = useState([]); // for calendar state
 	const [trainingMiles, setTrainingMiles] = useState({});
+
+	// variables
+	const availableDates = {
+		min: dayjs(currentCohort?.start_date).format("YYYY/MM/DD"),
+		max: dayjs(
+			new Date(Date.parse(currentCohort?.start_date) + 518400000)
+		).format("YYYY/MM/DD"),
+	};
 
 	// on load
 	useEffect(() => {
-		dispatch({ type: "FETCH_COHORTS" });
 		dispatch({ type: "FETCH_CURRENT_COHORT" });
 	}, []);
 
@@ -32,6 +36,28 @@ function JoinCohortPage() {
 		<div className="join-cohort">
 			<Sidebar />
 			<section className="join-cohort__main-content">
+				<DatePicker
+					multiple
+					value={trainingDates}
+					onChange={(e) => {
+						setTrainingDates(e);
+						setTrainingMiles(
+							e.reduce((obj, date) => {
+								obj[date] = 0;
+								return obj;
+							}, {})
+						);
+					}}
+					format="MMM D"
+					plugins={[<DatePanel />]}
+					render={(value, openCalendar) => {
+						return (
+							<button onClick={openCalendar}>Select Dates</button>
+						);
+					}}
+					minDate={availableDates.min}
+					maxDate={availableDates.max}
+				/>
 				<h1>JOIN COHORT</h1>
 				{<p>{currentCohort?.name}</p>}
 				{
@@ -41,23 +67,6 @@ function JoinCohortPage() {
 					</p>
 				}
 				<p>Duration: 7 days</p>
-				<Button onClick={() => setOpen(!open)}>Selected Dates</Button>
-				<MultipleDatesPicker
-					open={open}
-					selectedDates={[]}
-					onCancel={() => setOpen(false)}
-					onSubmit={(dates) => {
-						setTrainingMiles(
-							dates.reduce((obj, date) => {
-								obj[date.toString()] = 0;
-								return obj;
-							}, {})
-						);
-						setTrainingDates(dates);
-						setOpen(false);
-					}}
-					submitButtonText={"Done"}
-				/>
 				<table>
 					<thead>
 						<tr>
@@ -69,51 +78,42 @@ function JoinCohortPage() {
 						{trainingDates.map((day, i) => {
 							return (
 								<tr key={i}>
-									<td>{day.toString()}</td>
+									<td>
+										{dayjs(new Date(day)).format("MMM D")}
+									</td>
 									<td>
 										<Select
 											label={"Miles"}
 											value={
-												trainingMiles[day.toString()]
+												trainingMiles[
+													dayjs(new Date(day)).format(
+														"MMM D"
+													)
+												]
 											}
 											onChange={(e) => {
 												const newTrainingMiles = {
 													...trainingMiles,
 												};
-												newTrainingMiles[
-													day.toString()
-												] = e.target.value;
+												newTrainingMiles[day] =
+													e.target.value;
 												setTrainingMiles(
 													newTrainingMiles
 												);
 											}}
 										>
-											<MenuItem value={0}>0</MenuItem>
-											<MenuItem value={1}>1</MenuItem>
-											<MenuItem value={2}>2</MenuItem>
-											<MenuItem value={3}>3</MenuItem>
-											<MenuItem value={4}>4</MenuItem>
-											<MenuItem value={5}>5</MenuItem>
-											<MenuItem value={6}>6</MenuItem>
-											<MenuItem value={7}>7</MenuItem>
-											<MenuItem value={8}>8</MenuItem>
-											<MenuItem value={9}>9</MenuItem>
-											<MenuItem value={10}>10</MenuItem>
-											<MenuItem value={11}>11</MenuItem>
-											<MenuItem value={12}>12</MenuItem>
-											<MenuItem value={13}>13</MenuItem>
-											<MenuItem value={14}>14</MenuItem>
-											<MenuItem value={15}>15</MenuItem>
-											<MenuItem value={16}>16</MenuItem>
-											<MenuItem value={17}>17</MenuItem>
-											<MenuItem value={18}>18</MenuItem>
-											<MenuItem value={19}>19</MenuItem>
-											<MenuItem value={20}>20</MenuItem>
-											<MenuItem value={21}>21</MenuItem>
-											<MenuItem value={22}>22</MenuItem>
-											<MenuItem value={23}>23</MenuItem>
-											<MenuItem value={24}>24</MenuItem>
-											<MenuItem value={25}>25</MenuItem>
+											{[...Array(26).keys()].map(
+												(notUsed, i) => {
+													return (
+														<MenuItem
+															key={i}
+															value={i}
+														>
+															{i}
+														</MenuItem>
+													);
+												}
+											)}
 										</Select>
 									</td>
 								</tr>
@@ -121,6 +121,16 @@ function JoinCohortPage() {
 						})}
 					</tbody>
 				</table>
+				<button
+					onClick={() => {
+						Object.keys(trainingMiles).map((date) => {
+							console.log(date, trainingMiles[date]);
+						});
+						console.log("");
+					}}
+				>
+					Submit
+				</button>
 			</section>
 		</div>
 	);
