@@ -11,6 +11,7 @@ const passport = require("./strategies/user.strategy");
 const userRouter = require("./routes/user.router");
 const cohortRouter = require("./routes/cohort.router");
 const stravaRouter = require("./routes/strava.router");
+const joinRouter = require("./routes/join.router");
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -27,6 +28,7 @@ app.use(passport.session());
 app.use("/api/user", userRouter);
 app.use("/api/cohort", cohortRouter);
 app.use("/api/strava-auth", stravaRouter);
+app.use("/api/join", joinRouter);
 
 // Serve static files
 app.use(express.static("build"));

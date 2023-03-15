@@ -53,7 +53,7 @@ function JoinCohortPage() {
 							}, {})
 						);
 					}}
-					format="MMM D"
+					format="YYYY-MM-DD"
 					plugins={[<DatePanel />]}
 					render={(value, openCalendar) => {
 						return (
@@ -92,7 +92,7 @@ function JoinCohortPage() {
 											value={
 												trainingMiles[
 													dayjs(new Date(day)).format(
-														"MMM D"
+														"YYYY-MM-DD"
 													)
 												]
 											}
@@ -128,10 +128,10 @@ function JoinCohortPage() {
 				</table>
 				<button
 					onClick={() => {
-						Object.keys(trainingMiles).map((date) => {
-							console.log(date, trainingMiles[date]);
+						dispatch({
+							type: "ADD_USER_TO_COHORT",
+							payload: trainingMiles,
 						});
-						console.log("");
 					}}
 				>
 					Submit
