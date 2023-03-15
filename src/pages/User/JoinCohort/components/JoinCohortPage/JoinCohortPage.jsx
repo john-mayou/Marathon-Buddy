@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
+import axios from "axios";
 
 function JoinCohortPage() {
 	// redux
@@ -135,6 +136,14 @@ function JoinCohortPage() {
 								cohort_id: currentCohort.id,
 							},
 						});
+						axios
+							.post("/api/stripe/create-checkout-session")
+							.then((response) => {
+								window.location = response.data.url;
+							})
+							.catch((error) => {
+								console.log(error);
+							});
 					}}
 				>
 					Submit
