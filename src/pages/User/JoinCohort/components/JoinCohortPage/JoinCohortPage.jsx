@@ -130,7 +130,10 @@ function JoinCohortPage() {
 					onClick={() => {
 						dispatch({
 							type: "ADD_USER_TO_COHORT",
-							payload: trainingMiles,
+							payload: {
+								dates: trainingMiles,
+								cohort_id: currentCohort.id,
+							},
 						});
 					}}
 				>
