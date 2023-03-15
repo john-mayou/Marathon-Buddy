@@ -129,15 +129,18 @@ function JoinCohortPage() {
 				</table>
 				<button
 					onClick={() => {
-						dispatch({
-							type: "ADD_USER_TO_COHORT",
-							payload: {
-								dates: trainingMiles,
-								cohort_id: currentCohort.id,
-							},
-						});
+						// dispatch({
+						// 	type: "ADD_USER_TO_COHORT",
+						// 	payload: {
+						// 		dates: trainingMiles,
+						// 		cohort_id: currentCohort.id,
+						// 	},
+						// });
 						axios
-							.post("/api/stripe/create-checkout-session")
+							.post("/api/stripe/create-checkout-session", {
+								dates: JSON.stringify(trainingMiles),
+								cohort_id: currentCohort.id,
+							})
 							.then((response) => {
 								window.location = response.data.url;
 							})

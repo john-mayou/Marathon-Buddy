@@ -2,27 +2,38 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_TEST_LIVE_KEY);
+const {
+	rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
 
 /**
  * This is the endpoint that creates the stripe url that I then send back to the client
  */
-router.post("/create-checkout-session", async (req, res) => {
-	try {
-		const session = await stripe.checkout.sessions.create({
-			line_items: [{ price: process.env.PRODUCT_TEST_KEY }],
-			mode: "subscription",
-			// success.html?session_id={CHECKOUT_SESSION_ID}
-			success_url: "http://localhost:3000/?success=true",
-			cancel_url: "http://localhost:3000/?canceled=true",
-		});
+router.post(
+	"/create-checkout-session",
+	rejectUnauthenticated,
+	async (req, res) => {
+		const metadata = req.body;
+		metadata.user_id = req.user.id;
 
-		res.status(202);
-		res.send({ url: session.url }); // client will re-route the window to this url
-	} catch (error) {
-		console.log(error);
-		res.status(400);
+		try {
+			const session = await stripe.checkout.sessions.create({
+				line_items: [{ price: process.env.PRODUCT_TEST_KEY }],
+				mode: "subscription",
+				// success.html?session_id={CHECKOUT_SESSION_ID}
+				success_url: "http://localhost:3000/?success=true",
+				cancel_url: "http://localhost:3000/?canceled=true",
+				metadata,
+			});
+
+			res.status(202);
+			res.send({ url: session.url }); // client will re-route the window to this url
+		} catch (error) {
+			console.log(error);
+			res.status(400);
+		}
 	}
-});
+);
 
 /**
  * Stripe will notify me at this endpoint when an event happens on my account
@@ -77,6 +88,39 @@ router.post("/webhook", async (req, res) => {
 				},
 			],
 		});
+
+		// INSERTING CHECKOUT METADATA INTO DATABASE
+		let { dates, cohort_id, user_id } = checkoutSession.metadata;
+		dates = JSON.parse(dates); // object was stringified before sending
+
+		const joinCohortInsertion = `
+			INSERT INTO "users_cohorts" ("user_id", "cohort_id")
+			VALUES ($1, $2) RETURNING "id";
+		`;
+
+		pool.query(joinCohortInsertion, [user_id, cohort_id])
+			.then((result) => {
+				const createdCohortInstance = result.rows[0].id; // from RETURNING in last query
+
+				const plannedTrainingsInsertion = `
+					INSERT INTO "training_planned" ("users_cohorts_id", "date", "miles_planned")
+					VALUES ($1, $2, $3);
+				`;
+
+				Promise.all(
+					Object.keys(dates).map((date) => {
+						pool.query(plannedTrainingsInsertion, [
+							createdCohortInstance,
+							date,
+							dates[date], // number miles
+						]);
+					})
+				);
+			})
+			.catch((error) => {
+				console.log(`Error making query ${joinCohortInsertion}`, error);
+				res.sendStatus(500);
+			});
 	}
 
 	res.status(200).json({ success: true });
