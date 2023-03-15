@@ -9,36 +9,39 @@ import GoalCard from "../GoalCard/GoalCard";
 import RedTrackPic from "../../../../../assets/images/Track-Close-Up-Red.jpg";
 import BlackTrackPic from "../../../../../assets/images/Track-Close-Up-Black.jpg";
 
-//
-import { useHistory } from "react-router-dom";
-
 function JoinInfoPage() {
-	const history = useHistory();
-
 	const goalOptionsList = [
 		{
 			image: RedTrackPic,
-			imageText: "20M",
-			title: "20 Miles Per Week",
-			description: "The usual suspects into the universe we go",
+			imageText: "1W",
+			title: "Lucky Number 7",
+			description:
+				"This is just copy, lets figure something else to put in here",
+			durationParam: 7,
 		},
 		{
 			image: BlackTrackPic,
-			imageText: "40M",
-			title: "40 Miles Per Week",
-			description: "The usual suspects into the universe we go",
+			imageText: "2W",
+			title: "Build The Habit",
+			description:
+				"This is just copy, lets figure something else to put in here",
+			durationParam: 14,
 		},
 		{
 			image: RedTrackPic,
-			imageText: "60M",
-			title: "60 Miles Per Week",
-			description: "The usual suspects into the universe we go",
+			imageText: "1M",
+			title: "Running To The Bank",
+			description:
+				"This is just copy, lets figure something else to put in here",
+			durationParam: 28,
 		},
 		{
 			image: BlackTrackPic,
-			imageText: "Add",
-			title: "Custom Plan",
-			description: "The usual suspects into the universe we go",
+			imageText: "2M",
+			title: "To The Pro's We Go",
+			description:
+				"This is just copy, lets figure something else to put in here",
+			durationParam: 56,
 		},
 	];
 
@@ -82,14 +85,12 @@ function JoinInfoPage() {
 								imageText={goal.imageText}
 								title={goal.title}
 								description={goal.description}
+								durationParam={goal.durationParam}
 							/>
 						);
 					})}
 				</div>
 			</section>
-			<button onClick={() => history.push("/join-cohort")}>
-				Sign Up
-			</button>
 		</div>
 	);
 }
