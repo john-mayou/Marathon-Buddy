@@ -18,10 +18,10 @@ import HistoryPage from "../../pages/User/History/components/HistoryPage/History
 import AppsPage from "../../pages/User/Apps/components/AppsPage/AppsPage";
 
 // Admin
-import AdminPage from "../../pages/Admin/components/AdminPage/AdminPage";
+import AdminPage from "../../pages/Admin/AdminPage/AdminPage";
 
 // Info Pages / Landing
-import HomePage from "../../pages/Home/components/HomePage/HomePage";
+import HomePage from "../../pages/Home/HomePage/HomePage";
 
 // Login Pages
 import LoginPage from "../../pages/Login/LoginPage/LoginPage";

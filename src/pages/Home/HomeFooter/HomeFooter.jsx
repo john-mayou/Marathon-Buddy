@@ -1,6 +1,6 @@
 import "./HomeFooter.scss";
-import SignUpButton from "../../../../components/SignUpButton/SignUpButton";
-import HappyWoman from "../../../../assets/images/Happy-Woman.jpg";
+import SignUpButton from "../../../components/SignUpButton/SignUpButton";
+import HappyWoman from "../../../assets/images/Happy-Woman.jpg";
 
 function HomeFooter() {
 	return (

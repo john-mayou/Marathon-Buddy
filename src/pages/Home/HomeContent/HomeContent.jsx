@@ -1,6 +1,6 @@
 import "./HomeContent.scss";
-import ContentSideImageBlackTrack from "../../../../assets/images/Track-Close-Up-Black.jpg";
-import SectionLabel from "../../../../components/SectionLabel/SectionLabel";
+import ContentSideImageBlackTrack from "../../../assets/images/Track-Close-Up-Black.jpg";
+import SectionLabel from "../../../components/SectionLabel/SectionLabel";
 
 function HomeContent() {
 	return (
