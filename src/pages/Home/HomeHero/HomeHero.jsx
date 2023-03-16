@@ -1,5 +1,5 @@
 import "./HomeHero.scss";
-import SignUpButton from "../../../../components/SignUpButton/SignUpButton";
+import SignUpButton from "../../../components/SignUpButton/SignUpButton";
 
 function HomeHero() {
 	return (

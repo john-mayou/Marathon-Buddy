@@ -1,5 +1,5 @@
 import "./HistoryPage.scss";
-import Sidebar from "../../../../../layout/Sidebar/Sidebar";
+import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import { useSelector } from "react-redux";
 
 function HistoryPage() {

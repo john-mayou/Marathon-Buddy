@@ -11,21 +11,21 @@ import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "../../utils/ProtectedRoute";
 
 // User Pages
-import DashboardPage from "../../pages/User/Dashboard/components/DashboardPage/DashboardPage";
-import JoinInfoPage from "../../pages/User/JoinInfo/components/JoinInfoPage/JoinInfoPage";
-import JoinCohortPage from "../../pages/User/JoinCohort/components/JoinCohortPage/JoinCohortPage";
-import HistoryPage from "../../pages/User/History/components/HistoryPage/HistoryPage";
-import AppsPage from "../../pages/User/Apps/components/AppsPage/AppsPage";
+import DashboardPage from "../../pages/User/Dashboard/DashboardPage/DashboardPage";
+import JoinInfoPage from "../../pages/User/JoinInfo/JoinInfoPage/JoinInfoPage";
+import JoinCohortPage from "../../pages/User/JoinCohort/JoinCohortPage/JoinCohortPage";
+import HistoryPage from "../../pages/User/History/HistoryPage/HistoryPage";
+import AppsPage from "../../pages/User/Apps/AppsPage/AppsPage";
 
 // Admin
-import AdminPage from "../../pages/Admin/components/AdminPage/AdminPage";
+import AdminPage from "../../pages/Admin/AdminPage/AdminPage";
 
 // Info Pages / Landing
-import HomePage from "../../pages/Home/components/HomePage/HomePage";
+import HomePage from "../../pages/Home/HomePage/HomePage";
 
 // Login Pages
-import LoginPage from "../../pages/Login/Login/components/LoginPage/LoginPage";
-import RegisterPage from "../../pages/Login/Register/components/RegisterPage/RegisterPage";
+import LoginPage from "../../pages/Login/LoginPage/LoginPage";
+import RegisterPage from "../../pages/Login/RegisterPage/RegisterPage";
 
 import "./App.scss";
 

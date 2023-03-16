@@ -1,5 +1,5 @@
 import "./JoinCohortPage.scss";
-import Sidebar from "../../../../../layout/Sidebar/Sidebar";
+import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import DatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import Select from "@mui/material/Select";

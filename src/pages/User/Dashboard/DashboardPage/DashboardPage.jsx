@@ -1,8 +1,7 @@
 import "./DashboardPage.scss";
 import React from "react";
 import { useSelector } from "react-redux";
-
-import Sidebar from "../../../../../layout/Sidebar/Sidebar";
+import Sidebar from "../../../../layout/Sidebar/Sidebar";
 
 function DashboardPage() {
 	const user = useSelector((store) => store.user);
