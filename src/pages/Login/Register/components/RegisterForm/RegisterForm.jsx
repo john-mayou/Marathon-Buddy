@@ -10,11 +10,17 @@ import Button from "@mui/material/Button";
 function RegisterForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [showMessage, setShowMessage] = useState(false);
 	const errors = useSelector((store) => store.errors);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const registerUser = () => {
+		if (!email || !password) {
+			alert("Please enter a username and password");
+			return;
+		}
+
 		dispatch({
 			type: "REGISTER",
 			payload: {
@@ -22,6 +28,9 @@ function RegisterForm() {
 				password,
 			},
 		});
+		dispatch({ type: "SEND_VERIFICATION_EMAIL", payload: email });
+
+		setShowMessage(true);
 	}; // end registerUser
 
 	return (
@@ -32,8 +41,9 @@ function RegisterForm() {
 					{errors.registrationMessage}
 				</h3>
 			)}
+			{showMessage && <p>Please check your email to verify</p>}
 			<TextField
-				type="email"
+				type="text"
 				label="Email"
 				variant="outlined"
 				value={email}

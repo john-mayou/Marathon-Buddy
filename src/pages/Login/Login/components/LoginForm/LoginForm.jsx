@@ -11,6 +11,7 @@ function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const errors = useSelector((store) => store.errors);
+	const user = useSelector((store) => store.user);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -36,8 +37,22 @@ function LoginForm() {
 					{errors.loginMessage}
 				</h3>
 			)}
+			{!user.email_verified && (
+				<>
+					<p style={{ margin: "0" }}>Please verify your email</p>
+					<Button
+						variant="outlined"
+						sx={{ width: "100%" }}
+						onClick={() =>
+							dispatch({ type: "SEND_VERIFICATION_EMAIL" })
+						}
+					>
+						Re-Send Verification Email
+					</Button>
+				</>
+			)}
 			<TextField
-				type="email"
+				type="text"
 				label="Email"
 				variant="outlined"
 				value={email}

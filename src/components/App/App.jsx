@@ -69,11 +69,15 @@ function App() {
 					</ProtectedRoute>
 
 					<Route exact path="/login">
-						{user.id ? <Redirect to="/dashboard" /> : <LoginPage />}
+						{user.id && user.email_verified ? (
+							<Redirect to="/dashboard" />
+						) : (
+							<LoginPage />
+						)}
 					</Route>
 
 					<Route exact path="/registration">
-						{user.id ? (
+						{user.email_verified ? (
 							<Redirect to="/dashboard" />
 						) : (
 							<RegisterPage />
