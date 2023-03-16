@@ -1,9 +1,9 @@
 import { put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 
-function* sendVerificationEmail() {
+function* sendVerificationEmail(action) {
 	try {
-		yield axios.post("/api/verify-email");
+		yield axios.post(`/api/verify-email/${action.payload}`);
 	} catch (error) {
 		console.log("Error sending verification email", error);
 	}

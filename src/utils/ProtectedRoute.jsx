@@ -20,19 +20,6 @@ function ProtectedRoute({ component, children, ...props }) {
 	// or as a child component.
 	const ProtectedComponent = component || (() => children);
 
-	const renderPages = (user) => {
-		if (user.id && user.email_verified) {
-			// If the user is logged in, show the protected component
-			return <ProtectedComponent />;
-		} else if (user.id && !user.email_verified) {
-			// If the user is loggin in, but their email is not verified
-			return <LoginPage showVerifyEmail={true} />;
-		} else {
-			// Otherwise, redirect to the Loginpage
-			return <LoginPage showVerifyEmail={false} />;
-		}
-	};
-
 	// We return a Route component that gets added to our list of routes
 	return (
 		<Route
@@ -40,7 +27,13 @@ function ProtectedRoute({ component, children, ...props }) {
 			// are now passed along to the 'Route' Component
 			{...props}
 		>
-			{renderPages(user)}
+			{user.id && user.email_verified ? (
+				// If the user is logged in, show the protected component
+				<ProtectedComponent />
+			) : (
+				// Otherwise, redirect to the Loginpage
+				<LoginPage />
+			)}
 		</Route>
 	);
 }

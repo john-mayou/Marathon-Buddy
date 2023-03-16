@@ -32,8 +32,8 @@ router.get("/confirmation/:email/:code", async (req, res) => {
 	res.status(301).redirect("http://localhost:3000/login");
 });
 
-router.post("/", async (req, res) => {
-	const userEmail = req.user.email;
+router.post("/:email", async (req, res) => {
+	const userEmail = req.params.email;
 	const randomCode = crypto.randomBytes(16).toString("hex");
 	const expirationTimestamp = Date.now() + 3600;
 
