@@ -3,10 +3,13 @@ import "./LoginPage.scss";
 import LoginTemplate from "../../../../../layout/LoginTemplate/LoginTemplate";
 import LoginForm from "../LoginForm/LoginForm";
 
-function LoginPage() {
+function LoginPage({ showVerifyEmail }) {
 	return (
 		<div>
-			<LoginTemplate FormElement={LoginForm} />
+			<LoginTemplate
+				FormElement={LoginForm}
+				showVerifyEmail={showVerifyEmail}
+			/>
 		</div>
 	);
 }

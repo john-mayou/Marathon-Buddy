@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-function LoginForm() {
+function LoginForm({ showVerifyEmail }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const errors = useSelector((store) => store.errors);
@@ -35,6 +35,20 @@ function LoginForm() {
 				<h3 className="alert" role="alert">
 					{errors.loginMessage}
 				</h3>
+			)}
+			{showVerifyEmail && (
+				<>
+					<p style={{ margin: "0" }}>Please verify your email</p>
+					<Button
+						variant="outlined"
+						sx={{ width: "100%" }}
+						onClick={() =>
+							dispatch({ type: "SEND_VERIFICATION_EMAIL" })
+						}
+					>
+						Re-send Verification Email
+					</Button>
+				</>
 			)}
 			<TextField
 				type="email"

@@ -5,6 +5,7 @@ import userSaga from "./user.saga";
 import cohortSaga from "./cohorts.saga";
 import stravaSaga from "./strava.saga";
 import joinSaga from "./join.saga";
+import verifyEmailSaga from "./verify-email";
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
 		cohortSaga(),
 		stravaSaga(),
 		joinSaga(),
+		verifyEmailSaga(),
 	]);
 }

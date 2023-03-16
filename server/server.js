@@ -12,7 +12,7 @@ const userRouter = require("./routes/user.router");
 const cohortRouter = require("./routes/cohort.router");
 const stravaRouter = require("./routes/strava.router");
 const stripeRouter = require("./routes/stripe.router");
-const emailVerificationRouter = require("./routes/email-verification");
+const emailVerificationRouter = require("./routes/email-verification.router");
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
