@@ -12,6 +12,7 @@ const userRouter = require("./routes/user.router");
 const cohortRouter = require("./routes/cohort.router");
 const stravaRouter = require("./routes/strava.router");
 const stripeRouter = require("./routes/stripe.router");
+const emailVerificationRouter = require("./routes/email-verification");
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,6 +36,7 @@ app.use("/api/user", userRouter);
 app.use("/api/cohort", cohortRouter);
 app.use("/api/strava-auth", stravaRouter);
 app.use("/api/stripe", stripeRouter);
+app.use("/api/verify-email", emailVerificationRouter);
 
 // Serve static files
 app.use(express.static("build"));

@@ -151,6 +151,20 @@ function JoinCohortPage() {
 				>
 					Submit
 				</button>
+				<button
+					onClick={() => {
+						axios
+							.get("/api/verify-email")
+							.then(() => {
+								console.log("did the thing");
+							})
+							.catch((error) => {
+								console.log(error);
+							});
+					}}
+				>
+					SEND EMAIL
+				</button>
 			</section>
 		</div>
 	);
