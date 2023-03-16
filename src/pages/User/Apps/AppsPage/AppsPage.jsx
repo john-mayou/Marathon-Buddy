@@ -1,5 +1,5 @@
 import "./AppsPage.scss";
-import Sidebar from "../../../../../layout/Sidebar/Sidebar";
+import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 

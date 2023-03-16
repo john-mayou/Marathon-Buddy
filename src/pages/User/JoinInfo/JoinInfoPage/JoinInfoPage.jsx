@@ -1,13 +1,12 @@
 import "./JoinInfoPage.scss";
 
 // components
-import Sidebar from "../../../../../layout/Sidebar/Sidebar";
-import SectionLabel from "../../../../../components/SectionLabel/SectionLabel";
+import SectionLabel from "../../../../components/SectionLabel/SectionLabel";
 import GoalCard from "../GoalCard/GoalCard";
 
 // images
-import RedTrackPic from "../../../../../assets/images/Track-Close-Up-Red.jpg";
-import BlackTrackPic from "../../../../../assets/images/Track-Close-Up-Black.jpg";
+import RedTrackPic from "../../../../assets/images/Track-Close-Up-Red.jpg";
+import BlackTrackPic from "../../../../assets/images/Track-Close-Up-Black.jpg";
 
 function JoinInfoPage() {
 	const goalOptionsList = [
