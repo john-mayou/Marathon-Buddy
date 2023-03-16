@@ -1,4 +1,5 @@
-import "./LoginForm.scss";
+import "./LoginPage.scss";
+import LoginTemplate from "../../../layout/LoginTemplate/LoginTemplate";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +7,14 @@ import { useHistory } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+
+function LoginPage() {
+	return (
+		<div>
+			<LoginTemplate FormElement={LoginForm} />
+		</div>
+	);
+}
 
 function LoginForm() {
 	const [email, setEmail] = useState("");
@@ -37,7 +46,7 @@ function LoginForm() {
 					{errors.loginMessage}
 				</h3>
 			)}
-			{!user.email_verified && (
+			{user.id && !user.email_verified && (
 				<>
 					<p style={{ margin: "0" }}>Please verify your email</p>
 					<Button
@@ -92,4 +101,4 @@ function LoginForm() {
 	);
 }
 
-export default LoginForm;
+export default LoginPage;

@@ -1,4 +1,5 @@
-import "./RegisterForm.scss";
+import "./RegisterPage.scss";
+import LoginTemplate from "../../../layout/LoginTemplate/LoginTemplate";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +7,14 @@ import { useHistory } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+
+function RegisterPage() {
+	return (
+		<div>
+			<LoginTemplate FormElement={RegisterForm} />
+		</div>
+	);
+}
 
 function RegisterForm() {
 	const [email, setEmail] = useState("");
@@ -77,4 +86,4 @@ function RegisterForm() {
 	);
 }
 
-export default RegisterForm;
+export default RegisterPage;

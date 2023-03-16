@@ -24,8 +24,8 @@ import AdminPage from "../../pages/Admin/components/AdminPage/AdminPage";
 import HomePage from "../../pages/Home/components/HomePage/HomePage";
 
 // Login Pages
-import LoginPage from "../../pages/Login/Login/components/LoginPage/LoginPage";
-import RegisterPage from "../../pages/Login/Register/components/RegisterPage/RegisterPage";
+import LoginPage from "../../pages/Login/LoginPage/LoginPage";
+import RegisterPage from "../../pages/Login/RegisterPage/RegisterPage";
 
 import "./App.scss";
 
