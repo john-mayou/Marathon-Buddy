@@ -129,13 +129,6 @@ function JoinCohortPage() {
 				</table>
 				<button
 					onClick={() => {
-						// dispatch({
-						// 	type: "ADD_USER_TO_COHORT",
-						// 	payload: {
-						// 		dates: trainingMiles,
-						// 		cohort_id: currentCohort.id,
-						// 	},
-						// });
 						axios
 							.post("/api/stripe/create-checkout-session", {
 								dates: JSON.stringify(trainingMiles),
@@ -150,20 +143,6 @@ function JoinCohortPage() {
 					}}
 				>
 					Submit
-				</button>
-				<button
-					onClick={() => {
-						axios
-							.get("/api/verify-email")
-							.then(() => {
-								console.log("did the thing");
-							})
-							.catch((error) => {
-								console.log(error);
-							});
-					}}
-				>
-					SEND EMAIL
 				</button>
 			</section>
 		</div>
