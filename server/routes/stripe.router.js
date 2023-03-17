@@ -127,37 +127,4 @@ router.post("/webhook", async (req, res) => {
 	res.status(200).json({ success: true });
 });
 
-// const joinCohortInsertion = `
-// 	INSERT INTO "users_cohorts" ("user_id", "cohort_id")
-// 	VALUES ($1, $2) RETURNING "id";
-// `;
-
-// 	pool.query(joinCohortInsertion, [user_id, cohort_id])
-// 		.then((result) => {
-// 			const createdCohortInstance = result.rows[0].id; // from RETURNING in last query
-
-// 			const plannedTrainingsInsertion = `
-// 				INSERT INTO "training_planned" ("users_cohorts_id", "date", "miles_planned")
-// 				VALUES ($1, $2, $3);
-// 			`;
-
-// 			Promise.all(
-// 				Object.keys(dates).map((date) => {
-// 					pool.query(plannedTrainingsInsertion, [
-// 						createdCohortInstance,
-// 						date,
-// 						dates[date], // number miles
-// 					]);
-// 				})
-// 			);
-// 		})
-// 		.catch((error) => {
-// 			console.log(`Error making query ${joinCohortInsertion}`, error);
-// 			res.sendStatus(500);
-// 		});
-// }
-
-// 	res.status(200).json({ success: true });
-// });
-
 module.exports = router;
