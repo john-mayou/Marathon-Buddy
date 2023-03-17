@@ -29,10 +29,11 @@ router.get("/", async (req, res) => {
 			{ params: tokenExchangeParams }
 		);
 		// Second: insert refresh token into database
-		const tokenInsertion = `INSERT INTO "strava_tokens" ("user_id", "refresh_token") VALUES ($1, $2);`;
+		const tokenInsertion = `INSERT INTO "strava_tokens" ("user_id", "refresh_token", "access_token") VALUES ($1, $2, $3);`;
 		await connection.query(tokenInsertion, [
 			userId,
 			exchangeResponse.data.refresh_token,
+			exchangeResponse.data.access_token,
 		]);
 		// Third: updates user "strava_connected" flag to false
 		const stravaToggleQuery = `UPDATE "users" SET "strava_connected"=true WHERE "id"=$1;`;
