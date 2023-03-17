@@ -24,7 +24,9 @@ function LoginForm() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const login = () => {
+	const login = (e) => {
+		e.preventDefault();
+
 		if (email && password) {
 			dispatch({
 				type: "LOGIN",
@@ -39,7 +41,7 @@ function LoginForm() {
 	}; // end login
 
 	return (
-		<form className="login-form">
+		<form className="login-form" onSubmit={login}>
 			<h2 className="login-form__header">Welcome Back</h2>
 			{errors.loginMessage && (
 				<h3 className="alert" role="alert">
@@ -92,12 +94,7 @@ function LoginForm() {
 					Forgot Password
 				</a>
 			</div>
-			<Button
-				type="submit"
-				variant="contained"
-				sx={{ width: "100%" }}
-				onClick={login}
-			>
+			<Button type="submit" variant="contained" sx={{ width: "100%" }}>
 				Sign In
 			</Button>
 		</form>

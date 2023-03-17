@@ -24,7 +24,9 @@ function RegisterForm() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const registerUser = () => {
+	const registerUser = (e) => {
+		e.preventDefault();
+
 		if (!email || !password) {
 			alert("Please enter a username and password");
 			return;
@@ -43,7 +45,7 @@ function RegisterForm() {
 	}; // end registerUser
 
 	return (
-		<form className="register-form">
+		<form className="register-form" onSubmit={registerUser}>
 			<h2>Sign Up</h2>
 			{errors.registrationMessage && (
 				<h3 className="alert" role="alert">
@@ -67,12 +69,7 @@ function RegisterForm() {
 				onChange={(event) => setPassword(event.target.value)}
 				sx={{ width: "100%" }}
 			/>
-			<Button
-				type="submit"
-				variant="contained"
-				sx={{ width: "100%" }}
-				onClick={registerUser}
-			>
+			<Button type="submit" variant="contained" sx={{ width: "100%" }}>
 				Sign Up
 			</Button>
 			<Button
