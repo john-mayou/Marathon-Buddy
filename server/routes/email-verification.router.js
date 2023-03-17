@@ -10,26 +10,36 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 router.get("/confirmation/:email/:code", async (req, res) => {
 	const { email, code } = req.params;
 
-	const doesCodeExistQuery = `
-		SELECT EXISTS(SELECT 1 FROM "email_otps" WHERE "email"=$1 AND "code"=$2) AS "exists";
-	`;
+	const connection = await pool.connect();
 
-	await pool
-		.query(doesCodeExistQuery, [email, code])
-		.then((result) => {
-			const changeUserToVerified = `
-				UPDATE "users" SET "email_verified"=true WHERE "email"=$1;
-			`;
+	try {
+		await connection.query("BEGIN");
+		// First check if the email and code exists in the otps table
+		const doesCodeExistQuery = `
+			SELECT EXISTS(SELECT 1 FROM "email_otps" WHERE "email"=$1 AND "code"=$2) AS "exists";
+		`;
+		const existsResult = await pool.query(doesCodeExistQuery, [
+			email,
+			code,
+		]);
+		const exists = existsResult.rows[0].exists;
 
-			if (result.rows[0].exists) {
-				pool.query(changeUserToVerified, [email]);
-			}
-		})
-		.catch((error) => {
-			console.log("Error with checking if email code exists", error);
-		});
+		// Second if first query result is true, toggle users "email_verified"
+		const changeUserToVerified = `UPDATE "users" SET "email_verified"=true WHERE "email"=$1;`;
+		if (exists) {
+			await pool.query(changeUserToVerified, [email]);
+		}
 
-	res.status(301).redirect("http://localhost:3000/login");
+		// end
+		await connection.query("COMMIT");
+		res.status(200).redirect("http://localhost:3000/#/login");
+	} catch (error) {
+		await connection.query("ROLLBACK");
+		console.log("Transaction Error - Rolling back new account", error);
+		res.status(500).redirect("http://localhost:3000/#/login");
+	} finally {
+		connection.release();
+	}
 });
 
 router.post("/:email", async (req, res) => {
