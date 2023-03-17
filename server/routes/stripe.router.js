@@ -30,7 +30,7 @@ router.post(
 			res.send({ url: session.url }); // client will re-route the window to this url
 		} catch (error) {
 			console.log(error);
-			res.status(400);
+			res.sendStatus(400);
 		}
 	}
 );
@@ -92,38 +92,72 @@ router.post("/webhook", async (req, res) => {
 		// INSERTING CHECKOUT METADATA INTO DATABASE
 		let { dates, cohort_id, user_id } = checkoutSession.metadata;
 		dates = JSON.parse(dates); // object was stringified before sending
+		const connection = await pool.connect();
 
-		const joinCohortInsertion = `
-			INSERT INTO "users_cohorts" ("user_id", "cohort_id")
-			VALUES ($1, $2) RETURNING "id";
-		`;
+		try {
+			await connection.query("BEGIN");
+			// First: insert instance of user joining cohort in "users_cohorts"
+			const joinCohortInsertion = `INSERT INTO "users_cohorts" ("user_id", "cohort_id") VALUES ($1, $2) RETURNING "id";`;
+			const joinResponse = await connection.query(joinCohortInsertion, [
+				user_id,
+				cohort_id,
+			]);
+			// Second:
+			const joinedCohortId = joinResponse.rows[0].id; // from RETURNING in last query
+			const trainingsInsertion = `INSERT INTO "training_planned" ("users_cohorts_id", "date", "miles_planned") VALUES ($1, $2, $3);`;
+			await Promise.all(
+				Object.keys(dates).map((date) => {
+					connection.query(trainingsInsertion, [
+						joinedCohortId,
+						date,
+						dates[date], // number miles
+					]);
+				})
+			);
 
-		pool.query(joinCohortInsertion, [user_id, cohort_id])
-			.then((result) => {
-				const createdCohortInstance = result.rows[0].id; // from RETURNING in last query
-
-				const plannedTrainingsInsertion = `
-					INSERT INTO "training_planned" ("users_cohorts_id", "date", "miles_planned")
-					VALUES ($1, $2, $3);
-				`;
-
-				Promise.all(
-					Object.keys(dates).map((date) => {
-						pool.query(plannedTrainingsInsertion, [
-							createdCohortInstance,
-							date,
-							dates[date], // number miles
-						]);
-					})
-				);
-			})
-			.catch((error) => {
-				console.log(`Error making query ${joinCohortInsertion}`, error);
-				res.sendStatus(500);
-			});
+			await connection.query("COMMIT");
+		} catch (error) {
+			await connection.query("ROLLBACK");
+			console.log(`Transaction Error - Rolling back new account`, error);
+			res.sendStatus(500);
+		} finally {
+			connection.release();
+		}
 	}
-
 	res.status(200).json({ success: true });
 });
+
+// const joinCohortInsertion = `
+// 	INSERT INTO "users_cohorts" ("user_id", "cohort_id")
+// 	VALUES ($1, $2) RETURNING "id";
+// `;
+
+// 	pool.query(joinCohortInsertion, [user_id, cohort_id])
+// 		.then((result) => {
+// 			const createdCohortInstance = result.rows[0].id; // from RETURNING in last query
+
+// 			const plannedTrainingsInsertion = `
+// 				INSERT INTO "training_planned" ("users_cohorts_id", "date", "miles_planned")
+// 				VALUES ($1, $2, $3);
+// 			`;
+
+// 			Promise.all(
+// 				Object.keys(dates).map((date) => {
+// 					pool.query(plannedTrainingsInsertion, [
+// 						createdCohortInstance,
+// 						date,
+// 						dates[date], // number miles
+// 					]);
+// 				})
+// 			);
+// 		})
+// 		.catch((error) => {
+// 			console.log(`Error making query ${joinCohortInsertion}`, error);
+// 			res.sendStatus(500);
+// 		});
+// }
+
+// 	res.status(200).json({ success: true });
+// });
 
 module.exports = router;
