@@ -77,7 +77,7 @@ function App() {
 					</Route>
 
 					<Route exact path="/registration">
-						{user.email_verified ? (
+						{user.id && user.email_verified ? (
 							<Redirect to="/dashboard" />
 						) : (
 							<RegisterPage />

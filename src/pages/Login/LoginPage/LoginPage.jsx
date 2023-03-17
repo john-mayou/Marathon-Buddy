@@ -53,7 +53,10 @@ function LoginForm() {
 						variant="outlined"
 						sx={{ width: "100%" }}
 						onClick={() =>
-							dispatch({ type: "SEND_VERIFICATION_EMAIL" })
+							dispatch({
+								type: "SEND_VERIFICATION_EMAIL",
+								payload: user.email,
+							})
 						}
 					>
 						Re-Send Verification Email
