@@ -14,7 +14,7 @@ router.get("/confirmation/:email/:code", async (req, res) => {
 
 	try {
 		await connection.query("BEGIN");
-		// First check if the email and code exists in the otps table
+		// First: check if the email and code exists in the otps table
 		const doesCodeExistQuery = `
 			SELECT EXISTS(SELECT 1 FROM "email_otps" WHERE "email"=$1 AND "code"=$2) AS "exists";
 		`;
@@ -24,7 +24,7 @@ router.get("/confirmation/:email/:code", async (req, res) => {
 		]);
 		const exists = existsResult.rows[0].exists;
 
-		// Second if first query result is true, toggle users "email_verified"
+		// Second: if first query result is true, toggle users "email_verified"
 		const changeUserToVerified = `UPDATE "users" SET "email_verified"=true WHERE "email"=$1;`;
 		if (exists) {
 			await pool.query(changeUserToVerified, [email]);
@@ -61,24 +61,26 @@ router.post("/:email", async (req, res) => {
 			"\n\nThank You!\n",
 	};
 
-	const codeInsertion = `
-		INSERT INTO "email_otps" ("email", "code")
-		VALUES ($1, $2);
-	`;
+	const connection = await pool.connect();
 
-	pool.query(codeInsertion, [userEmail, randomCode])
-		.then(async () => {
-			try {
-				await sgMail.send(msg);
-				res.sendStatus(201);
-			} catch (error) {
-				console.log("Error sending email to user", error);
-			}
-		})
-		.catch((error) => {
-			console.log(`Error with insertion ${codeInsertion}`, error);
-			res.sendStatus(500);
-		});
+	try {
+		await connection.query("BEGIN");
+		// insert created token and email into otps table
+		const codeInsertion = `INSERT INTO "email_otps" ("email", "code") VALUES ($1, $2);`;
+		await pool.query(codeInsertion, [userEmail, randomCode]);
+
+		// then send the user an email with the verification link
+		await sgMail.send(msg);
+
+		await connection.query("COMMIT");
+		res.status(201);
+	} catch (error) {
+		await connection.query("ROLLBACK");
+		console.log("Transaction Error - Rolling back new account", error);
+		res.status(500);
+	} finally {
+		connection.release();
+	}
 });
 
 module.exports = router;
