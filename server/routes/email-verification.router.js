@@ -45,11 +45,10 @@ router.get("/confirmation/:email/:code", async (req, res) => {
 router.post("/:email", async (req, res) => {
 	const userEmail = req.params.email;
 	const randomCode = crypto.randomBytes(16).toString("hex");
-	const expirationTimestamp = Date.now() + 3600;
 
 	const msg = {
-		to: "john@johnmayou.com",
-		from: "john@marathonbuddy.co",
+		to: "john@johnmayou.com", // CHANGE LATER
+		from: "john@marathonbuddy.co", // this email is verified
 		subject: "Marathon Buddy Email Verification",
 		text:
 			"Hello!\n\nPlease verify your account by clicking the link:\n" +
