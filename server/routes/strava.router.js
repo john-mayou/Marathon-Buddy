@@ -49,26 +49,29 @@ router.get("/", (req, res) => {
 	res.status(301).redirect("http://localhost:3000/connected-apps");
 });
 
-router.delete("/", (req, res) => {
-	const deletionQuery = `
-		DELETE FROM "strava_tokens" WHERE "user_id"=$1;
-	`;
+router.delete("/", async (req, res) => {
+	const userId = req.user.id;
+	const connection = await pool.connect();
 
-	// FIRST REMOVES FROM STRAVA TOKENS TABLE
-	pool.query(deletionQuery, [req.user.id])
-		.then(() => {
-			const updateUserQuery = `
-				UPDATE "users" SET "strava_connected"=false WHERE "id"=$1;
-			`;
+	try {
+		await connection.query("BEGIN");
+		// First: removes strava refresh token
+		const deletionQuery = `DELETE FROM "strava_tokens" WHERE "user_id"=$1;`;
+		await connection.query(deletionQuery, [userId]);
 
-			pool.query(updateUserQuery, [req.user.id]).then(() => {
-				res.sendStatus(204);
-			});
-		})
-		.catch((error) => {
-			console.log("Error exchanging access token", error);
-			res.send(500).redirect("http://localhost:3000/connected-apps");
-		});
+		// Second: updates user "strava_connected" flag
+		const updateUserQuery = `UPDATE "users" SET "strava_connected"=false WHERE "id"=$1;`;
+		await connection.query(updateUserQuery, [userId]);
+
+		await connection.query("COMMIT");
+		res.sendStatus(204);
+	} catch (error) {
+		await connection.query("ROLLBACK");
+		console.log(`Transaction Error - Rolling back new account`, error);
+		res.sendStatus(500);
+	} finally {
+		connection.release();
+	}
 });
 
 module.exports = router;
