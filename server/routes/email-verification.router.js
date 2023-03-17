@@ -10,36 +10,45 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 router.get("/confirmation/:email/:code", async (req, res) => {
 	const { email, code } = req.params;
 
-	const doesCodeExistQuery = `
-		SELECT EXISTS(SELECT 1 FROM "email_otps" WHERE "email"=$1 AND "code"=$2) AS "exists";
-	`;
+	const connection = await pool.connect();
 
-	await pool
-		.query(doesCodeExistQuery, [email, code])
-		.then((result) => {
-			const changeUserToVerified = `
-				UPDATE "users" SET "email_verified"=true WHERE "email"=$1;
-			`;
+	try {
+		await connection.query("BEGIN");
+		// First: check if the email and code exists in the otps table
+		const doesCodeExistQuery = `
+			SELECT EXISTS(SELECT 1 FROM "email_otps" WHERE "email"=$1 AND "code"=$2) AS "exists";
+		`;
+		const existsResult = await pool.query(doesCodeExistQuery, [
+			email,
+			code,
+		]);
+		const exists = existsResult.rows[0].exists;
 
-			if (result.rows[0].exists) {
-				pool.query(changeUserToVerified, [email]);
-			}
-		})
-		.catch((error) => {
-			console.log("Error with checking if email code exists", error);
-		});
+		// Second: if first query result is true, toggle users "email_verified"
+		const changeUserToVerified = `UPDATE "users" SET "email_verified"=true WHERE "email"=$1;`;
+		if (exists) {
+			await pool.query(changeUserToVerified, [email]);
+		}
 
-	res.status(301).redirect("http://localhost:3000/login");
+		// end
+		await connection.query("COMMIT");
+		res.status(200).redirect("http://localhost:3000/#/login");
+	} catch (error) {
+		await connection.query("ROLLBACK");
+		console.log("Transaction Error - Rolling back new account", error);
+		res.status(500).redirect("http://localhost:3000/#/login");
+	} finally {
+		connection.release();
+	}
 });
 
 router.post("/:email", async (req, res) => {
 	const userEmail = req.params.email;
 	const randomCode = crypto.randomBytes(16).toString("hex");
-	const expirationTimestamp = Date.now() + 3600;
 
 	const msg = {
-		to: "john@johnmayou.com",
-		from: "john@marathonbuddy.co",
+		to: "john@johnmayou.com", // CHANGE LATER
+		from: "john@marathonbuddy.co", // this email is verified
 		subject: "Marathon Buddy Email Verification",
 		text:
 			"Hello!\n\nPlease verify your account by clicking the link:\n" +
@@ -51,24 +60,26 @@ router.post("/:email", async (req, res) => {
 			"\n\nThank You!\n",
 	};
 
-	const codeInsertion = `
-		INSERT INTO "email_otps" ("email", "code")
-		VALUES ($1, $2);
-	`;
+	const connection = await pool.connect();
 
-	pool.query(codeInsertion, [userEmail, randomCode])
-		.then(async () => {
-			try {
-				await sgMail.send(msg);
-				res.sendStatus(201);
-			} catch (error) {
-				console.log("Error sending email to user", error);
-			}
-		})
-		.catch((error) => {
-			console.log(`Error with insertion ${codeInsertion}`, error);
-			res.sendStatus(500);
-		});
+	try {
+		await connection.query("BEGIN");
+		// insert created token and email into otps table
+		const codeInsertion = `INSERT INTO "email_otps" ("email", "code") VALUES ($1, $2);`;
+		await pool.query(codeInsertion, [userEmail, randomCode]);
+
+		// then send the user an email with the verification link
+		await sgMail.send(msg);
+
+		await connection.query("COMMIT");
+		res.status(201);
+	} catch (error) {
+		await connection.query("ROLLBACK");
+		console.log("Transaction Error - Rolling back new account", error);
+		res.status(500);
+	} finally {
+		connection.release();
+	}
 });
 
 module.exports = router;
