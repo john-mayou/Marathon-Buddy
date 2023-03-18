@@ -44,9 +44,13 @@
 		}
 
 		& .link-text {
-			display: none;
+			font-size: 1.2rem;
+			white-space: nowrap;
+			opacity: 0;
+			visibility: hidden;
 			margin-left: 1rem;
 			color: $navbar-text-primary;
+			transition: all 0s ease-in;
 		}
 
 		& .link-icon {
@@ -66,12 +70,14 @@
 		color: $navbar-text-secondary;
 		background: $navbar-bg-secondary;
 		font-size: 1.5rem;
-		letter-spacing: 0.3ch;
+		// letter-spacing: 0.3ch;
 		width: 100%;
 
 		& .logo-icon {
 			transform: rotate(0deg);
 			transition: $transition-speed;
+			font-weight: 800;
+			font-size: 2rem;
 		}
 
 		& .logo-text {
@@ -79,6 +85,12 @@
 			position: absolute;
 			left: -999px;
 			transition: $transition-speed;
+			text-align: left;
+		}
+
+		& .logo-text-top,
+		& .logo-text-bottom {
+			display: block;
 		}
 	}
 
@@ -119,7 +131,12 @@
 			width: 16rem;
 
 			& .link-text {
-				display: inline;
+				visibility: visible;
+				opacity: 1;
+			}
+
+			& .navbar__item .link-text {
+				transition: opacity 600ms ease-in;
 			}
 
 			& .logo-icon {

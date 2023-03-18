@@ -19,7 +19,10 @@ function UserTemplate({ PageContent }) {
 			<ul className="navbar__nav">
 				<li className="navbar__logo">
 					<a className="navbar__link">
-						<span className="logo-text link-text">Marathon</span>
+						<span className="logo-text link-text">
+							<span className="logo-text-top">Marathon</span>
+							<span className="logo-text-bottom">Buddy</span>
+						</span>
 						<FontAwesomeIcon
 							icon={faAnglesRight}
 							className="logo-icon link-icon"
@@ -59,7 +62,7 @@ function UserTemplate({ PageContent }) {
 				>
 					<a className="navbar__link">
 						<FontAwesomeIcon icon={faHouse} className="link-icon" />
-						<span className="link-text">Connected Apps</span>
+						<span className="link-text">Connect Apps</span>
 					</a>
 				</li>
 				<li
