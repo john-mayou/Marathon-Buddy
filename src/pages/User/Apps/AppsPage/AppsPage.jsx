@@ -11,9 +11,9 @@ function AppsPage() {
 	const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=102249&response_type=code&redirect_uri=http://localhost:5000/api/strava-auth&approval_prompt=force&scope=activity:read_all`;
 
 	return (
-		<div className="connected-apps">
+		<div>
 			<Sidebar />
-			<section className="connected-apps__main-content">
+			<section className="connected-apps-main">
 				<h1>CONNECTED APPS</h1>
 				{user.strava_connected ? (
 					<button
