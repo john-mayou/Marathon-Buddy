@@ -51,6 +51,10 @@
 			margin-left: 1rem;
 			color: $navbar-text-primary;
 			transition: all 0s ease-in;
+
+			&:not(.logo-text) {
+				margin-left: 0;
+			}
 		}
 
 		& .link-icon {
