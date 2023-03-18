@@ -1,0 +1,23 @@
+.header {
+	padding: 1rem;
+	width: 100%;
+	height: 5rem;
+	text-align: center;
+
+	&__title {
+		display: inline-block;
+		font-size: 4rem;
+		border-bottom: 3px solid black;
+		margin: 0;
+		margin-left: -5rem;
+		color: black;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.header {
+		&__title {
+			margin-left: 0;
+		}
+	}
+}

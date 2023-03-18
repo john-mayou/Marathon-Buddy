@@ -4,6 +4,7 @@ import DatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Header from "../../../../components/Header/Header";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -42,6 +43,7 @@ function JoinCohortPage() {
 		<div>
 			<Sidebar />
 			<section className="join-cohort-main">
+				<Header text={"Dashboard"} />
 				<DatePicker
 					multiple
 					value={trainingDates}
@@ -64,7 +66,6 @@ function JoinCohortPage() {
 					minDate={availableDates.min}
 					maxDate={availableDates.max}
 				/>
-				<h1>JOIN COHORT</h1>
 				{<p>{currentCohort?.name}</p>}
 				{
 					<p>
