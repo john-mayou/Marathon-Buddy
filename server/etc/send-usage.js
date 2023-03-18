@@ -26,41 +26,38 @@ async function sendStripeUsage() {
 		]);
 
 		// Second: calculate amount to charge (either 1 or 0 units: $25.00 per unit)
-		const usageCharges = trainingsToCalculate.rows.reduce(
-			(charges, training) => {
-				const newCharge = { ...training };
-				newCharge.amount =
-					training.miles_actual >= training.miles_planned ? 0 : 1;
-				charges.push(newCharge);
-				return charges;
-			},
-			[]
-		);
+		const daily_stake = 1;
+		const usageCharges = trainingsToCalculate.rows.map((training) => ({
+			...training,
+			amount:
+				training.miles_actual >= training.miles_planned
+					? 0
+					: daily_stake,
+		}));
 
 		// Third: send stripe the usage data
 		await Promise.all(
-			usageCharges.map(async (charge) => {
-				const usageRecord =
-					await stripe.subscriptionItems.createUsageRecord(
-						charge.subscription_id,
-						{
-							action: "set", // protects against sending usage data multiple times
-							quantity: charge.amount,
-						}
-					);
-			})
+			usageCharges.map((charge) =>
+				stripe.subscriptionItems.createUsageRecord(
+					charge.subscription_id,
+					{
+						action: "set", // protects against sending usage data multiple times
+						quantity: charge.amount,
+					}
+				)
+			)
 		);
 
 		// Fourth: insert charges into database
 		const chargeInsertion = `INSERT INTO "charges" ("users_cohorts_id", "date", "amount") VALUES ($1, $2, $3)`;
 		await Promise.all(
-			usageCharges.map((charge) => {
-				return connection.query(chargeInsertion, [
+			usageCharges.map((charge) =>
+				connection.query(chargeInsertion, [
 					charge.id,
 					charge.date,
 					charge.amount,
-				]);
-			})
+				])
+			)
 		);
 
 		await connection.query("COMMIT");
