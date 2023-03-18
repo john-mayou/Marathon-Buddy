@@ -90,17 +90,23 @@ router.post("/webhook", async (req, res) => {
 		});
 
 		// INSERTING CHECKOUT METADATA INTO DATABASE
+		const subscription = await stripe.subscriptions.retrieve(
+			checkoutSession.subscription
+		);
+		const subscription_id = subscription.items.data[0].id;
 		let { dates, cohort_id, user_id } = checkoutSession.metadata;
 		dates = JSON.parse(dates); // object was stringified before sending
+
 		const connection = await pool.connect();
 
 		try {
 			await connection.query("BEGIN");
 			// First: insert instance of user joining cohort in "users_cohorts"
-			const joinCohortInsertion = `INSERT INTO "users_cohorts" ("user_id", "cohort_id") VALUES ($1, $2) RETURNING "id";`;
+			const joinCohortInsertion = `INSERT INTO "users_cohorts" ("user_id", "cohort_id", "subscription_id") VALUES ($1, $2, $3) RETURNING "id";`;
 			const joinResponse = await connection.query(joinCohortInsertion, [
 				user_id,
 				cohort_id,
+				subscription_id,
 			]);
 			// Second:
 			const joinedCohortId = joinResponse.rows[0].id; // from RETURNING in last query
