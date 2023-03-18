@@ -35,7 +35,7 @@ function UserTemplate({ PageContent }) {
 				>
 					<a className="navbar__link">
 						<FontAwesomeIcon icon={faHouse} className="link-icon" />
-						<span className="link-text">Dashboard</span>
+						<span className="link-text">Current</span>
 					</a>
 				</li>
 				<li
@@ -44,7 +44,10 @@ function UserTemplate({ PageContent }) {
 				>
 					<a className="navbar__link">
 						<FontAwesomeIcon icon={faHouse} className="link-icon" />
-						<span className="link-text">Join</span>
+						<span className="link-text">
+							Join{" "}
+							<span className="remove-for-mobile">Cohort</span>
+						</span>
 					</a>
 				</li>
 				<li
@@ -62,7 +65,10 @@ function UserTemplate({ PageContent }) {
 				>
 					<a className="navbar__link">
 						<FontAwesomeIcon icon={faHouse} className="link-icon" />
-						<span className="link-text">Connect Apps</span>
+						<span className="link-text">
+							<span className="remove-for-mobile">Connect</span>{" "}
+							Apps
+						</span>
 					</a>
 				</li>
 				<li
