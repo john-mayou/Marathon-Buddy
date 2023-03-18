@@ -7,13 +7,13 @@ function DashboardPage() {
 	const user = useSelector((store) => store.user);
 
 	return (
-		<div className="cohort-dashboard">
+		<div>
 			<Sidebar />
-			<section className="cohort-dashboard__main-content">
+			<main className="dashboard-main">
 				<h1>DASHBOARD</h1>
 				<h2>Welcome, {user.email}!</h2>
 				<p>Your ID is: {user.id}</p>
-			</section>
+			</main>
 		</div>
 	);
 }

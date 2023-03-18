@@ -39,9 +39,9 @@ function JoinCohortPage() {
 	}, []);
 
 	return (
-		<div className="join-cohort">
+		<div>
 			<Sidebar />
-			<section className="join-cohort__main-content">
+			<section className="join-cohort-main">
 				<DatePicker
 					multiple
 					value={trainingDates}

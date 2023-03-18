@@ -6,9 +6,9 @@ function HistoryPage() {
 	const user = useSelector((store) => store.user);
 
 	return (
-		<div className="cohort-history">
+		<div>
 			<Sidebar />
-			<section className="cohort-history__main-content">
+			<section className="history-main">
 				<h1>HISTORY</h1>
 				<h2>Welcome, {user.email}!</h2>
 				<p>Your ID is: {user.id}</p>
