@@ -21,8 +21,8 @@ router.post(
 				line_items: [{ price: process.env.PRODUCT_TEST_KEY }],
 				mode: "subscription",
 				// success.html?session_id={CHECKOUT_SESSION_ID}
-				success_url: "http://localhost:3000/?success=true",
-				cancel_url: "http://localhost:3000/?canceled=true",
+				success_url: "http://localhost:3000/#/?success=true",
+				cancel_url: "http://localhost:3000/#/?canceled=true",
 				metadata,
 			});
 
@@ -102,11 +102,15 @@ router.post("/webhook", async (req, res) => {
 		try {
 			await connection.query("BEGIN");
 			// First: insert instance of user joining cohort in "users_cohorts"
-			const joinCohortInsertion = `INSERT INTO "users_cohorts" ("user_id", "cohort_id", "subscription_id") VALUES ($1, $2, $3) RETURNING "id";`;
+			const joinCohortInsertion = `
+				INSERT INTO "users_cohorts" ("user_id", "cohort_id", "subscription_id", "daily_stake") 
+				VALUES ($1, $2, $3, $4) RETURNING "id";
+			`;
 			const joinResponse = await connection.query(joinCohortInsertion, [
 				user_id,
 				cohort_id,
 				subscription_id,
+				1,
 			]);
 			// Second:
 			const joinedCohortId = joinResponse.rows[0].id; // from RETURNING in last query
