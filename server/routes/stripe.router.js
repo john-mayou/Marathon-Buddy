@@ -5,6 +5,7 @@ const stripe = require("stripe")(process.env.STRIPE_TEST_LIVE_KEY);
 const {
 	rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
+const dayjs = require("dayjs");
 
 /**
  * This is the endpoint that creates the stripe url that I then send back to the client
@@ -62,6 +63,7 @@ router.post("/webhook", async (req, res) => {
 	 */
 	if (event.type === "checkout.session.completed") {
 		const checkoutSession = event.data.object;
+		const { trainingDuration, startDate } = checkoutSession.metadata;
 
 		// create a schedule and add it to the original subscription
 		let schedule = await stripe.subscriptionSchedules.create({
@@ -82,9 +84,9 @@ router.post("/webhook", async (req, res) => {
 				...phases, // old phases
 				{
 					items: [{ price: process.env.PRODUCT_TEST_KEY }], // same product
-					end_date: Math.floor(
-						new Date("2023-03-25").getTime() / 1000 // 1 day after the end of the cohort
-					),
+					end_date: dayjs(startDate)
+						.add(Number(trainingDuration) + 1, "day") // 1 day after the end of the cohort
+						.unix(),
 				},
 			],
 		});
@@ -94,7 +96,7 @@ router.post("/webhook", async (req, res) => {
 			checkoutSession.subscription
 		);
 		const subscription_id = subscription.items.data[0].id;
-		let { dates, cohort_id, user_id } = checkoutSession.metadata;
+		let { dates, cohort_id, user_id, stake } = checkoutSession.metadata;
 		dates = JSON.parse(dates); // object was stringified before sending
 
 		const connection = await pool.connect();
@@ -110,7 +112,7 @@ router.post("/webhook", async (req, res) => {
 				user_id,
 				cohort_id,
 				subscription_id,
-				1,
+				stake,
 			]);
 			// Second:
 			const joinedCohortId = joinResponse.rows[0].id; // from RETURNING in last query

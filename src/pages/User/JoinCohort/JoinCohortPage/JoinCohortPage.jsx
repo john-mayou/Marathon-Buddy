@@ -186,6 +186,8 @@ function JoinCohortPage() {
 											),
 											cohort_id: currentCohort.id,
 											stake: stake,
+											trainingDuration,
+											startDate: currentCohort.start_date,
 										}
 									)
 									.then((response) => {
