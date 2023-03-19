@@ -100,6 +100,7 @@ function JoinCohortPage() {
 							render={(value, openCalendar) => {
 								return (
 									<Button
+										color="primary"
 										variant="contained"
 										className="date-picker-button"
 										onClick={openCalendar}
@@ -159,42 +160,6 @@ function JoinCohortPage() {
 													min={0}
 													max={15}
 												/>
-												{/* <Select
-													label={"Miles"}
-													value={
-														trainingMiles[
-															dayjs(
-																new Date(day)
-															).format(
-																"YYYY-MM-DD"
-															)
-														]
-													}
-													onChange={(e) => {
-														const newTrainingMiles =
-															{
-																...trainingMiles,
-															};
-														newTrainingMiles[day] =
-															e.target.value;
-														setTrainingMiles(
-															newTrainingMiles
-														);
-													}}
-												>
-													{[...Array(26).keys()].map(
-														(notUsed, i) => {
-															return (
-																<MenuItem
-																	key={i}
-																	value={i}
-																>
-																	{i}
-																</MenuItem>
-															);
-														}
-													)}
-												</Select> */}
 											</td>
 										</tr>
 									);
@@ -205,6 +170,7 @@ function JoinCohortPage() {
 					<section className="join-form__checkout-container">
 						<Button
 							sx={{ width: "100%" }}
+							color="warning"
 							variant="contained"
 							onClick={() => {
 								console.log(
@@ -231,6 +197,7 @@ function JoinCohortPage() {
 						>
 							Checkout
 						</Button>
+						<section className="container-to-fill-navbar-space"></section>
 					</section>
 				</section>
 			</main>
