@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from "@mui/icons-material/Check";
 import Swal from "sweetalert2";
 
 function AdminPage() {
@@ -99,10 +100,18 @@ function AdminPage() {
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Start Date</th>
+						<th>Date</th>
 						<th>Users</th>
-						<th>Active</th>
-						<th>Delete</th>
+						<th>
+							<span className="delete-when-small-screen">
+								Active
+							</span>
+						</th>
+						<th>
+							<span className="delete-when-small-screen">
+								Delete
+							</span>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -118,9 +127,7 @@ function AdminPage() {
 							>
 								<td>{cohort.name}</td>
 								<td>
-									{dayjs(cohort.start_date).format(
-										"MMM D, YYYY"
-									)}
+									{dayjs(cohort.start_date).format("MMM D")}
 								</td>
 								<td>{cohort.users}</td>
 								<td>
@@ -137,6 +144,7 @@ function AdminPage() {
 										<span className="active-text">
 											Make Active
 										</span>
+										<CheckIcon fontSize="small" />
 									</Button>
 								</td>
 								<td>
