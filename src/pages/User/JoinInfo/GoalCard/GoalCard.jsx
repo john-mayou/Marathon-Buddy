@@ -1,13 +1,31 @@
 import "./GoalCard.scss";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function GoalCard({ image, imageText, title, description, durationParam }) {
 	const history = useHistory();
+	const user = useSelector((store) => store.user);
 
 	return (
 		<div
 			className="goal-card"
-			onClick={() => history.push(`/join-cohort/${durationParam}`)}
+			onClick={() => {
+				if (user.strava_connected && !user.is_active) {
+					history.push(`/join-cohort/${durationParam}`);
+				} else if (user.is_active) {
+					alert(
+						"You can join a another cohort once your current one is complete"
+					);
+				} else if (!user.strava_connected) {
+					alert(
+						"Please connect to Strava under the Connect Apps page"
+					);
+				} else {
+					alert(
+						"Something went wrong, please give us some time to figure it out"
+					);
+				}
+			}}
 		>
 			<div className="goal-card__image-container">
 				<span className="goal-card__image-text-container">
