@@ -1,7 +1,9 @@
 import "./AdminPage.scss";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function AdminPage() {
 	const dispatch = useDispatch();
@@ -50,7 +52,7 @@ function AdminPage() {
 						<th>Name</th>
 						<th>Start Date</th>
 						<th>Users</th>
-						<th>Set Current</th>
+						<th>Active</th>
 						<th>Delete</th>
 					</tr>
 				</thead>
@@ -66,10 +68,16 @@ function AdminPage() {
 								}
 							>
 								<td>{cohort.name}</td>
-								<td>{cohort.start_date.toString()}</td>
+								<td>
+									{dayjs(cohort.start_date).format(
+										"MMM D, YYYY"
+									)}
+								</td>
 								<td>{cohort.users}</td>
 								<td>
-									<button
+									<Button
+										color="info"
+										variant="contained"
 										onClick={() =>
 											dispatch({
 												type: "UPDATE_CURRENT_COHORT",
@@ -77,11 +85,15 @@ function AdminPage() {
 											})
 										}
 									>
-										Set Current
-									</button>
+										<span className="active-text">
+											Make Active
+										</span>
+									</Button>
 								</td>
 								<td>
-									<button
+									<Button
+										color="error"
+										variant="contained"
 										onClick={() =>
 											dispatch({
 												type: "DELETE_COHORT",
@@ -89,8 +101,11 @@ function AdminPage() {
 											})
 										}
 									>
-										Delete
-									</button>
+										<DeleteIcon fontSize="small" />{" "}
+										<span className="delete-text">
+											Delete
+										</span>
+									</Button>
 								</td>
 							</tr>
 						);

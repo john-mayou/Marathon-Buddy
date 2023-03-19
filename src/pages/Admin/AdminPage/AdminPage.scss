@@ -68,6 +68,21 @@
 	transform: translateY(0);
 }
 
-// .cohort-table {
-//     border-collapse:;
-// }
+.cohort-table {
+	border-collapse: collapse;
+	text-align: center;
+
+	& td,
+	& th {
+		padding: 0.5rem 1rem;
+	}
+
+	& .active-text {
+		font-size: 1rem;
+	}
+
+	& .delete-text {
+		margin-left: 3px;
+		font-size: 1rem;
+	}
+}
