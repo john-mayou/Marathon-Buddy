@@ -1,6 +1,8 @@
 import "./AppsPage.scss";
 import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import { useSelector, useDispatch } from "react-redux";
+import Header from "../../../../components/Header/Header";
+import StravaLogo from "../../../../assets/images/Strava_Logo.svg.png";
 import { useEffect } from "react";
 
 function AppsPage() {
@@ -14,18 +16,33 @@ function AppsPage() {
 		<div>
 			<Sidebar />
 			<section className="connected-apps-main">
-				<h1>CONNECTED APPS</h1>
-				{user.strava_connected ? (
-					<button
-						onClick={() => dispatch({ type: "DISCONNECT_STRAVA" })}
-					>
-						Disconnect
-					</button>
-				) : (
-					<a href={stravaAuthUrl}>Connect to Strava</a>
-				)}
-				<h2>Welcome, {user.email}!</h2>
-				<p>Your ID is: {user.id}</p>
+				<Header text={"Connect Apps"} />
+				<div className="app-card">
+					<div class="app-card__upper-container">
+						<img src={StravaLogo} className="app-card__logo" />
+						{user.strava_connected ? (
+							<button
+								className="app-card__connected-btn"
+								onClick={() =>
+									dispatch({ type: "DISCONNECT_STRAVA" })
+								}
+							>
+								Connected
+							</button>
+						) : (
+							<a
+								className="app-card__connect-link"
+								href={stravaAuthUrl}
+							>
+								Connect
+							</a>
+						)}
+					</div>
+					<p className="app-card__description">
+						Allow Marathon Buddy to check you daily activies to
+						update your progress
+					</p>
+				</div>
 			</section>
 		</div>
 	);
