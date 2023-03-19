@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 function AdminPage() {
 	const dispatch = useDispatch();
@@ -14,6 +15,50 @@ function AdminPage() {
 	useEffect(() => {
 		dispatch({ type: "FETCH_ADMIN_COHORTS" });
 	}, []);
+
+	const popupDeleteConfirmation = (cohortId) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			cancelButtonColor: "#3085d6",
+			confirmButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire("Deleted!", "Cohort has been removed.", "success");
+				dispatch({
+					type: "DELETE_COHORT",
+					payload: cohortId,
+				});
+			}
+		});
+	};
+
+	const popupMakeActiveConfirmation = (cohortId, cohortName) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: `${cohortName} will be the current cohort users can sign up for`,
+			icon: "warning",
+			showCancelButton: true,
+			cancelButtonColor: "#3085d6",
+			confirmButtonColor: "#FFA500",
+			confirmButtonText: "Yes, make active!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+					"Made Active!",
+					`${cohortName} is now active.`,
+					"success"
+				);
+				dispatch({
+					type: "UPDATE_CURRENT_COHORT",
+					payload: cohortId,
+				});
+			}
+		});
+	};
 
 	const handleAddCohort = (e) => {
 		e.preventDefault();
@@ -83,10 +128,10 @@ function AdminPage() {
 										color="info"
 										variant="contained"
 										onClick={() =>
-											dispatch({
-												type: "UPDATE_CURRENT_COHORT",
-												payload: cohort.id,
-											})
+											popupMakeActiveConfirmation(
+												cohort.id,
+												cohort.name
+											)
 										}
 									>
 										<span className="active-text">
@@ -99,10 +144,7 @@ function AdminPage() {
 										color="error"
 										variant="contained"
 										onClick={() =>
-											dispatch({
-												type: "DELETE_COHORT",
-												payload: cohort.id,
-											})
+											popupDeleteConfirmation(cohort.id)
 										}
 									>
 										<DeleteIcon fontSize="small" />{" "}
