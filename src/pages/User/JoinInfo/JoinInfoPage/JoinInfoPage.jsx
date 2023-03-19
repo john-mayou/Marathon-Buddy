@@ -6,13 +6,13 @@ import GoalCard from "../GoalCard/GoalCard";
 import Sidebar from "../../../../layout/Sidebar/Sidebar";
 
 // images
-import RedTrackPic from "../../../../assets/images/Track-Close-Up-Red.jpg";
+import BlueTrackPic from "../../../../assets/images/Track-Close-Up-Light-Blue.jpg";
 import BlackTrackPic from "../../../../assets/images/Track-Close-Up-Black.jpg";
 
 function JoinInfoPage() {
 	const goalOptionsList = [
 		{
-			image: RedTrackPic,
+			image: BlueTrackPic,
 			imageText: "1W",
 			title: "Lucky Number 7",
 			description:
@@ -28,7 +28,7 @@ function JoinInfoPage() {
 			durationParam: 14,
 		},
 		{
-			image: RedTrackPic,
+			image: BlueTrackPic,
 			imageText: "1M",
 			title: "Running To The Bank",
 			description:
