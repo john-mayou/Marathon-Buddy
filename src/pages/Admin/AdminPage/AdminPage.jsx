@@ -25,22 +25,26 @@ function AdminPage() {
 	};
 
 	return (
-		<>
-			<h1>AdminPage</h1>
-			<form onSubmit={handleAddCohort}>
+		<div className="admin-page-container">
+			<h1 className="admin-header">Admin</h1>
+			<form onSubmit={handleAddCohort} className="cohort-form">
 				<input
+					id="cohort-date-input"
 					type="date"
 					onChange={(e) => setNewCohortDate(e.target.value)}
 				/>
 				<input
+					className="cohort-name-input"
 					type="text"
 					placeholder="Name"
 					value={newCohortName}
 					onChange={(e) => setNewCohortName(e.target.value)}
 				/>
-				<button type="submit">Add</button>
+				<button type="submit" id="new-cohort-btn">
+					Add Cohort
+				</button>
 			</form>
-			<table>
+			<table className="cohort-table">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -93,7 +97,7 @@ function AdminPage() {
 					})}
 				</tbody>
 			</table>
-		</>
+		</div>
 	);
 }
 
