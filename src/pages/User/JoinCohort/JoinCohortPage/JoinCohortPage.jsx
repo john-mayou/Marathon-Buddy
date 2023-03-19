@@ -99,12 +99,13 @@ function JoinCohortPage() {
 							plugins={[<DatePanel />]}
 							render={(value, openCalendar) => {
 								return (
-									<button
+									<Button
+										variant="contained"
 										className="date-picker-button"
 										onClick={openCalendar}
 									>
 										Select Dates
-									</button>
+									</Button>
 								);
 							}}
 							minDate={availableDates.min}
@@ -129,7 +130,36 @@ function JoinCohortPage() {
 												)}
 											</td>
 											<td>
-												<Select
+												<Slider
+													className=""
+													aria-label="Stake"
+													onChange={(e) => {
+														const newTrainingMiles =
+															{
+																...trainingMiles,
+															};
+														newTrainingMiles[day] =
+															e.target.value;
+														setTrainingMiles(
+															newTrainingMiles
+														);
+													}}
+													value={
+														trainingMiles[
+															dayjs(
+																new Date(day)
+															).format(
+																"YYYY-MM-DD"
+															)
+														]
+													}
+													valueLabelDisplay="auto"
+													step={1}
+													marks
+													min={0}
+													max={15}
+												/>
+												{/* <Select
 													label={"Miles"}
 													value={
 														trainingMiles[
@@ -164,7 +194,7 @@ function JoinCohortPage() {
 															);
 														}
 													)}
-												</Select>
+												</Select> */}
 											</td>
 										</tr>
 									);
@@ -174,8 +204,13 @@ function JoinCohortPage() {
 					</section>
 					<section className="join-form__checkout-container">
 						<Button
+							sx={{ width: "100%" }}
 							variant="contained"
 							onClick={() => {
+								console.log(
+									"training miles here",
+									trainingMiles
+								);
 								axios
 									.post(
 										"/api/stripe/create-checkout-session",

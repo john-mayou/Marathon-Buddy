@@ -34,6 +34,7 @@
 
 	&__stake-container {
 		padding: 1rem;
+		text-align: center;
 		border-bottom: 3px solid black;
 
 		& .stake-input-slider {
@@ -44,36 +45,31 @@
 	&__date-input-container {
 		padding: 1rem;
 		text-align: center;
-
-		& .date-picker-button {
-			cursor: pointer;
-			padding: 1rem 2rem;
-			border-radius: 10px;
-			background-color: #f0f0f0;
-			border: none;
-			transition: all 0.3s ease-out;
-
-			&:hover {
-				background-color: black;
-				color: #f0f0f0;
-			}
-		}
 	}
 
 	&__table-container {
+		padding: 1rem;
+
 		& th {
-			padding: 0.5rem 5rem;
+			padding: 0.5rem 7rem;
+		}
+
+		& td {
+			padding: 0.5rem 0;
 		}
 
 		& table {
 			text-align: center;
-			border: 1px solid black;
 			margin: 0 auto;
 			border-collapse: collapse;
 		}
+
+		border-bottom: 3px solid black;
 	}
 
 	&__checkout-container {
+		padding: 1rem;
+		text-align: center;
 	}
 }
 
