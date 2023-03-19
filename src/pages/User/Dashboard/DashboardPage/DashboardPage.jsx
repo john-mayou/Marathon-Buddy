@@ -13,6 +13,7 @@ function DashboardPage() {
 				<h1>DASHBOARD</h1>
 				<h2>Welcome, {user.email}!</h2>
 				<p>Your ID is: {user.id}</p>
+				<p>{JSON.stringify(user)}</p>
 			</main>
 		</div>
 	);

@@ -2,13 +2,34 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const encryptLib = require("../modules/encryption");
 const pool = require("../modules/pool");
+const dayjs = require("dayjs");
 
 passport.serializeUser((user, done) => {
 	done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-	pool.query('SELECT * FROM "users" WHERE id = $1', [id])
+	const today = dayjs().format("YYYY-MM-DD");
+
+	/**
+	 * This query will have performance considerations at scale as this will be run
+	 * everytime the page loads. A better way would be to set up a daily cron job to
+	 * update a table with a list of user_id and is_active flag. This would save on
+	 * app efficiency as it would not have to join tables for every 'user' selection
+	 */
+	pool.query(
+		`SELECT 
+			u.*, 
+			EXISTS(
+				SELECT *
+				FROM "users_cohorts" AS uc
+				JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
+				WHERE tp.date::date >= $1
+			) AS "is_active"
+		FROM users AS u 
+		WHERE u.id = $2;`,
+		[today, id]
+	)
 		.then((result) => {
 			// Handle Errors
 			const user = result && result.rows && result.rows[0];
