@@ -11,10 +11,17 @@ async function sendStripeUsage() {
 	const yesterday = dayjs().add(-1, "day").format("YYYY-MM-DD");
 
 	const trainingDataQuery = `
-        SELECT uc.id, tp.date ,tp.miles_planned, ta.miles_actual, uc.subscription_id FROM "users_cohorts" AS uc
-        JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
-        JOIN "training_actual" AS ta ON ta.users_cohorts_id = uc.id
-        WHERE tp.date::date = $1;
+        SELECT 
+			uc.id, 
+			tp.date, 
+			tp.miles_planned, 
+			ta.miles_actual, 
+			uc.subscription_id, 
+			uc.daily_stake 
+		FROM "users_cohorts" AS uc
+			JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
+			JOIN "training_actual" AS ta ON ta.users_cohorts_id = uc.id
+		WHERE tp.date::date = $1 AND ta.date::date = $1;
     `;
 
 	try {
@@ -26,13 +33,12 @@ async function sendStripeUsage() {
 		]);
 
 		// Second: calculate amount to charge (either 1 or 0 units: $25.00 per unit)
-		const daily_stake = 1;
 		const usageCharges = trainingsToCalculate.rows.map((training) => ({
 			...training,
 			amount:
 				training.miles_actual >= training.miles_planned
 					? 0
-					: daily_stake,
+					: training.daily_stake,
 		}));
 
 		// Third: send stripe the usage data

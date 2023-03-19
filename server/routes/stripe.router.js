@@ -94,7 +94,7 @@ router.post("/webhook", async (req, res) => {
 			checkoutSession.subscription
 		);
 		const subscription_id = subscription.items.data[0].id;
-		let { dates, cohort_id, user_id } = checkoutSession.metadata;
+		let { dates, cohort_id, user_id, stake } = checkoutSession.metadata;
 		dates = JSON.parse(dates); // object was stringified before sending
 
 		const connection = await pool.connect();
@@ -110,7 +110,7 @@ router.post("/webhook", async (req, res) => {
 				user_id,
 				cohort_id,
 				subscription_id,
-				1,
+				stake,
 			]);
 			// Second:
 			const joinedCohortId = joinResponse.rows[0].id; // from RETURNING in last query
