@@ -136,6 +136,10 @@
 			&:nth-child(6) {
 				order: 6;
 			} // Logout
+
+			&:last-child {
+				margin-top: 0;
+			}
 		}
 
 		&__link {
@@ -182,6 +186,17 @@
 
 			& .logo-text {
 				left: 0px;
+			}
+		}
+	}
+}
+
+// Super small screens
+@media only screen and (max-width: 450px) {
+	.navbar {
+		&__link {
+			& .link-icon {
+				margin: 0 0.5rem;
 			}
 		}
 	}
