@@ -185,6 +185,7 @@ function JoinCohortPage() {
 												trainingMiles
 											),
 											cohort_id: currentCohort.id,
+											stake: stake,
 										}
 									)
 									.then((response) => {
