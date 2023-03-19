@@ -42,9 +42,13 @@ function AdminPage() {
 					value={newCohortName}
 					onChange={(e) => setNewCohortName(e.target.value)}
 				/>
-				<button type="submit" id="new-cohort-btn">
+				<Button
+					type="submit"
+					variant="contained"
+					sx={{ fontSize: "1rem" }}
+				>
 					Add Cohort
-				</button>
+				</Button>
 			</form>
 			<table className="cohort-table">
 				<thead>

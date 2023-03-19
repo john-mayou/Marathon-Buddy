@@ -40,34 +40,6 @@
 	}
 }
 
-#new-cohort-btn {
-	cursor: pointer;
-	all: unset;
-	background-color: #fff;
-	font-size: 1.6rem;
-	color: #2b2b2b;
-	display: inline-block;
-	text-decoration: none;
-	padding: 0.3rem 1rem;
-	transition: all 0.2s;
-	border-radius: 5px;
-	text-align: center;
-}
-
-#new-cohort-btn:hover {
-	cursor: pointer;
-	background-color: #2b2b2b;
-	color: #fff;
-	box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-	transform: translateY(-2px);
-}
-
-#new-cohort-btn:active {
-	cursor: pointer;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-	transform: translateY(0);
-}
-
 .cohort-table {
 	border-collapse: collapse;
 	text-align: center;
