@@ -1,3 +1,88 @@
 .connected-apps-main {
 	margin-left: 5rem;
+	padding: 1rem;
+
+	aspect-ratio: 900/600;
+	height: 100vh;
+	width: 100%;
+	overflow-y: scroll;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+	background-image: url("../../../../assets/images/stacked-waves-haikei\ \(5\).svg");
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3rem;
+
+	@media only screen and (max-width: 600px) {
+		margin-left: 0;
+		padding: 0.5rem;
+		gap: 1.5rem;
+	}
+}
+
+.app-card {
+	margin-left: -5rem;
+	padding: 1rem;
+	max-width: 400px;
+	background-color: #f0f0f0;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+		rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+		rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	border-radius: 5px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	&__upper-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	&__logo {
+		width: 150px;
+	}
+
+	&__connect-link {
+		border: 1px solid rgb(146, 146, 146);
+		border-radius: 5px;
+		padding: 0.2rem 1rem;
+		font-size: 1.3rem;
+		color: rgb(137, 137, 137);
+		font-weight: 400;
+		transition: all 0.3s ease;
+
+		&:hover {
+			background-color: #d6d6d6;
+		}
+	}
+
+	&__connected-btn {
+		cursor: pointer;
+		border: none;
+		font-size: 1.3rem;
+		color: rgb(30, 174, 30);
+		padding: 0.2rem 1rem;
+		border-radius: 5px;
+		background-color: rgb(193, 247, 193);
+		font-weight: 400;
+	}
+
+	&__description {
+		margin: 0;
+		font-size: 1.3rem;
+		color: rgb(125, 125, 125);
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.app-card {
+		margin-left: 0;
+		max-width: 400px;
+	}
 }
