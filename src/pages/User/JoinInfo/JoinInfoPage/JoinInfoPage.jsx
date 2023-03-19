@@ -93,6 +93,7 @@ function JoinInfoPage() {
 						})}
 					</div>
 				</section>
+				<section className="container-to-fill-navbar-space"></section>
 			</main>
 		</div>
 	);
