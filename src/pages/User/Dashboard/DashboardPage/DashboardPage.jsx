@@ -12,10 +12,12 @@ import dayjs from "dayjs";
 function DashboardPage() {
 	const dispatch = useDispatch();
 	const user = useSelector((store) => store.user);
-	const userCohort = useSelector((store) => store.cohorts.userCohortReducer);
+	const userData = useSelector((store) => store.userData.userDataReducer);
+	const currentCohort = userData[0];
 
 	useEffect(() => {
 		dispatch({ type: "FETCH_USER_COHORT" });
+		dispatch({ type: "FETCH_USER_DATA" });
 	}, []);
 
 	return (
@@ -23,17 +25,21 @@ function DashboardPage() {
 			<Sidebar />
 			<main className="dashboard-main">
 				<Header text={"Progress"} />
-				<h1>{JSON.stringify(userCohort)}</h1>
+				<h1>NEW BELOW THIS</h1>
+				{userData.map((cohort) => {
+					console.log(cohort);
+				})}
 				<CalendarHeatmap
 					showOutOfRangeDays={true}
 					horizontal={false}
 					gutterSize={2}
-					startDate={userCohort.start_date}
-					endDate={dayjs(userCohort.start_date).add(
-						userCohort.duration,
+					startDate={currentCohort?.start_date}
+					endDate={dayjs(currentCohort?.start_date).add(
+						currentCohort?.duration,
 						"day"
 					)}
 					showMonthLabels={true}
+					showWeekdayLabels={true}
 					values={[
 						{ date: "2023-03-12", count: 12 },
 						{ date: "2023-03-15", count: 12 },

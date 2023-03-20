@@ -20,15 +20,6 @@ function* fetchCurrentCohort() {
 	}
 }
 
-function* fetchUserCohort() {
-	try {
-		const response = yield axios.get("api/cohort/user-cohort");
-		yield put({ type: "SET_USER_COHORT", payload: response.data });
-	} catch (error) {
-		console.log("Error fetching user cohort", error);
-	}
-}
-
 // ADMIN REQUESTS BELOW THIS LINE
 function* fetchAdminCohorts() {
 	try {
@@ -70,7 +61,6 @@ function* cohortSaga() {
 	// user
 	yield takeEvery("FETCH_COHORTS", fetchCohorts); // GET
 	yield takeEvery("FETCH_CURRENT_COHORT", fetchCurrentCohort); // GET
-	yield takeEvery("FETCH_USER_COHORT", fetchUserCohort); // GET
 
 	// admin
 	yield takeEvery("FETCH_ADMIN_COHORTS", fetchAdminCohorts); // GET

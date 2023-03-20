@@ -37,25 +37,6 @@ router.get("/current", rejectUnauthenticated, (req, res) => {
 		});
 });
 
-router.get("/user-cohort", rejectUnauthenticated, (req, res) => {
-	// finds the furthest away training date of the user and then returns that cohorts data
-	const userCohortQuery = `
-		SELECT c.id, c.name, c.start_date, uc.duration FROM "cohorts" AS c
-		JOIN "users_cohorts" AS uc ON uc.cohort_id = c.id
-		JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
-		WHERE uc.user_id = 1 ORDER BY tp.date DESC LIMIT 1;
-	`;
-
-	pool.query(userCohortQuery)
-		.then((result) => {
-			res.send(result.rows[0]);
-		})
-		.catch((error) => {
-			console.log(`Error making query ${userCohortQuery}`, error);
-			res.sendStatus(500);
-		});
-});
-
 // ADMIN PROTECTED ROUTES BELOW THIS LINE
 router.get("/admin", rejectUnauthenticated, rejectIfNotAdmin, (req, res) => {
 	const cohortDataQuery = `
