@@ -129,15 +129,15 @@ router.post("/webhook", async (req, res) => {
 			);
 
 			await connection.query("COMMIT");
+			res.status(200).json({ success: true });
 		} catch (error) {
 			await connection.query("ROLLBACK");
 			console.log(`Transaction Error - Rolling back new account`, error);
-			res.sendStatus(500);
+			res.sendStatus(500).json({ success: false });
 		} finally {
 			connection.release();
 		}
 	}
-	res.status(200).json({ success: true });
 });
 
 module.exports = router;
