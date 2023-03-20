@@ -5,6 +5,9 @@ import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import Header from "../../../../components/Header/Header";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import dayjs from "dayjs";
 
 function DashboardPage() {
 	const dispatch = useDispatch();
@@ -21,17 +24,30 @@ function DashboardPage() {
 			<main className="dashboard-main">
 				<Header text={"Progress"} />
 				<h1>{JSON.stringify(userCohort)}</h1>
-				{/* <CalendarHeatmap
-					startDate={new Date("2023-03-01")}
-					endDate={new Date("2023-04-01")}
+				<CalendarHeatmap
+					showOutOfRangeDays={true}
+					horizontal={false}
+					gutterSize={2}
+					startDate={userCohort.start_date}
+					endDate={dayjs(userCohort.start_date).add(
+						userCohort.duration,
+						"day"
+					)}
+					showMonthLabels={true}
 					values={[
-						{ date: "2016-01-01", count: 12 },
-						{ date: "2016-01-22", count: 122 },
-						{ date: "2016-01-30", count: 38 },
+						{ date: "2023-03-12", count: 12 },
+						{ date: "2023-03-15", count: 12 },
+						{ date: "2023-03-25", count: 38 },
 						// ...and so on
 					]}
-				/> */}
-
+					tooltipDataAttrs={(value) => {
+						return {
+							"data-tooltip-id": "calendar-tooltip",
+							"data-tooltip-content": `${JSON.stringify(value)}`,
+						};
+					}}
+				/>
+				<Tooltip id="calendar-tooltip" />
 				{user.is_active ? (
 					<h1>CAN SEE DATA</h1>
 				) : (
