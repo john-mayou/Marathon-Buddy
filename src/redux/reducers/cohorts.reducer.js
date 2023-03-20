@@ -22,7 +22,19 @@ const currentCohortReducer = (state = [], action) => {
 	}
 };
 
+const userCohortReducer = (state = {}, action) => {
+	switch (action.type) {
+		case "SET_USER_COHORT":
+			return action.payload;
+		case "UNSET_COHORTS":
+			return {};
+		default:
+			return state;
+	}
+};
+
 export default combineReducers({
 	cohortsReducer,
 	currentCohortReducer,
+	userCohortReducer,
 });
