@@ -24,7 +24,7 @@ passport.deserializeUser((id, done) => {
 				SELECT *
 				FROM "users_cohorts" AS uc
 				JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
-				WHERE tp.date::date >= $1
+				WHERE tp.date::date >= $1 AND uc.user_id = $2
 			) AS "is_active"
 		FROM users AS u 
 		WHERE u.id = $2;`,

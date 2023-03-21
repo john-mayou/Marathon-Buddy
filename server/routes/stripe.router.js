@@ -63,7 +63,7 @@ router.post("/webhook", async (req, res) => {
 	 */
 	if (event.type === "checkout.session.completed") {
 		const checkoutSession = event.data.object;
-		const { trainingDuration, startDate } = checkoutSession.metadata;
+		const { trainingDuration, startDate } = checkoutSession.metadata; // trainingDuration is a string
 
 		// create a schedule and add it to the original subscription
 		let schedule = await stripe.subscriptionSchedules.create({
@@ -105,14 +105,15 @@ router.post("/webhook", async (req, res) => {
 			await connection.query("BEGIN");
 			// First: insert instance of user joining cohort in "users_cohorts"
 			const joinCohortInsertion = `
-				INSERT INTO "users_cohorts" ("user_id", "cohort_id", "subscription_id", "daily_stake") 
-				VALUES ($1, $2, $3, $4) RETURNING "id";
+				INSERT INTO "users_cohorts" ("user_id", "cohort_id", "subscription_id", "daily_stake", "duration") 
+				VALUES ($1, $2, $3, $4, $5) RETURNING "id";
 			`;
 			const joinResponse = await connection.query(joinCohortInsertion, [
 				user_id,
 				cohort_id,
 				subscription_id,
 				stake,
+				Number(trainingDuration),
 			]);
 			// Second:
 			const joinedCohortId = joinResponse.rows[0].id; // from RETURNING in last query
@@ -128,15 +129,15 @@ router.post("/webhook", async (req, res) => {
 			);
 
 			await connection.query("COMMIT");
+			res.status(200).json({ success: true });
 		} catch (error) {
 			await connection.query("ROLLBACK");
 			console.log(`Transaction Error - Rolling back new account`, error);
-			res.sendStatus(500);
+			res.sendStatus(500).json({ success: false });
 		} finally {
 			connection.release();
 		}
 	}
-	res.status(200).json({ success: true });
 });
 
 module.exports = router;

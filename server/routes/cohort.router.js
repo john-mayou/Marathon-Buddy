@@ -31,7 +31,7 @@ router.get("/current", rejectUnauthenticated, (req, res) => {
 		.then((result) => {
 			res.send(result.rows);
 		})
-		.catch(() => {
+		.catch((error) => {
 			console.log(`Error making query ${cohortQuery}`, error);
 			res.sendStatus(500);
 		});
