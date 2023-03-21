@@ -7,3 +7,22 @@
 	height: 300px;
 	padding: 1rem;
 }
+
+// box styles
+.react-calendar-heatmap {
+	& .heatmap-nothing-planned {
+		fill: black;
+	}
+
+	& .heatmap-completed {
+		fill: green;
+	}
+
+	& .heatmap-missed {
+		fill: red;
+	}
+
+	& .heatmap-planned {
+		fill: lightgray;
+	}
+}

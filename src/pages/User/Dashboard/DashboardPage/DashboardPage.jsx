@@ -14,7 +14,6 @@ function DashboardPage() {
 	const user = useSelector((store) => store.user);
 	const userData = useSelector((store) => store.userData.userDataReducer);
 	const currentCohort = userData[0];
-	console.log("user data", userData);
 
 	const calendarData = currentCohort?.planned.map((training) => {
 		training.actual = currentCohort.actual?.find(
@@ -25,10 +24,8 @@ function DashboardPage() {
 		)?.charge;
 		return training;
 	});
-	console.log("calendar data", calendarData);
 
 	useEffect(() => {
-		dispatch({ type: "FETCH_USER_COHORT" });
 		dispatch({ type: "FETCH_USER_DATA" });
 	}, []);
 
@@ -36,7 +33,7 @@ function DashboardPage() {
 		<div>
 			<Sidebar />
 			<main className="dashboard-main">
-				<Header text={"Progress"} />
+				<Header text={"Current"} />
 				<h1>NEW BELOW THIS</h1>
 				<CalendarHeatmap
 					showOutOfRangeDays={true}
@@ -50,8 +47,19 @@ function DashboardPage() {
 					showMonthLabels={true}
 					showWeekdayLabels={true}
 					values={calendarData ? calendarData : []}
+					classForValue={(value) => {
+						if (!value) {
+							return `heatmap-nothing-planned`;
+						} else if (value.charge === 0) {
+							return `heatmap-completed`;
+						} else if (value.charge) {
+							return `heatmap-missed`;
+						} else {
+							return `heatmap-planned`;
+						}
+					}}
 					tooltipDataAttrs={(value) => {
-						const date = dayjs(value.date).format("MMM D");
+						const date = dayjs(value.date).format("ddd MMM D");
 						let tooltip;
 
 						if (!value.date) {
@@ -59,7 +67,7 @@ function DashboardPage() {
 						} else if (value.charge === 0) {
 							tooltip = `${date}: Completed! :)`;
 						} else if (value.charge) {
-							tooltip = `${date}: Did not meet goal :( planned for ${value.planned} and ran ${value.actual}`;
+							tooltip = `${date}: Missed this one :( planned for ${value.planned} and ran ${value.actual}`;
 						} else {
 							tooltip = `${date}: ${
 								value.planned > 1
