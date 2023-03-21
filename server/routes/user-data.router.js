@@ -13,9 +13,9 @@ router.get("/", rejectUnauthenticated, async (req, res) => {
 			cohorts.start_date,
 			uc.daily_stake,
 			uc.duration,
-			JSON_AGG(JSON_BUILD_OBJECT('date', tp.date, 'miles', tp.miles_planned)) AS "planned",
-			JSON_AGG(JSON_BUILD_OBJECT('date', ta.date, 'miles', ta.miles_actual)) AS "actual",
-			JSON_AGG(JSON_BUILD_OBJECT('date', charges.date, 'miles', charges.amount)) AS "charge"
+			JSON_AGG(JSON_BUILD_OBJECT('date', tp.date, 'planned', tp.miles_planned)) AS "planned",
+			JSON_AGG(JSON_BUILD_OBJECT('date', ta.date, 'actual', ta.miles_actual)) AS "actual",
+			JSON_AGG(JSON_BUILD_OBJECT('date', charges.date, 'charge', charges.amount)) AS "charge"
 		FROM "users_cohorts" AS uc
 		LEFT JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
 		LEFT JOIN "training_actual" AS ta ON ta.users_cohorts_id = uc.id

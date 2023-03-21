@@ -14,6 +14,18 @@ function DashboardPage() {
 	const user = useSelector((store) => store.user);
 	const userData = useSelector((store) => store.userData.userDataReducer);
 	const currentCohort = userData[0];
+	console.log("user data", userData);
+
+	const calendarData = currentCohort?.planned.map((training) => {
+		training.actual = currentCohort.actual?.find(
+			(t) => t.date === training.date
+		)?.miles;
+		training.charge = currentCohort.charge?.find(
+			(t) => t.date === training.date
+		)?.charge;
+		return training;
+	});
+	console.log("calendar data", calendarData);
 
 	useEffect(() => {
 		dispatch({ type: "FETCH_USER_COHORT" });
@@ -26,9 +38,6 @@ function DashboardPage() {
 			<main className="dashboard-main">
 				<Header text={"Progress"} />
 				<h1>NEW BELOW THIS</h1>
-				{userData.map((cohort) => {
-					console.log(cohort);
-				})}
 				<CalendarHeatmap
 					showOutOfRangeDays={true}
 					horizontal={false}
@@ -40,16 +49,28 @@ function DashboardPage() {
 					)}
 					showMonthLabels={true}
 					showWeekdayLabels={true}
-					values={[
-						{ date: "2023-03-12", count: 12 },
-						{ date: "2023-03-15", count: 12 },
-						{ date: "2023-03-25", count: 38 },
-						// ...and so on
-					]}
+					values={calendarData ? calendarData : []}
 					tooltipDataAttrs={(value) => {
+						const date = dayjs(value.date).format("MMM D");
+						let tooltip;
+
+						if (!value.date) {
+							tooltip = `Nothing Planned`;
+						} else if (value.charge === 0) {
+							tooltip = `${date}: Completed! :)`;
+						} else if (value.charge) {
+							tooltip = `${date}: Did not meet goal :( planned for ${value.planned} and ran ${value.actual}`;
+						} else {
+							tooltip = `${date}: ${
+								value.planned > 1
+									? `${value.planned} Miles`
+									: `${value.planned} Mile`
+							} Planned!`;
+						}
+
 						return {
 							"data-tooltip-id": "calendar-tooltip",
-							"data-tooltip-content": `${JSON.stringify(value)}`,
+							"data-tooltip-content": tooltip,
 						};
 					}}
 				/>
