@@ -1,9 +1,109 @@
 .dashboard-main {
 	margin-left: 5rem;
+
+	aspect-ratio: 900/600;
+	height: 100vh;
+	width: 100%;
+	overflow-y: scroll;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+	background-image: url("../../../../assets/images/stacked-waves-haikei\ \(5\).svg");
 }
 
+// DATA VISUALIZATION
+.dashboard {
+	margin-left: -5rem;
+	padding: 0 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+
+	& > * {
+		width: 500px;
+	}
+
+	&__heatmap-box {
+	}
+
+	&__day-details-box {
+		margin-bottom: 1.5rem;
+
+		& .details-header {
+			text-align: center;
+			margin: 0;
+			padding-bottom: 0.5rem;
+			font-size: 2rem;
+		}
+
+		& table {
+			margin: 0 auto;
+			border-collapse: collapse;
+			border: 2px solid black;
+			& td {
+				padding: 0.5rem 1rem;
+			}
+
+			& tr {
+				border-bottom: 2px solid black;
+			}
+		}
+	}
+}
+
+.stats {
+	&__section {
+		padding: 1rem;
+	}
+
+	&__data-box {
+		text-align: center;
+	}
+
+	&__header-primary {
+		margin: 0 auto;
+		text-align: center;
+		font-size: 3rem;
+		border-bottom: 3px solid black;
+		border-radius: 5px;
+		width: 70%;
+	}
+
+	&__text {
+		margin: 0;
+		font-size: 50px;
+		color: #f0f0f0;
+		font-weight: 900;
+		text-shadow: 0 1px 0 #999999, 0 2px 0 #888888, 0 3px 0 #777777,
+			0 4px 0 #666666, 0 5px 0 #555555, 0 6px 0 #444444, 0 7px 0 #333333,
+			0 8px 7px rgba(0, 0, 0, 0.4), 0 9px 10px rgba(0, 0, 0, 0.2);
+	}
+}
+
+// HEATMAP
 .react-calendar-heatmap {
 	margin-left: 5rem;
-	height: 300px;
+	width: 100%;
 	padding: 1rem;
+}
+
+// HEATMAP BOX STYLES
+.react-calendar-heatmap {
+	& .heatmap-nothing-planned {
+		fill: black;
+	}
+
+	& .heatmap-completed {
+		fill: green;
+	}
+
+	& .heatmap-missed {
+		fill: red;
+	}
+
+	& .heatmap-planned {
+		fill: lightgray;
+	}
 }
