@@ -37,73 +37,112 @@ function DashboardPage() {
 			<Sidebar />
 			<main className="dashboard-main">
 				<Header text={"Current"} />
-				<div>
-					<p>
-						Date:{" "}
-						{focusedTraning
-							? dayjs(focusedTraning.date).format("MMMM D")
-							: "N/A"}
-					</p>
-					<p>
-						Planned:{" "}
-						{focusedTraning ? focusedTraning.planned : "N/A"}
-					</p>
-					<p>
-						Actual: {focusedTraning ? focusedTraning.actual : "N/A"}
-					</p>
-					<p>
-						Charge: {focusedTraning ? focusedTraning.charge : "N/A"}
-					</p>
-				</div>
-				<CalendarHeatmap
-					showOutOfRangeDays={true}
-					horizontal={false}
-					gutterSize={2}
-					startDate={currentCohort?.start_date}
-					endDate={dayjs(currentCohort?.start_date).add(
-						currentCohort?.duration,
-						"day"
-					)}
-					showMonthLabels={true}
-					showWeekdayLabels={true}
-					values={calendarData ? calendarData : []}
-					onClick={(value) => setFocusedTraining(value)}
-					classForValue={(value) => {
-						if (!value) {
-							return `heatmap-nothing-planned`;
-						} else if (value.charge === 0) {
-							return `heatmap-completed`;
-						} else if (value.charge) {
-							return `heatmap-missed`;
-						} else {
-							return `heatmap-planned`;
-						}
-					}}
-					tooltipDataAttrs={(value) => {
-						const date = dayjs(value.date).format("ddd MMM D");
-						let tooltip;
+				<section className="dashboard">
+					<div className="dashboard__heatmap-box">
+						<CalendarHeatmap
+							showOutOfRangeDays={true}
+							horizontal={false}
+							gutterSize={2}
+							startDate={currentCohort?.start_date}
+							endDate={dayjs(currentCohort?.start_date).add(
+								currentCohort?.duration,
+								"day"
+							)}
+							showMonthLabels={true}
+							showWeekdayLabels={true}
+							values={calendarData ? calendarData : []}
+							onClick={(value) => setFocusedTraining(value)}
+							classForValue={(value) => {
+								if (!value) {
+									return `heatmap-nothing-planned`;
+								} else if (value.charge === 0) {
+									return `heatmap-completed`;
+								} else if (value.charge) {
+									return `heatmap-missed`;
+								} else {
+									return `heatmap-planned`;
+								}
+							}}
+							tooltipDataAttrs={(value) => {
+								const date = dayjs(value.date).format(
+									"ddd MMM D"
+								);
+								let tooltip;
 
-						if (!value.date) {
-							tooltip = `Nothing Planned`;
-						} else if (value.charge === 0) {
-							tooltip = `${date}: Completed! :)`;
-						} else if (value.charge) {
-							tooltip = `${date}: Missed :(`;
-						} else {
-							tooltip = `${date}: ${
-								value.planned > 1
-									? `${value.planned} Miles`
-									: `${value.planned} Mile`
-							} Planned!`;
-						}
+								if (!value.date) {
+									tooltip = `Nothing Planned`;
+								} else if (value.charge === 0) {
+									tooltip = `${date}: Completed! :)`;
+								} else if (value.charge) {
+									tooltip = `${date}: Missed :(`;
+								} else {
+									tooltip = `${date}: ${
+										value.planned > 1
+											? `${value.planned} Miles`
+											: `${value.planned} Mile`
+									} Planned!`;
+								}
 
-						return {
-							"data-tooltip-id": "calendar-tooltip",
-							"data-tooltip-content": tooltip,
-						};
-					}}
-				/>
-				<Tooltip id="calendar-tooltip" />
+								return {
+									"data-tooltip-id": "calendar-tooltip",
+									"data-tooltip-content": tooltip,
+								};
+							}}
+						/>
+						<Tooltip id="calendar-tooltip" />
+					</div>
+					<div className="dashboard__day-details-box">
+						<h2 className="details-header">
+							{focusedTraning && focusedTraning.date
+								? dayjs(focusedTraning.date).format("MMMM D")
+								: "N/A"}
+						</h2>
+						<table>
+							<tbody>
+								<tr>
+									<td>Planned</td>
+									<td>
+										{focusedTraning &&
+										typeof focusedTraning.planned ===
+											"number"
+											? `${focusedTraning.planned} Miles`
+											: "N/A"}
+									</td>
+								</tr>
+								<tr>
+									<td>Actual</td>
+									<td>
+										{focusedTraning &&
+										typeof focusedTraning.actual ===
+											"number"
+											? `${focusedTraning.actual} Miles`
+											: "N/A"}
+									</td>
+								</tr>
+								<tr>
+									<td>Charge</td>
+									<td>
+										{focusedTraning &&
+										typeof focusedTraning.charge ===
+											"number"
+											? `$${focusedTraning.charge}`
+											: "N/A"}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<StatsContainer
+						header={"Personal"}
+						overallStat={"78%"}
+						milesStat={"59M"}
+					/>
+					<StatsContainer
+						header={"Cohort"}
+						overallStat={"88%"}
+						milesStat={"324M"}
+					/>
+				</section>
 				{user.is_active ? (
 					<h1>CAN SEE DATA</h1>
 				) : (
@@ -111,6 +150,28 @@ function DashboardPage() {
 				)}
 			</main>
 		</div>
+	);
+}
+
+function StatsContainer({ header, overallStat, milesStat }) {
+	return (
+		<section className="stats__section">
+			<h2 className="stats__header-primary">{header}</h2>
+			<div>
+				<span>
+					<p className="stats__title">Overall</p>
+					<div className="stats__data">
+						<span>{overallStat}</span>
+					</div>
+				</span>
+				<span>
+					<p className="stats__title">Miles</p>
+					<div className="stats__data">
+						<span>{milesStat}</span>
+					</div>
+				</span>
+			</div>
+		</section>
 	);
 }
 
