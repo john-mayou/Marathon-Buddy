@@ -135,12 +135,12 @@ function DashboardPage() {
 					<StatsContainer
 						header={"Personal"}
 						overallStat={"78%"}
-						milesStat={"59M"}
+						milesStat={"59"}
 					/>
 					<StatsContainer
 						header={"Cohort"}
 						overallStat={"88%"}
-						milesStat={"324M"}
+						milesStat={"324"}
 					/>
 				</section>
 				{user.is_active ? (
@@ -157,17 +157,21 @@ function StatsContainer({ header, overallStat, milesStat }) {
 	return (
 		<section className="stats__section">
 			<h2 className="stats__header-primary">{header}</h2>
-			<div>
-				<span>
+			<div className="stats__data-section">
+				<span className="stats__data-box">
 					<p className="stats__title">Overall</p>
 					<div className="stats__data">
-						<span>{overallStat}</span>
+						<span className="stats__text-container">
+							<span className="stats__text">{overallStat}</span>
+						</span>
 					</div>
 				</span>
-				<span>
+				<span className="stats__data-box">
 					<p className="stats__title">Miles</p>
 					<div className="stats__data">
-						<span>{milesStat}</span>
+						<span className="stats__text-container">
+							<span className="stats__text">{milesStat}</span>
+						</span>
 					</div>
 				</span>
 			</div>

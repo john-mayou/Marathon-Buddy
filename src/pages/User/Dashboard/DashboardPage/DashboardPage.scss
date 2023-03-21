@@ -19,16 +19,18 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 1rem;
 
 	& > * {
 		width: 500px;
-		// border: 1px solid red;
 	}
 
 	&__heatmap-box {
 	}
 
 	&__day-details-box {
+		margin-bottom: 1.5rem;
+
 		& .details-header {
 			text-align: center;
 			margin: 0;
@@ -52,17 +54,67 @@
 
 .stats {
 	&__section {
+		padding: 1rem;
+		border-top: 2px solid black;
+	}
+
+	&__data-section {
+		display: flex;
+		justify-content: center;
+		gap: 2rem;
+	}
+
+	&__data-box {
 	}
 
 	&__header-primary {
+		text-align: center;
 		margin: 0;
+		padding: 0.5rem;
 	}
 
 	&__title {
 		margin: 0;
+		text-align: center;
+		font-weight: 600;
 	}
 
 	&__data {
+		width: 150px;
+		height: 150px;
+		// border: 1px solid blue;
+		position: relative;
+		background-image: linear-gradient(
+				to top right,
+				rgba(0, 0, 0, 0.349),
+				rgba(0, 0, 0, 0.351)
+			),
+			url("../../../../assets/images/Track-Close-Up-Black.jpg");
+		border-radius: 10px;
+	}
+
+	&__text-container {
+		width: 100px;
+		height: 100px;
+		position: absolute;
+		z-index: 10;
+		top: 50%;
+		margin-top: -50px;
+		left: 50%;
+		margin-left: -50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__text {
+		margin: 0;
+		font-size: 50px;
+		color: #f0f0f0;
+		font-weight: 900;
+		text-shadow: 0 1px 0 #999999, 0 2px 0 #888888, 0 3px 0 #777777,
+			0 4px 0 #666666, 0 5px 0 #555555, 0 6px 0 #444444, 0 7px 0 #333333,
+			0 8px 7px rgba(0, 0, 0, 0.4), 0 9px 10px rgba(0, 0, 0, 0.2);
 	}
 }
 
