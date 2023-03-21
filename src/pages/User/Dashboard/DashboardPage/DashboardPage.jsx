@@ -1,5 +1,5 @@
 import "./DashboardPage.scss";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import Header from "../../../../components/Header/Header";
@@ -18,12 +18,15 @@ function DashboardPage() {
 	const calendarData = currentCohort?.planned.map((training) => {
 		training.actual = currentCohort.actual?.find(
 			(t) => t.date === training.date
-		)?.miles;
+		)?.actual;
 		training.charge = currentCohort.charge?.find(
 			(t) => t.date === training.date
 		)?.charge;
 		return training;
 	});
+
+	// local state
+	const [focusedTraning, setFocusedTraining] = useState({});
 
 	useEffect(() => {
 		dispatch({ type: "FETCH_USER_DATA" });
@@ -34,7 +37,24 @@ function DashboardPage() {
 			<Sidebar />
 			<main className="dashboard-main">
 				<Header text={"Current"} />
-				<h1>NEW BELOW THIS</h1>
+				<div>
+					<p>
+						Date:{" "}
+						{focusedTraning
+							? dayjs(focusedTraning.date).format("MMMM D")
+							: "N/A"}
+					</p>
+					<p>
+						Planned:{" "}
+						{focusedTraning ? focusedTraning.planned : "N/A"}
+					</p>
+					<p>
+						Actual: {focusedTraning ? focusedTraning.actual : "N/A"}
+					</p>
+					<p>
+						Charge: {focusedTraning ? focusedTraning.charge : "N/A"}
+					</p>
+				</div>
 				<CalendarHeatmap
 					showOutOfRangeDays={true}
 					horizontal={false}
@@ -47,6 +67,7 @@ function DashboardPage() {
 					showMonthLabels={true}
 					showWeekdayLabels={true}
 					values={calendarData ? calendarData : []}
+					onClick={(value) => setFocusedTraining(value)}
 					classForValue={(value) => {
 						if (!value) {
 							return `heatmap-nothing-planned`;
@@ -67,7 +88,7 @@ function DashboardPage() {
 						} else if (value.charge === 0) {
 							tooltip = `${date}: Completed! :)`;
 						} else if (value.charge) {
-							tooltip = `${date}: Missed this one :( planned for ${value.planned} and ran ${value.actual}`;
+							tooltip = `${date}: Missed :(`;
 						} else {
 							tooltip = `${date}: ${
 								value.planned > 1
