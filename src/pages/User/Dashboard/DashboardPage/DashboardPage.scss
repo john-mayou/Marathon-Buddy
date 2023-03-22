@@ -26,27 +26,9 @@
 	}
 
 	&__day-details-box {
-		margin-bottom: 1.5rem;
-
-		& .details-header {
-			text-align: center;
-			margin: 0;
-			padding-bottom: 0.5rem;
-			font-size: 2rem;
-		}
-
-		& table {
-			margin: 0 auto;
-			border-collapse: collapse;
-			border: 2px solid black;
-			& td {
-				padding: 0.5rem 1rem;
-			}
-
-			& tr {
-				border-bottom: 2px solid black;
-			}
-		}
+		margin: 1rem;
+		display: flex;
+		justify-content: center;
 	}
 }
 
