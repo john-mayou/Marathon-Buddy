@@ -2,6 +2,7 @@ import "./HistoryPage.scss";
 import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Header from "../../../../components/Header/Header";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -20,14 +21,11 @@ function HistoryPage() {
 		dispatch({ type: "FETCH_USER_DATA" });
 	}, []);
 
-	console.log(userData);
 	return (
 		<div>
 			<Sidebar />
 			<section className="history-main">
-				<h1>HISTORY</h1>
-				<h2>Welcome, {user.email}!</h2>
-				<p>Your ID is: {user.id}</p>
+				<Header text={"History"} />
 				<TableContainer
 					component={Paper}
 					elevation={10}
