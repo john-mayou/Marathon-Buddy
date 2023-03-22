@@ -140,15 +140,17 @@ function DashboardPage() {
 								currentCohort?.charge.filter((t) => t.date)
 									.length) *
 								100
-						)} // finds percentage of days completed by user
-						milesStat={Math.floor(
-							currentCohort?.actual.reduce(
-								(totalMiles, training) => {
-									return totalMiles + training.actual;
-								},
-								0
-							)
-						)}
+						)} // percentage of days completed by user
+						milesStat={
+							Math.floor(
+								currentCohort?.actual.reduce(
+									(totalMiles, training) => {
+										return totalMiles + training.actual;
+									},
+									0
+								)
+							) // total miles run by the user
+						}
 					/>
 					<StatsContainer
 						header={"Cohort"}
