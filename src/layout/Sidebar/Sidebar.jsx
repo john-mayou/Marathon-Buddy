@@ -2,7 +2,14 @@ import "./Sidebar.scss";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import {
+	faHouse,
+	faAnglesRight,
+	faClockRotateLeft,
+	faLink,
+	faUserPlus,
+	faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 function UserTemplate({ PageContent }) {
 	const history = useHistory();
@@ -43,7 +50,10 @@ function UserTemplate({ PageContent }) {
 					onClick={() => history.push("/join-info")}
 				>
 					<a className="navbar__link">
-						<FontAwesomeIcon icon={faHouse} className="link-icon" />
+						<FontAwesomeIcon
+							icon={faUserPlus}
+							className="link-icon add-user-icon"
+						/>
 						<span className="link-text">
 							Join{" "}
 							<span className="remove-for-mobile">Cohort</span>
@@ -55,7 +65,10 @@ function UserTemplate({ PageContent }) {
 					onClick={() => history.push("/cohort-history")}
 				>
 					<a className="navbar__link">
-						<FontAwesomeIcon icon={faHouse} className="link-icon" />
+						<FontAwesomeIcon
+							icon={faClockRotateLeft}
+							className="link-icon"
+						/>
 						<span className="link-text">History</span>
 					</a>
 				</li>
@@ -64,7 +77,7 @@ function UserTemplate({ PageContent }) {
 					onClick={() => history.push("/connected-apps")}
 				>
 					<a className="navbar__link">
-						<FontAwesomeIcon icon={faHouse} className="link-icon" />
+						<FontAwesomeIcon icon={faLink} className="link-icon" />
 						<span className="link-text">
 							<span className="remove-for-mobile">Connect</span>{" "}
 							Apps
@@ -76,7 +89,10 @@ function UserTemplate({ PageContent }) {
 					onClick={() => dispatch({ type: "LOGOUT" })}
 				>
 					<a className="navbar__link">
-						<FontAwesomeIcon icon={faHouse} className="link-icon" />
+						<FontAwesomeIcon
+							icon={faRightFromBracket}
+							className="link-icon"
+						/>
 						<span className="link-text">Logout</span>
 					</a>
 				</li>
