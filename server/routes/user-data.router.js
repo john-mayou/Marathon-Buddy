@@ -8,23 +8,26 @@ const {
 router.get("/", rejectUnauthenticated, async (req, res) => {
 	// finds cohorts the user was a part of and returns them
 	const userCohortDataQuery = `
-        SELECT
-			cohorts.name,
-			cohorts.start_date,
+		SELECT
+			co.name,
+			co.start_date,
 			uc.daily_stake,
 			uc.duration,
 			JSON_AGG(JSON_BUILD_OBJECT('date', tp.date, 'planned', tp.miles_planned)) AS "planned",
 			JSON_AGG(JSON_BUILD_OBJECT('date', ta.date, 'actual', ta.miles_actual)) AS "actual",
-			JSON_AGG(JSON_BUILD_OBJECT('date', charges.date, 'charge', charges.amount)) AS "charge"
+			JSON_AGG(JSON_BUILD_OBJECT('date', ch.date, 'charge', ch.amount)) AS "charge",
+			(COUNT(ch.amount) FILTER (WHERE ch.amount > 0))::int AS "cohort_charges", 
+			COUNT(ch.amount)::int AS "users",
+			SUM(ta.miles_actual)::int AS "cohort_miles"
 		FROM "users_cohorts" AS uc
-		LEFT JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
-		LEFT JOIN "training_actual" AS ta ON ta.users_cohorts_id = uc.id
-		LEFT JOIN "charges" ON charges.users_cohorts_id = uc.id
-		JOIN "cohorts" ON cohorts.id = uc.cohort_id
+			LEFT JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
+			LEFT JOIN "training_actual" AS ta ON ta.users_cohorts_id = uc.id AND ta.date = tp.date
+			LEFT JOIN "charges" ch ON ch.users_cohorts_id = uc.id AND ch.date = tp.date AND ch.date = ta.date
+		JOIN "cohorts" AS co ON co.id = uc.cohort_id
 		WHERE uc.user_id = $1
-		GROUP BY cohorts.name, cohorts.start_date, uc.daily_stake, uc.duration, uc.user_id
-		ORDER BY cohorts.start_date DESC;
-    `;
+		GROUP BY co.name, co.start_date, uc.daily_stake, uc.duration, uc.user_id
+		ORDER BY co.start_date DESC;
+	`;
 	const connection = await pool.connect();
 
 	try {
