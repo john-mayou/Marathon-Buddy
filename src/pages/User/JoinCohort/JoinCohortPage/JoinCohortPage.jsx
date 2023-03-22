@@ -8,6 +8,13 @@ import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
 import MenuItem from "@mui/material/MenuItem";
 import Header from "../../../../components/Header/Header";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -49,10 +56,13 @@ function JoinCohortPage() {
 			<main className="join-cohort-main">
 				<Header text={`Join Cohort`} />
 				<section className="join-form">
-					<section className="join-form__info-container">
+					<Paper
+						elevation={10}
+						sx={{ textAlign: "center", padding: "0.5rem" }}
+					>
 						<p>The {currentCohort?.name} Cohort!</p>
 						<p>
-							Start Date:{" "}
+							Starts{" "}
 							<strong>
 								{dayjs(currentCohort?.start_date).format(
 									"MMM D"
@@ -60,14 +70,17 @@ function JoinCohortPage() {
 							</strong>
 						</p>
 						<p>
-							Duration: <strong>{trainingDuration} days</strong>
+							<strong>{trainingDuration} days</strong>
 						</p>
-					</section>
-					<section className="join-form__stake-container">
-						<span>
-							How much would you want to stake?{" "}
+					</Paper>
+					<Paper
+						elevation={10}
+						sx={{ textAlign: "center", padding: "0.5rem" }}
+					>
+						<p>How much would you want to stake?</p>
+						<p>
 							<strong>${stake}</strong>
-						</span>
+						</p>
 						<Slider
 							className="stake-input-slider"
 							aria-label="Stake"
@@ -79,7 +92,7 @@ function JoinCohortPage() {
 							min={5}
 							max={25}
 						/>
-					</section>
+					</Paper>
 					<section className="join-form__date-input-container">
 						<DatePicker
 							className="rmdp-mobile"
@@ -100,7 +113,7 @@ function JoinCohortPage() {
 							render={(value, openCalendar) => {
 								return (
 									<Button
-										color="primary"
+										color="warning"
 										variant="contained"
 										className="date-picker-button"
 										onClick={openCalendar}
@@ -114,23 +127,53 @@ function JoinCohortPage() {
 						/>
 					</section>
 					<section className="join-form__table-container">
-						<table>
-							<thead>
-								<tr>
-									<th>Date</th>
-									<th>Miles</th>
-								</tr>
-							</thead>
-							<tbody>
-								{trainingDates.map((day, i) => {
-									return (
-										<tr key={i}>
-											<td>
+						<TableContainer
+							component={Paper}
+							elevation={10}
+							sx={{
+								maxWidth: 500,
+							}}
+						>
+							<Table
+								sx={{ minWidth: 350 }}
+								aria-label="simple table"
+							>
+								<TableHead>
+									<TableRow>
+										<TableCell align="center">
+											Date
+										</TableCell>
+										<TableCell align="center">
+											Miles
+										</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{trainingDates.map((day) => (
+										<TableRow
+											key={day}
+											sx={{
+												"&:last-child td, &:last-child th":
+													{
+														border: 0,
+													},
+											}}
+										>
+											<TableCell
+												style={{ width: "50%" }}
+												component="th"
+												scope="row"
+												align="center"
+											>
 												{dayjs(new Date(day)).format(
 													"dddd MMM D"
 												)}
-											</td>
-											<td>
+											</TableCell>
+
+											<TableCell
+												style={{ width: "50%" }}
+												align="center"
+											>
 												<Slider
 													className=""
 													aria-label="Stake"
@@ -160,12 +203,12 @@ function JoinCohortPage() {
 													min={0}
 													max={15}
 												/>
-											</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
 					</section>
 					<section className="join-form__checkout-container">
 						<Button

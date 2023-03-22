@@ -157,7 +157,9 @@ function AdminPage() {
 									{cohort.users}
 								</TableCell>
 								<TableCell align="center">
-									{
+									{cohort.is_current ? (
+										<></>
+									) : (
 										<Button
 											color="info"
 											variant="contained"
@@ -173,10 +175,12 @@ function AdminPage() {
 											</span>
 											<CheckIcon fontSize="small" />
 										</Button>
-									}
+									)}
 								</TableCell>
 								<TableCell align="center">
-									{
+									{cohort.is_current ? (
+										<></>
+									) : (
 										<Button
 											color="error"
 											variant="contained"
@@ -191,7 +195,7 @@ function AdminPage() {
 												Delete
 											</span>
 										</Button>
-									}
+									)}
 								</TableCell>
 							</TableRow>
 						))}
