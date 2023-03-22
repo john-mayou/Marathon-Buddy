@@ -153,10 +153,11 @@ function DashboardPage() {
 					<StatsContainer
 						header={"Cohort"}
 						overallStat={`${
-							currentCohort?.cohort_charges !== 0
+							currentCohort?.num_non_zero_charges !== 0
 								? Math.floor(
-										(currentCohort?.cohort_charges /
-											currentCohort?.users) *
+										(currentCohort?.num_non_zero_charges /
+											(currentCohort?.num_non_zero_charges +
+												currentCohort?.num_zero_charges)) *
 											100
 								  )
 								: 100

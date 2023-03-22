@@ -16,8 +16,8 @@ router.get("/", rejectUnauthenticated, async (req, res) => {
 			JSON_AGG(JSON_BUILD_OBJECT('date', tp.date, 'planned', tp.miles_planned)) AS "planned",
 			JSON_AGG(JSON_BUILD_OBJECT('date', ta.date, 'actual', ta.miles_actual)) AS "actual",
 			JSON_AGG(JSON_BUILD_OBJECT('date', ch.date, 'charge', ch.amount)) AS "charge",
-			(COUNT(ch.amount) FILTER (WHERE ch.amount > 0))::int AS "cohort_charges", 
-			COUNT(ch.amount)::int AS "users",
+			(COUNT(ch.amount) FILTER (WHERE ch.amount = 0))::int AS "num_zero_charges", 
+			(COUNT(ch.amount) FILTER (WHERE ch.amount > 0))::int AS "num_non_zero_charges",
 			SUM(ta.miles_actual)::int AS "cohort_miles"
 		FROM "users_cohorts" AS uc
 			LEFT JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
