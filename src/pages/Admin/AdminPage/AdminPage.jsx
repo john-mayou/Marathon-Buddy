@@ -15,7 +15,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Swal from "sweetalert2";
 
 function AdminPage() {
@@ -75,6 +75,10 @@ function AdminPage() {
 	const handleAddCohort = (e) => {
 		e.preventDefault();
 
+		if (!newCohortName || !newCohortDate) {
+			return;
+		}
+
 		const newCohort = {
 			name: newCohortName,
 			start_date: newCohortDate,
@@ -88,9 +92,10 @@ function AdminPage() {
 			<h1 className="admin-header">Admin</h1>
 			<form onSubmit={handleAddCohort} className="cohort-form">
 				<LocalizationProvider dateAdapter={AdapterDayjs}>
-					<DatePicker
+					<MobileDatePicker
 						label={"Start Date"}
 						onChange={(e) => setNewCohortDate(e)}
+						minDate={dayjs()}
 						sx={{ backgroundColor: "#fff", borderRadius: "5px" }}
 					/>
 				</LocalizationProvider>
