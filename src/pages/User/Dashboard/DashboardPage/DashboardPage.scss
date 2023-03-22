@@ -1,5 +1,6 @@
 .dashboard-main {
 	margin-left: 5rem;
+	padding: 1rem;
 
 	aspect-ratio: 900/600;
 	height: 100vh;
@@ -25,31 +26,10 @@
 		width: 500px;
 	}
 
-	&__heatmap-box {
-	}
-
 	&__day-details-box {
-		margin-bottom: 1.5rem;
-
-		& .details-header {
-			text-align: center;
-			margin: 0;
-			padding-bottom: 0.5rem;
-			font-size: 2rem;
-		}
-
-		& table {
-			margin: 0 auto;
-			border-collapse: collapse;
-			border: 2px solid black;
-			& td {
-				padding: 0.5rem 1rem;
-			}
-
-			& tr {
-				border-bottom: 2px solid black;
-			}
-		}
+		margin: 1rem;
+		display: flex;
+		justify-content: center;
 	}
 }
 
@@ -74,7 +54,7 @@
 	&__text {
 		margin: 0;
 		font-size: 50px;
-		color: #f0f0f0;
+		color: #fff;
 		font-weight: 900;
 		text-shadow: 0 1px 0 #999999, 0 2px 0 #888888, 0 3px 0 #777777,
 			0 4px 0 #666666, 0 5px 0 #555555, 0 6px 0 #444444, 0 7px 0 #333333,
@@ -105,5 +85,15 @@
 
 	& .heatmap-planned {
 		fill: black;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.dashboard-main {
+		margin-left: 0;
+	}
+
+	.dashboard {
+		margin-left: 0;
 	}
 }

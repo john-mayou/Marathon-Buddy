@@ -5,6 +5,17 @@ import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Swal from "sweetalert2";
 
 function AdminPage() {
@@ -76,17 +87,20 @@ function AdminPage() {
 		<div className="admin-page-container">
 			<h1 className="admin-header">Admin</h1>
 			<form onSubmit={handleAddCohort} className="cohort-form">
-				<input
-					id="cohort-date-input"
-					type="date"
-					onChange={(e) => setNewCohortDate(e.target.value)}
-				/>
-				<input
-					className="cohort-name-input"
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DatePicker
+						label={"Start Date"}
+						onChange={(e) => setNewCohortDate(e)}
+						sx={{ backgroundColor: "#fff", borderRadius: "5px" }}
+					/>
+				</LocalizationProvider>
+				<TextField
 					type="text"
-					placeholder="Name"
+					label="Name"
+					varitant="outlined"
 					value={newCohortName}
 					onChange={(e) => setNewCohortName(e.target.value)}
+					sx={{ backgroundColor: "#fff", borderRadius: "5px" }}
 				/>
 				<Button
 					type="submit"
@@ -96,76 +110,89 @@ function AdminPage() {
 					Add Cohort
 				</Button>
 			</form>
-			<table className="cohort-table">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Date</th>
-						<th>Users</th>
-						<th>
-							<span className="delete-when-small-screen">
-								Active
-							</span>
-						</th>
-						<th>
-							<span className="delete-when-small-screen">
-								Delete
-							</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{cohorts.map((cohort) => {
-						return (
-							<tr
-								key={cohort.id}
+			<TableContainer
+				component={Paper}
+				elevation={10}
+				sx={{
+					maxWidth: 700,
+				}}
+			>
+				<Table sx={{ minWidth: 350 }} aria-label="simple table">
+					<TableHead>
+						<TableRow>
+							<TableCell>Name</TableCell>
+							<TableCell align="center">Date</TableCell>
+							<TableCell align="center">Users</TableCell>
+							<TableCell align="center">Active</TableCell>
+							<TableCell align="center">Delete</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{cohorts.map((cohort) => (
+							<TableRow
+								key={cohort.name}
+								sx={{
+									"&:last-child td, &:last-child th": {
+										border: 0,
+									},
+								}}
 								style={
 									cohort.is_current
 										? { backgroundColor: "lightgreen" }
 										: { backgroundColor: "#f0f0f0" }
 								}
 							>
-								<td>{cohort.name}</td>
-								<td>
-									{dayjs(cohort.start_date).format("MMM D")}
-								</td>
-								<td>{cohort.users}</td>
-								<td>
-									<Button
-										color="info"
-										variant="contained"
-										onClick={() =>
-											popupMakeActiveConfirmation(
-												cohort.id,
-												cohort.name
-											)
-										}
-									>
-										<span className="active-text">
-											Make Active
-										</span>
-										<CheckIcon fontSize="small" />
-									</Button>
-								</td>
-								<td>
-									<Button
-										color="error"
-										variant="contained"
-										onClick={() =>
-											popupDeleteConfirmation(cohort.id)
-										}
-									>
-										<DeleteIcon fontSize="small" />{" "}
-										<span className="delete-text">
-											Delete
-										</span>
-									</Button>
-								</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
+								<TableCell component="th" scope="row">
+									{cohort.name}
+								</TableCell>
+								<TableCell align="center">
+									{dayjs(cohort.start_date).format("MMMM D")}
+								</TableCell>
+								<TableCell align="center">
+									{cohort.users}
+								</TableCell>
+								<TableCell align="center">
+									{
+										<Button
+											color="info"
+											variant="contained"
+											onClick={() =>
+												popupMakeActiveConfirmation(
+													cohort.id,
+													cohort.name
+												)
+											}
+										>
+											<span className="active-text">
+												Make Active
+											</span>
+											<CheckIcon fontSize="small" />
+										</Button>
+									}
+								</TableCell>
+								<TableCell align="center">
+									{
+										<Button
+											color="error"
+											variant="contained"
+											onClick={() =>
+												popupDeleteConfirmation(
+													cohort.id
+												)
+											}
+										>
+											<DeleteIcon fontSize="small" />{" "}
+											<span className="delete-text">
+												Delete
+											</span>
+										</Button>
+									}
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 		</div>
 	);
 }

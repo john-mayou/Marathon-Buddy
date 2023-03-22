@@ -32,61 +32,10 @@
 	align-items: stretch;
 	text-align: center;
 	gap: 1rem;
-
-	& input {
-		padding: 0.3rem 1rem;
-		border-radius: 5px;
-		border: none;
-	}
-}
-
-.cohort-table {
-	border-collapse: collapse;
-	text-align: center;
-
-	& td,
-	& th {
-		padding: 0.5rem 1rem;
-	}
-
-	& .active-text {
-		font-size: 1rem;
-	}
-
-	& .delete-text {
-		margin-left: 3px;
-		font-size: 1rem;
-	}
 }
 
 @media only screen and (max-width: 600px) {
 	.admin-page-container {
 		padding: 3px;
-	}
-
-	.cohort-table {
-		& .delete-text,
-		& .active-text {
-			display: none;
-			margin: 0;
-		}
-
-		& td,
-		& th {
-			padding: 1.5rem 5px;
-		}
-	}
-}
-
-@media only screen and (max-width: 450px) {
-	.cohort-table {
-		& td,
-		& th {
-			padding: 1.5rem 2px;
-		}
-
-		& .delete-when-small-screen {
-			display: none;
-		}
 	}
 }

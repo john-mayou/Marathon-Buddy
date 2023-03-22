@@ -4,6 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import Sidebar from "../../../../layout/Sidebar/Sidebar";
 import Header from "../../../../components/Header/Header";
 import CalendarHeatmap from "react-calendar-heatmap";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 import "react-calendar-heatmap/dist/styles.css";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -72,7 +79,7 @@ function DashboardPage() {
 								if (!value.date) {
 									tooltip = `Nothing Planned`;
 								} else if (value.charge === 0) {
-									tooltip = `${date}: Completed! :)`;
+									tooltip = `${date}: Completed :)`;
 								} else if (value.charge) {
 									tooltip = `${date}: Missed :(`;
 								} else {
@@ -92,45 +99,70 @@ function DashboardPage() {
 						<Tooltip id="calendar-tooltip" />
 					</div>
 					<div className="dashboard__day-details-box">
-						<h2 className="details-header">
-							{focusedTraning && focusedTraning.date
-								? dayjs(focusedTraning.date).format("MMMM D")
-								: "N/A"}
-						</h2>
-						<table>
-							<tbody>
-								<tr>
-									<td>Planned</td>
-									<td>
-										{focusedTraning &&
-										typeof focusedTraning.planned ===
-											"number"
-											? `${focusedTraning.planned} Miles`
-											: "N/A"}
-									</td>
-								</tr>
-								<tr>
-									<td>Actual</td>
-									<td>
-										{focusedTraning &&
-										typeof focusedTraning.actual ===
-											"number"
-											? `${focusedTraning.actual} Miles`
-											: "N/A"}
-									</td>
-								</tr>
-								<tr>
-									<td>Charge</td>
-									<td>
-										{focusedTraning &&
-										typeof focusedTraning.charge ===
-											"number"
-											? `$${focusedTraning.charge}`
-											: "N/A"}
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<TableContainer
+							component={Paper}
+							elevation={10}
+							sx={{
+								maxWidth: 200,
+							}}
+						>
+							<Table
+								sx={{ minWidth: 200 }}
+								aria-label="simple table"
+							>
+								<TableBody>
+									<TableRow>
+										<TableCell component="th" scope="row">
+											Day
+										</TableCell>
+										<TableCell component="th" scope="row">
+											{focusedTraning &&
+											focusedTraning.date
+												? dayjs(
+														focusedTraning.date
+												  ).format("MMMM D")
+												: "N/A"}
+										</TableCell>
+									</TableRow>
+									<TableRow>
+										<TableCell component="th" scope="row">
+											Planned
+										</TableCell>
+										<TableCell component="th" scope="row">
+											{focusedTraning &&
+											typeof focusedTraning.planned ===
+												"number"
+												? `${focusedTraning.planned} Miles`
+												: "N/A"}
+										</TableCell>
+									</TableRow>
+									<TableRow>
+										<TableCell component="th" scope="row">
+											Actual
+										</TableCell>
+										<TableCell component="th" scope="row">
+											{focusedTraning &&
+											typeof focusedTraning.actual ===
+												"number"
+												? `${focusedTraning.actual} Miles`
+												: "N/A"}
+										</TableCell>
+									</TableRow>
+									<TableRow>
+										<TableCell component="th" scope="row">
+											Charge
+										</TableCell>
+										<TableCell component="th" scope="row">
+											{focusedTraning &&
+											typeof focusedTraning.charge ===
+												"number"
+												? `$${focusedTraning.charge}`
+												: "N/A"}
+										</TableCell>
+									</TableRow>
+								</TableBody>
+							</Table>
+						</TableContainer>
 					</div>
 					<StatsContainer
 						header={"Personal"}
@@ -140,15 +172,17 @@ function DashboardPage() {
 								currentCohort?.charge.filter((t) => t.date)
 									.length) *
 								100
-						)} // finds percentage of days completed by user
-						milesStat={Math.floor(
-							currentCohort?.actual.reduce(
-								(totalMiles, training) => {
-									return totalMiles + training.actual;
-								},
-								0
-							)
-						)}
+						)} // percentage of days completed by user
+						milesStat={
+							Math.floor(
+								currentCohort?.actual.reduce(
+									(totalMiles, training) => {
+										return totalMiles + training.actual;
+									},
+									0
+								)
+							) // total miles run by the user
+						}
 					/>
 					<StatsContainer
 						header={"Cohort"}
