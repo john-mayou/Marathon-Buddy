@@ -134,13 +134,38 @@ function DashboardPage() {
 					</div>
 					<StatsContainer
 						header={"Personal"}
-						overallStat={"78"}
-						milesStat={"59"}
+						overallStat={Math.floor(
+							(currentCohort?.charge.filter((t) => t.charge > 0)
+								.length /
+								currentCohort?.charge.filter((t) => t.date)
+									.length) *
+								100
+						)} // finds percentage of days completed by user
+						milesStat={Math.floor(
+							currentCohort?.actual.reduce(
+								(totalMiles, training) => {
+									return totalMiles + training.actual;
+								},
+								0
+							)
+						)}
 					/>
 					<StatsContainer
 						header={"Cohort"}
-						overallStat={"88"}
-						milesStat={"324"}
+						overallStat={`${
+							currentCohort?.cohort_charges !== 0
+								? Math.floor(
+										(currentCohort?.cohort_charges /
+											currentCohort?.users) *
+											100
+								  )
+								: 100
+						}`} // finds percentage of days completed by cohort
+						milesStat={
+							currentCohort?.cohort_miles
+								? currentCohort?.cohort_miles
+								: 0
+						}
 					/>
 				</section>
 				{user.is_active ? (

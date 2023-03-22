@@ -92,7 +92,7 @@
 // HEATMAP BOX STYLES
 .react-calendar-heatmap {
 	& .heatmap-nothing-planned {
-		fill: black;
+		fill: lightgray;
 	}
 
 	& .heatmap-completed {
@@ -104,6 +104,6 @@
 	}
 
 	& .heatmap-planned {
-		fill: lightgray;
+		fill: black;
 	}
 }
