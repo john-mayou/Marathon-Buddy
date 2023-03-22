@@ -79,7 +79,7 @@ function DashboardPage() {
 								if (!value.date) {
 									tooltip = `Nothing Planned`;
 								} else if (value.charge === 0) {
-									tooltip = `${date}: Completed! :)`;
+									tooltip = `${date}: Completed :)`;
 								} else if (value.charge) {
 									tooltip = `${date}: Missed :(`;
 								} else {
