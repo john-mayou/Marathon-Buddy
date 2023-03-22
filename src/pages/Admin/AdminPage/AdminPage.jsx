@@ -12,6 +12,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Swal from "sweetalert2";
 
 function AdminPage() {
@@ -83,17 +87,20 @@ function AdminPage() {
 		<div className="admin-page-container">
 			<h1 className="admin-header">Admin</h1>
 			<form onSubmit={handleAddCohort} className="cohort-form">
-				<input
-					id="cohort-date-input"
-					type="date"
-					onChange={(e) => setNewCohortDate(e.target.value)}
-				/>
-				<input
-					className="cohort-name-input"
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DatePicker
+						label={"Start Date"}
+						onChange={(e) => setNewCohortDate(e)}
+						sx={{ backgroundColor: "#fff", borderRadius: "5px" }}
+					/>
+				</LocalizationProvider>
+				<TextField
 					type="text"
-					placeholder="Name"
+					label="Name"
+					varitant="outlined"
 					value={newCohortName}
 					onChange={(e) => setNewCohortName(e.target.value)}
+					sx={{ backgroundColor: "#fff", borderRadius: "5px" }}
 				/>
 				<Button
 					type="submit"
