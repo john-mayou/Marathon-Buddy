@@ -82,15 +82,23 @@ function HistoryPage() {
 									</TableCell>
 									<TableCell align="right">
 										{
-											`${Math.floor(
-												(cohort?.charge.filter(
-													(t) => t.charge > 0
-												).length /
-													cohort?.charge.filter(
-														(t) => t.date
-													).length) *
-													100
-											)}%` // percentage of days completed by user
+											`${
+												cohort?.charge.some(
+													(charge) => charge.date
+												) // checks if any of the charges are not null
+													? Math.floor(
+															(cohort?.charge.filter(
+																(t) =>
+																	t.charge > 0
+															).length /
+																cohort?.charge.filter(
+																	(t) =>
+																		t.date
+																).length) *
+																100
+													  )
+													: 100
+											}%` // percentage of days completed by user
 										}
 									</TableCell>
 								</TableRow>
