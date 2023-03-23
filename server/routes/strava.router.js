@@ -2,8 +2,11 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 const axios = require("axios");
+const {
+	rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
 
-router.get("/", async (req, res) => {
+router.get("/", rejectUnauthenticated, async (req, res) => {
 	// if proper scopes were not authorized, break and redirect back to apps page
 	if (!/read,activity:read_all/.test(req.query.scope)) {
 		res.status(301).redirect("http://localhost:3000/#/connected-apps");
@@ -50,7 +53,7 @@ router.get("/", async (req, res) => {
 	}
 });
 
-router.delete("/", async (req, res) => {
+router.delete("/", rejectUnauthenticated, async (req, res) => {
 	const userId = req.user.id;
 	const connection = await pool.connect();
 
