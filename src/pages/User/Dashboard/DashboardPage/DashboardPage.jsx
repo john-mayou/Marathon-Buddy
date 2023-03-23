@@ -233,6 +233,7 @@ function DashboardPage() {
 					</p>
 				)}
 			</main>
+			<section className="container-to-fill-navbar-space"></section>
 		</div>
 	);
 }
