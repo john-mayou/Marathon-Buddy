@@ -133,10 +133,12 @@ router.post("/webhook", async (req, res) => {
 		} catch (error) {
 			await connection.query("ROLLBACK");
 			console.log(`Transaction Error - Rolling back new account`, error);
-			res.sendStatus(500).json({ success: false });
+			res.status(500).json({ success: false });
 		} finally {
 			connection.release();
 		}
+	} else {
+		res.status(200).json({ recieved: true });
 	}
 });
 
