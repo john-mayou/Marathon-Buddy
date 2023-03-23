@@ -16,6 +16,12 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 2rem;
+
+	& .if-user-not-active-dashboard {
+		margin-left: -5rem;
+		font-size: 2rem;
+		text-align: center;
+	}
 }
 
 // DATA VISUALIZATION
@@ -96,9 +102,13 @@
 @media only screen and (max-width: 600px) {
 	.dashboard-main {
 		margin-left: 0;
-	}
 
-	.dashboard {
-		margin-left: 0;
+		& .dashboard {
+			margin-left: 0;
+		}
+
+		& .if-user-not-active-dashboard {
+			margin-left: 0;
+		}
 	}
 }
