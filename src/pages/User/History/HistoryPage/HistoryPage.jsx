@@ -38,10 +38,10 @@ function HistoryPage() {
 						<TableHead>
 							<TableRow>
 								<TableCell>Cohort</TableCell>
-								<TableCell align="right">Start Date</TableCell>
-								<TableCell align="right">Length</TableCell>
-								<TableCell align="right">Miles</TableCell>
-								<TableCell align="right">Completed</TableCell>
+								<TableCell align="center">Date</TableCell>
+								<TableCell align="center">Length</TableCell>
+								<TableCell align="center">Miles</TableCell>
+								<TableCell align="center">Completed</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -57,15 +57,15 @@ function HistoryPage() {
 									<TableCell component="th" scope="row">
 										{cohort.name}
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align="center">
 										{dayjs(cohort.start_date).format(
 											"MMMM D"
 										)}
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align="center">
 										{cohort.duration}
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align="center">
 										{
 											Math.floor(
 												cohort?.actual.reduce(
@@ -80,7 +80,7 @@ function HistoryPage() {
 											) // total miles run by the user
 										}
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align="center">
 										{
 											`${
 												cohort?.charge.some(
