@@ -24,7 +24,13 @@ function AppsPage() {
 							<button
 								className="app-card__connected-btn"
 								onClick={() =>
-									dispatch({ type: "DISCONNECT_STRAVA" })
+									user.is_active
+										? alert(
+												"You can disconnect once you are done with your current cohort"
+										  )
+										: dispatch({
+												type: "DISCONNECT_STRAVA",
+										  })
 								}
 							>
 								Connected
