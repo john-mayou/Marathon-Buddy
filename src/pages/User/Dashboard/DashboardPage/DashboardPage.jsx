@@ -194,14 +194,21 @@ function DashboardPage() {
 						</div>
 						<StatsContainer
 							header={"Personal"}
-							overallStat={Math.floor(
-								(currentCohort?.charge.filter(
-									(t) => t.charge > 0
-								).length /
-									currentCohort?.charge.filter((t) => t.date)
-										.length) *
-									100
-							)} // percentage of days completed by user
+							overallStat={
+								currentCohort?.charge.some(
+									(charge) => charge.date
+								) // checks if any of the charges are not null
+									? Math.floor(
+											(currentCohort?.charge.filter(
+												(t) => t.charge > 0
+											).length /
+												currentCohort?.charge.filter(
+													(t) => t.date
+												).length) *
+												100
+									  )
+									: 100
+							} // percentage of days completed by user
 							milesStat={
 								Math.floor(
 									currentCohort?.actual.reduce(

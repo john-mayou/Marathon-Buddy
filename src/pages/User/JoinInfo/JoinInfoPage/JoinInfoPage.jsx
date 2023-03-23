@@ -14,33 +14,33 @@ function JoinInfoPage() {
 		{
 			image: BlueTrackPic,
 			imageText: "1W",
-			title: "Lucky Number 7",
+			title: "1 Week Training",
 			description:
-				"This is just copy, lets figure something else to put in here",
+				"Lucky number 7 what can you say, this is a great place to start.",
 			durationParam: 7,
 		},
 		{
 			image: BlackTrackPic,
 			imageText: "2W",
-			title: "Build The Habit",
+			title: "2 Week Training",
 			description:
-				"This is just copy, lets figure something else to put in here",
+				"Now we're starting to build the habit, legs will just be a tad sore",
 			durationParam: 14,
 		},
 		{
 			image: BlueTrackPic,
 			imageText: "1M",
-			title: "Running To The Bank",
+			title: "1 Month Training",
 			description:
-				"This is just copy, lets figure something else to put in here",
+				"Habit complete, let's run all the way to bank with this one",
 			durationParam: 28,
 		},
 		{
 			image: BlackTrackPic,
 			imageText: "2M",
-			title: "To The Pro's We Go",
+			title: "2 Month Traning",
 			description:
-				"This is just copy, lets figure something else to put in here",
+				"Inconsistencies who? We're on the way to finishing first",
 			durationParam: 56,
 		},
 	];
@@ -58,8 +58,8 @@ function JoinInfoPage() {
 							<p className="goal-hero__heading-secondary"></p>
 						</div>
 						<p className="goal-hero__copy-text">
-							Pick from our hand crafted templates down below or
-							click custom to create your own!
+							Depending on the time before your race or how hard
+							you want to push yourself, we've got options.
 						</p>
 					</div>
 				</section>
@@ -72,11 +72,11 @@ function JoinInfoPage() {
 						Our Most Popular Training Programs
 					</h2>
 					<p className="selection__description">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						Dolores quaerat reprehenderit deserunt reiciendis quia
-						natus omnis excepturi cupiditate veniam. Repellendus
-						illo vel sit, unde nisi accusamus neque id, quos,
-						deleniti exercitationem odit.
+						Pick your timeline down below then you can specify which
+						days you will be active. You will be able to see the
+						start date of the next cohort after you decide your
+						length or training. Our most popular training plan is
+						one month.
 					</p>
 					<div className="selection__content-box">
 						{goalOptionsList.map((goal, i) => {

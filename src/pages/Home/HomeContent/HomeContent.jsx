@@ -20,25 +20,25 @@ function HomeContent() {
 				</h2>
 				<ul className="home-content__list">
 					<HomeContentItem
-						title={"Title"}
+						title={"Community"}
 						description={
-							"Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus eum iste vero, debitis labore cupiditate doloribus voluptates vitae accusantium quasi."
+							"Joining a cohort of runners that are all working towards their goals will fuel you with fire to crush your own"
 						}
-						icon={`<i class="fa-solid fa-house"></i>`}
+						icon={`<i class="fa-solid fa-user-group"></i>`}
 					/>
 					<HomeContentItem
-						title={"Title"}
+						title={"Stake"}
 						description={
-							"Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus eum iste vero, debitis labore cupiditate doloribus voluptates vitae accusantium quasi."
+							"For each day you run your desired mileage, you keep your stake. Do well, and earn you entire stake back while achieving your athletic goals"
 						}
-						icon={`<i class="fa-solid fa-house"></i>`}
+						icon={`<i class="fa-solid fa-handshake-simple"></i>`}
 					/>
 					<HomeContentItem
-						title={"Title"}
+						title={"Win"}
 						description={
-							"Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus eum iste vero, debitis labore cupiditate doloribus voluptates vitae accusantium quasi."
+							"By using social dynamics and loss aversion as catalysts to improving your training, you give yourself the advantage come race day"
 						}
-						icon={`<i class="fa-solid fa-house"></i>`}
+						icon={`<i class="fa-solid fa-ribbon"></i>`}
 					/>
 				</ul>
 			</article>
