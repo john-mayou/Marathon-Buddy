@@ -11,7 +11,7 @@ import {
 	faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-function UserTemplate({ PageContent }) {
+function Sidebar({ PageContent }) {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
@@ -101,4 +101,4 @@ function UserTemplate({ PageContent }) {
 	);
 }
 
-export default UserTemplate;
+export default Sidebar;
