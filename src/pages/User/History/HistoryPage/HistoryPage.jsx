@@ -31,6 +31,7 @@ function HistoryPage() {
 					elevation={10}
 					sx={{
 						maxWidth: 500,
+						"& .MuiTableCell-root": { fontSize: "1.1rem" },
 					}}
 				>
 					<Table sx={{ minWidth: 350 }} aria-label="simple table">

@@ -104,6 +104,7 @@ function DashboardPage() {
 							elevation={10}
 							sx={{
 								maxWidth: 200,
+								"& .MuiTableCell-root": { fontSize: "1.1rem" },
 							}}
 						>
 							<Table
