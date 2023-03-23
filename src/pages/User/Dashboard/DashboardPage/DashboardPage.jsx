@@ -181,7 +181,7 @@ function DashboardPage() {
 							</TableContainer>
 						</div>
 						<StatsContainer
-							header={"Personal"}
+							header={"Personal Stats"}
 							overallStat={
 								currentCohort?.charge.some(
 									(charge) => charge.date
@@ -209,7 +209,7 @@ function DashboardPage() {
 							}
 						/>
 						<StatsContainer
-							header={"Cohort"}
+							header={"Cohort Stats"}
 							overallStat={`${
 								currentCohort?.num_non_zero_charges !== 0
 									? Math.floor(
