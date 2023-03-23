@@ -132,6 +132,7 @@ function JoinCohortPage() {
 							elevation={10}
 							sx={{
 								maxWidth: 500,
+								"& .MuiTableCell-root": { fontSize: "1.1rem" },
 							}}
 						>
 							<Table
