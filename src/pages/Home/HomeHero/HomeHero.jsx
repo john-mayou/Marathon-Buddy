@@ -10,8 +10,8 @@ function HomeHero() {
 					<p className="home-hero__heading-secondary">FOCUS ON</p>
 				</div>
 				<p className="home-hero__copy-text">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Natus blanditiis expedita, aspernatur iure repellendus!
+					Shatter daily insconsistencies by joining a group of like
+					minded runners all working toward the same goal
 				</p>
 				<SignUpButton />
 				{/* <StravaButton /> */}
