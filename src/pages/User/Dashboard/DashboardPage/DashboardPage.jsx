@@ -104,14 +104,14 @@ function DashboardPage() {
 								component={Paper}
 								elevation={10}
 								sx={{
-									maxWidth: 200,
+									maxWidth: 250,
 									"& .MuiTableCell-root": {
 										fontSize: "1.1rem",
 									},
 								}}
 							>
 								<Table
-									sx={{ minWidth: 200 }}
+									sx={{ minWidth: 250 }}
 									aria-label="simple table"
 								>
 									<TableBody>
@@ -122,10 +122,7 @@ function DashboardPage() {
 											>
 												Day
 											</TableCell>
-											<TableCell
-												component="th"
-												scope="row"
-											>
+											<TableCell align="center">
 												{focusedTraning &&
 												focusedTraning.date
 													? dayjs(
@@ -141,10 +138,7 @@ function DashboardPage() {
 											>
 												Planned
 											</TableCell>
-											<TableCell
-												component="th"
-												scope="row"
-											>
+											<TableCell align="center">
 												{focusedTraning &&
 												typeof focusedTraning.planned ===
 													"number"
@@ -159,10 +153,7 @@ function DashboardPage() {
 											>
 												Actual
 											</TableCell>
-											<TableCell
-												component="th"
-												scope="row"
-											>
+											<TableCell align="center">
 												{focusedTraning &&
 												typeof focusedTraning.actual ===
 													"number"
@@ -177,10 +168,7 @@ function DashboardPage() {
 											>
 												Charge
 											</TableCell>
-											<TableCell
-												component="th"
-												scope="row"
-											>
+											<TableCell align="center">
 												{focusedTraning &&
 												typeof focusedTraning.charge ===
 													"number"
