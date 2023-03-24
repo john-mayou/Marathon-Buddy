@@ -13,4 +13,4 @@ async function dailyCronWorkflow() {
 	}
 }
 
-dailyCronWorkflow();
+module.exports = dailyCronWorkflow;
