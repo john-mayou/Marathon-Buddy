@@ -5,62 +5,69 @@ const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 require("dotenv").config();
 
-fetchTrainingsWorkflow();
-
 /**
  * This function takes all of the training instances of the training_planned events for the day before
  * and fetches the actual mileage from Strava. Put the total miles ran into the database to validate later.
  */
-async function fetchTrainingsWorkflow() {
-	const connection = await pool.connect();
-	const yesterday = dayjs().add(-1, "day").format("YYYY-MM-DD");
+function fetchTrainingsWorkflow() {
+	return new Promise(async (resolve, reject) => {
+		const connection = await pool.connect();
+		const yesterday = dayjs().add(-1, "day").format("YYYY-MM-DD");
 
-	const activeUserTokensQuery = `
+		const activeUserTokensQuery = `
 		SELECT uc.user_id, st.refresh_token FROM "users_cohorts" AS uc
 		JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
 		JOIN "strava_tokens" AS st ON st.user_id = uc.user_id
 		WHERE tp.date::date = $1;
-	`;
+		`;
 
-	const trainigsQuery = `
+		const trainingsQuery = `
         SELECT tp.users_cohorts_id, tp.date, st.access_token FROM "users_cohorts" AS uc
         JOIN "training_planned" AS tp ON tp.users_cohorts_id = uc.id
         JOIN "strava_tokens" AS st ON st.user_id = uc.user_id
         WHERE tp.date::date = $1;
-    `;
+		`;
 
-	try {
-		await connection.query("BEGIN");
+		try {
+			await connection.query("BEGIN");
 
-		// First: query all active user refresh_tokens
-		const activeTokens = await connection.query(activeUserTokensQuery, [
-			yesterday,
-		]);
+			// First: query all active user refresh_tokens
+			const activeTokens = await connection.query(activeUserTokensQuery, [
+				yesterday,
+			]);
 
-		// Second: refresh those tokens for new refresh and access tokens
-		await Promise.all(
-			activeTokens.rows.map((user) =>
-				updateRefreshTokens(connection, user)
-			)
-		);
+			// Second: refresh those tokens for new refresh and access tokens
+			await Promise.all(
+				activeTokens.rows.map((user) =>
+					updateRefreshTokens(connection, user)
+				)
+			);
 
-		// Third: query all of yersterdays trainings
-		const trainings = await connection.query(trainigsQuery, [yesterday]);
+			// Third: query all of yersterdays trainings
+			const trainings = await connection.query(trainingsQuery, [
+				yesterday,
+			]);
 
-		// Fourth: fetch yesterdays actual training data from Strava
-		await Promise.all(
-			trainings.rows.map((training) =>
-				fetchStravaTraining(connection, yesterday, training)
-			)
-		);
+			// Fourth: fetch yesterdays actual training data from Strava
+			await Promise.all(
+				trainings.rows.map((training) =>
+					fetchStravaTraining(connection, yesterday, training)
+				)
+			);
 
-		await connection.query("COMMIT");
-	} catch (error) {
-		await connection.query("ROLLBACK");
-		console.log(`Transaction Error - Rolling back new account`, error);
-	} finally {
-		connection.release();
-	}
+			await connection.query("COMMIT");
+			resolve();
+		} catch (error) {
+			await connection.query("ROLLBACK");
+			console.error(
+				"Transaction Error - Rolling back new account",
+				error
+			);
+			reject();
+		} finally {
+			connection.release();
+		}
+	});
 }
 
 function updateRefreshTokens(connection, user) {
@@ -133,3 +140,5 @@ function fetchStravaTraining(connection, yesterday, training) {
 		}
 	});
 }
+
+module.exports = fetchTrainingsWorkflow;

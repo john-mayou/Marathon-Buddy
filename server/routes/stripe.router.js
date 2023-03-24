@@ -138,7 +138,7 @@ router.post("/webhook", async (req, res) => {
 			connection.release();
 		}
 	} else {
-		res.status(200).json({ recieved: true });
+		res.status(200).json({ received: true });
 	}
 });
 
