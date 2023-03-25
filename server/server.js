@@ -47,17 +47,17 @@ app.use(express.static("build"));
 const PORT = process.env.PORT || 5000;
 
 // Crons
-const cron = require("node-cron");
-const dailyCronWorkflow = require("./etc/_root.cron");
-const frequency = "0 5 * * *";
+// const cron = require("node-cron");
+// const dailyCronWorkflow = require("./etc/_root.cron"); // Build path
+// const frequency = "0 5 * * *";
 
-const initCrons = () => {
-	if (cron.validate(frequency)) {
-		cron.schedule(frequency, () => {
-			dailyCronWorkflow();
-		});
-	}
-};
+// const initCrons = () => {
+// 	if (cron.validate(frequency)) {
+// 		cron.schedule(frequency, () => {
+// 			dailyCronWorkflow();
+// 		});
+// 	}
+// };
 
 // initCrons(); // uncomment this line to start the cron
 
