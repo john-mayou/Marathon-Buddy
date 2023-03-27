@@ -6,6 +6,10 @@ const dayjs = require("dayjs");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_TEST_LIVE_KEY);
 
+/**
+ *
+ * @returns promise
+ */
 function sendStripeUsage() {
 	return new Promise(async (resolve, reject) => {
 		const connection = await pool.connect();

@@ -2,6 +2,9 @@ const fetchTrainingsWorkflow = require("./fetch-runs");
 const sendStripeUsage = require("./send-usage");
 const sendDailyEmails = require("./daily-emails");
 
+/**
+ * Aggregator cron function that the cron will run everyday at a given time
+ */
 async function dailyCronWorkflow() {
 	try {
 		await fetchTrainingsWorkflow();
@@ -13,6 +16,6 @@ async function dailyCronWorkflow() {
 	}
 }
 
-// dailyCronWorkflow(); // for testing purposes
+// dailyCronWorkflow(); // for cron purposes
 
 module.exports = dailyCronWorkflow;

@@ -6,6 +6,10 @@ require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_DAILY_EMAIL_KEY);
 
+/**
+ * Sends the user a daily email with information about the previos days training.
+ * @returns promise
+ */
 function sendDailyEmails() {
 	return new Promise(async (resolve, reject) => {
 		const yesterday = dayjs().add(-1, "day").format("YYYY-MM-DD");

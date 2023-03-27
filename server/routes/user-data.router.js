@@ -5,6 +5,10 @@ const {
 	rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
+/**
+ * This aggregates all the cohorts data from all the cohorts that the user has been
+ * a part of.
+ */
 router.get("/", rejectUnauthenticated, async (req, res) => {
 	// finds cohorts the user was a part of and returns them
 	const userCohortDataQuery = `

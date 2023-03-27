@@ -70,6 +70,13 @@ function fetchTrainingsWorkflow() {
 	});
 }
 
+/**
+ * This takes all the active users, grabs their refresh tokens,
+ * then exchanges the for new refresh tokens and access tokens
+ * @param {*} connection // database transaction
+ * @param {*} user
+ * @returns promise
+ */
 function updateRefreshTokens(connection, user) {
 	return new Promise(async (resolve, reject) => {
 		try {
@@ -100,6 +107,14 @@ function updateRefreshTokens(connection, user) {
 	});
 }
 
+/**
+ * Function will make a API request to Strava to get the actual running
+ * mileage for the given date. Puts the mileage in the database
+ * @param {*} connection // database transaction
+ * @param {*} yesterday // date
+ * @param {*} training // user training planned data
+ * @returns
+ */
 function fetchStravaTraining(connection, yesterday, training) {
 	return new Promise(async (resolve, reject) => {
 		try {
