@@ -188,7 +188,7 @@ function DashboardPage() {
 								) // checks if any of the charges are not null
 									? Math.floor(
 											(currentCohort?.charge.filter(
-												(t) => t.charge > 0
+												(t) => t.charge === 0
 											).length /
 												currentCohort?.charge.filter(
 													(t) => t.date
@@ -213,7 +213,7 @@ function DashboardPage() {
 							overallStat={`${
 								currentCohort?.num_non_zero_charges !== 0
 									? Math.floor(
-											(currentCohort?.num_non_zero_charges /
+											(currentCohort?.num_zero_charges /
 												(currentCohort?.num_non_zero_charges +
 													currentCohort?.num_zero_charges)) *
 												100
