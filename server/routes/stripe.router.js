@@ -8,7 +8,8 @@ const {
 const dayjs = require("dayjs");
 
 /**
- * This is the endpoint that creates the stripe url that I then send back to the client
+ * This is the endpoint that creates the cehckout stripe url.
+ * It sends the url back to the client to then re-route there
  */
 router.post(
 	"/create-checkout-session",
@@ -38,6 +39,8 @@ router.post(
 
 /**
  * Stripe will notify me at this endpoint when an event happens on my account
+ * Checking for checkout.session.completes to add a subscription schedule to the
+ * subscription. This allows for setting an end-date on the subscription
  */
 router.post("/webhook", async (req, res) => {
 	// finding the data needed to reconstruct the request event

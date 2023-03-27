@@ -6,6 +6,10 @@ const {
 	rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
+/**
+ * Routes to Strava with OAuth scope that includes reading all activites
+ * Takes access token and refresh token and stores them.
+ */
 router.get("/", rejectUnauthenticated, async (req, res) => {
 	// if proper scopes were not authorized, break and redirect back to apps page
 	if (!/read,activity:read_all/.test(req.query.scope)) {
@@ -53,6 +57,10 @@ router.get("/", rejectUnauthenticated, async (req, res) => {
 	}
 });
 
+/**
+ * Deletes Strava tokens of the user from the database.
+ * Toggles the strava_connected flag to false.
+ */
 router.delete("/", rejectUnauthenticated, async (req, res) => {
 	const userId = req.user.id;
 	const connection = await pool.connect();

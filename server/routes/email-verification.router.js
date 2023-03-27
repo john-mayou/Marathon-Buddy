@@ -7,6 +7,11 @@ const crypto = require("crypto");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+/**
+ * Endpoint that the user is routes to after they click their email verification link
+ * in their email. Checks if that token is actively in the database.
+ * If it is, that user is verified
+ */
 router.get("/confirmation/:email/:code", async (req, res) => {
 	const { email, code } = req.params;
 
@@ -42,6 +47,10 @@ router.get("/confirmation/:email/:code", async (req, res) => {
 	}
 });
 
+/**
+ * Sends the user an email with a email verification link. Puts the random code generated
+ * into the database to check later.
+ */
 router.post("/:email", async (req, res) => {
 	const userEmail = req.params.email;
 	const randomCode = crypto.randomBytes(16).toString("hex");
