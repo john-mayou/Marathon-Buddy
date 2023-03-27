@@ -89,7 +89,8 @@ function HistoryPage() {
 													? Math.floor(
 															(cohort?.charge.filter(
 																(t) =>
-																	t.charge > 0
+																	t.charge ===
+																	0
 															).length /
 																cohort?.charge.filter(
 																	(t) =>
