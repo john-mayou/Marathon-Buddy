@@ -59,6 +59,14 @@ User features:
 | The user can see their performatnce through multiple cohorts and see how they are improving over time. |
 | <img width="30%" src="screenshots/mb-history.png"> |
 | |
+| Daily Email Update |
+| The user will automatically receive daily email updates with information about the previous days train. This will include: date, miles planned, actual miles run and if they kept their stake or not. |
+| <img width="30%" src="screenshots/marathon-training-update.png"> |
+| |
+| Database Architecture |
+| This is the database design that I used for the project. |
+| <img width="30%" src="screenshots/database-design.png"> |
+| |
 
 ## What I learned
 
