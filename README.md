@@ -1,6 +1,8 @@
 ## Project Objective
 
-Marathon Buddy was a chance to explore new and dificult technologies at Prime Digital academy. Since I want to start businesses in the future, I wanted to explore payments, user auth, Oauth 2, and email for the project. Marathon Buddy is an athletic training gamification app that allows users to stake money in order to meet their athletic goals.
+Marathon Buddy was a chance to explore new and dificult technologies at Prime Digital academy. Since I want to start businesses in the future, I wanted to explore payments, user auth, Oauth 2, and email for the project. Marathon Buddy is an athletic training gamification app that allows users to stake money in order to meet their athletic goals. 
+
+Elevator pitch: Marathon training is boring
 
 User features:
 - Sign up for an account
@@ -32,4 +34,4 @@ Refactored with:
 - Database query A / B testing for performance
 - Global scss variables utilization
 
-[Deploy Link 🚀](https://cryptic-reef-41000.herokuapp.com/) ! Link will take ~10s to bootup !
+[Deploy Link 🚀](http://www.marathonbuddy.co) ! Link will take ~10s to boot-up !
