@@ -2,19 +2,9 @@
 
 Marathon Buddy was a chance to explore new and dificult technologies at Prime Digital academy. Since I want to start businesses in the future, I wanted to explore payments, user auth, Oauth 2, and email for the project. Marathon Buddy is an athletic training gamification app that allows users to stake money in order to meet their athletic goals. 
 
-Elevator pitch: Marathon training is boring
+Elevator pitch: Training for a marathon is hard, and even harder doing it alone. Training can start up to 6 months before race day, and it can be difficult to find motivation during that extended period of time. Marathon Buddy was built to gamifying that experience by first having the user join a cohort (group) of other runners and then putting money on the line (that they can lose) if they don't meet their training goals. 
 
-User features:
-- Sign up for an account
-- Verify their email through email link
-- Connect to Strava (GPS tracking platform that connects to Garmin / Apple Watch / Fitbit....)
-- Join cohort of other runners
-- Decide which days and how many miles for those days they will train
-- Stake a custom $ amount for each day
-- Either win back their stake or lose it based on if they completed their planned mileage
-- Recieve daily email updates with information of the previous days training
-- See their current statistics of their current cohort
-- See their progress through multiple cohorts
+[Deploy Link 🚀](http://www.marathonbuddy.co) ! Link will take ~10s to boot-up !
 
 | Marathon Buddy Walk-Through! |
 |:---:|
@@ -24,7 +14,7 @@ User features:
 | <img width="30%" src="screenshots/mb-home.png"> |
 | |
 | Login / Register |
-| Users can sign up for an account / login. Registration will have the user verify their email through an email link sent to the email address they signed up with. |
+| Users can sign up for an account / login. Registration will have the user verify their email through an email link. |
 | <img width="30%" src="screenshots/mb-login.png"> |
 | |
 | Connect To Strava |
@@ -32,7 +22,7 @@ User features:
 | <img width="30%" src="screenshots/mb-connect.png"> |
 | |
 | Strava Authorization |
-| When the user clicks the Connect button on the previous screen, they are taken to Strava.com. There they can login, then click "Authorize" to allow Marathon Buddy to keep track of their running activities for them. |
+| When the user clicks the Connect button on the previous screen, they are taken to Strava.com. They will login, then click "Authorize" to allow Marathon Buddy to keep track of their running activities for them. |
 | <img width="30%" src="screenshots/mb-strava.png"> |
 | |
 | Duration Choice |
@@ -44,11 +34,11 @@ User features:
 | <img width="30%" src="screenshots/mb-join-calendar.png"> |
 | |
 | Decide Stake + Mileage For Training Days |
-| This page gives the user more information about the cohort that they will be joining. They can also decide the stake amount ($) that they would like to put on the line. And finally, the user will plan the mileage for each day that they chose to train. |
+| This page gives the user more information about the cohort that they will be joining. They can also decide the daily stake amount ($) that they would like to put on the line. And finally, the user will plan the mileage for each day that they chose to train. |
 | <img width="30%" src="screenshots/mb-join-whole.png"> |
 | |
 | Stripe Checkout |
-| Where the user will put in their payment details to commit to their training plan and put their stake on the line. |
+| Where the user will put in their payment details to commit to their training plan. |
 | <img width="30%" src="screenshots/mb-stripe.png"> |
 | |
 | Current Cohort Dashboard |
@@ -56,7 +46,7 @@ User features:
 | <img width="30%" src="screenshots/mb-dashboard.png"> |
 | |
 | Cohort History Page |
-| The user can see their performatnce through multiple cohorts and see how they are improving over time. |
+| The user can see their performance through multiple cohorts and see how they are improving over time. |
 | <img width="30%" src="screenshots/mb-history.png"> |
 | |
 | Daily Email Update |
@@ -86,4 +76,23 @@ Refactored with:
 - Database query A / B testing for performance
 - Global scss variables utilization
 
-[Deploy Link 🚀](http://www.marathonbuddy.co) ! Link will take ~10s to boot-up !
+## Technologies
+* JavaScript
+* HTML
+* CSS
+* SCSS/SASS
+* React
+* Redux
+* Redux-Saga
+* Node.js
+* Express
+* Passport.js
+* PostgreSQL
+* Material UI
+* Strava V3 OAuth 2.0
+* Stripe API
+* SendGrid API
+
+## Connect with me on LinkedIn! Always interested meeting new people! 
+
+<a href="https://www.linkedin.com/in/johnmayou/" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
