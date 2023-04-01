@@ -1,12 +1,19 @@
 ## Project Objective
 
-Marathon Buddy was a chance to explore new and dificult technologies at Prime Digital academy. Since I want to start businesses in the future, I wanted to explore payments, user auth, Oauth 2, and email for the project. Marathon Buddy is an athletic training gamification app that allows users to stake money in order to meet their athletic goals. 
+Marathon Buddy was a chance to explore new and dificult technologies at Prime Digital academy. 
+Since I want to start businesses in the future, I wanted to explore:
+- Payments
+- User Authentication / OAuth 2.0
+- Email
 
-Elevator pitch: Training for a marathon is hard, and even harder doing it alone. Training can start up to 6 months before race day, and it can be difficult to find motivation during that extended period of time. Marathon Buddy was built to gamifying that experience by first having the user join a cohort (group) of other runners and then putting money on the line (that they can lose) if they don't meet their training goals. 
+## Elevator Pitch
+Training for a marathon is hard, and even harder doing it alone. Training can start up to 6 months before race day, and it can be difficult to find motivation during that extended period of time. Marathon Buddy was built to gamifying that experience by first having the user join a cohort (group) of other runners and then putting money on the line (that they can lose) if they don't meet their training goals. 
+
+## App Walk-Through!
 
 [Deploy Link 🚀](http://www.marathonbuddy.co) ! Link will take ~10s to boot-up !
 
-| Marathon Buddy Walk-Through! |
+| Marathon Buddy |
 |:---:|
 | |
 | Home |
